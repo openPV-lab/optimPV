@@ -122,7 +122,12 @@ class FitParam():
         else:
             raise ValueError('type must be range, choice or fixed')      
 
-        
+        if self. value > self.bounds[1] or self.value < self.bounds[0]:
+            raise ValueError('value must be within bounds')
+        if self.start_value is not None:
+            if self.start_value > self.bounds[1] or self.start_value < self.bounds[0]:
+                raise ValueError('start_value must be within bounds')
+
         if self.value_type == 'float':
             if self.force_log:
                 # self.bounds = [np.log10(self.bounds[0]), np.log10(self.bounds[1])]
