@@ -129,10 +129,6 @@ class ImpedanceAgent(SIMsalabimAgent):
                 raise ValueError('Xfit must be specified for the mmed metric')
             return mean_min_euclidean_distance(self.X,y,Xfit,yfit)
         elif self.metric.lower() == 'dmeud':
-            print(self.X)
-            print(Xfit)
-            print(y)
-            print(yfit)
             if Xfit is None:
                 raise ValueError('Xfit must be specified for the med metric')
             return direct_mean_euclidean_distance(self.X,y,Xfit,yfit)
