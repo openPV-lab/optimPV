@@ -33,7 +33,7 @@ class FitParam():
         fscale : float, optional
             order of magnitude of the parameter/scaling factor, by default None
         stepsize : float, optional
-            stepsize for integer parameters (value_type = 'int') can be used by the model to transform the integer seen by the optimizer to the actual value, i.e. the optimizer sees integers but the model uses value*stepsize, by default None
+            stepsize for integer parameters (value_type = 'int') can be used by the model to transform the integer given by the optimizer to the actual value, i.e. the optimizer sees integers but the model uses value*stepsize, by default None
         display_name : str, optional
             name to be displayed in plots, by default ''
         unit : str, optional
@@ -158,6 +158,7 @@ class FitParam():
         if self.value_type == 'int' and self.stepsize is None:
             self.stepsize = 1
             
+        
     def __repr__(self):
         """Representation of the Fitparam object with all attributes
         Returns

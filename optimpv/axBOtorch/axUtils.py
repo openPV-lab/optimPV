@@ -1,4 +1,4 @@
-"""FitParams class"""
+"""Utility functions for the Ax/Botorch library"""
 # Note: This class is inspired by the https://github.com/i-MEET/boar/ package
 ######### Package Imports #########################################################################
 
@@ -17,12 +17,15 @@ def ConvertParamsAx(params):
         Returns
         -------
         list of dict
-            list of dictionaries with the following keys:\\
-                'name': string: the name of the parameter\\
-                'type': string: 'range' or 'fixed'\\
-                'bounds': list of float: the lower and upper bounds of the parameter\\
+            list of dictionaries with the following keys:
+
+                'name': string: the name of the parameter
+                'type': string: 'range' or 'fixed'
+                'bounds': list of float: the lower and upper bounds of the parameter
                 
         """ 
+    if params is None:
+        raise ValueError('The params argument is None')
     
     ax_params = []
     for param in params:
@@ -41,7 +44,7 @@ def ConvertParamsAx(params):
             if param.type == 'fixed':
                 ax_params.append({'name': param.name, 'type': 'fixed', 'value': param.value, 'value_type': 'int'})
             else:
-                ax_params.append({'name': param.name, 'type': 'range', 'bounds': [param.bounds[0], param.bounds[1]], 'value_type': 'int'})
+                ax_params.append({'name': param.name, 'type': 'range', 'bounds': [int(param.bounds[0]/param.stepsize), int(param.bounds[1]/param.stepsize)], 'value_type': 'int'})
         elif param.value_type == 'cat' or param.value_type == 'sub' or param.value_type == 'str': 
             if param.type == 'fixed':
                 ax_params.append({'name': param.name, 'type': 'fixed', 'value': param.value, 'value_type': 'str'})
