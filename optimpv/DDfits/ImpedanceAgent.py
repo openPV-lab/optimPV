@@ -1,4 +1,4 @@
-"""JVAgent class for steady-state JV simulations"""
+"""ImpedanceAgent class for impedance simulations"""
 ######### Package Imports #########################################################################
 
 import numpy as np
@@ -35,35 +35,66 @@ class ImpedanceAgent(SIMsalabimAgent):
     V_0 : float
         Initial voltage for the impedance simulation.
     G_frac : float, optional
-        Fraction of the voltage to use for the G measurement, by default 1.
+        Fractional light intensity, by default 1.
+    del_V : float, optional
+        Voltage step for the impedance simulation, by default 0.01.
     simulation_setup : str, optional
         Path to the simulation setup file, if None then use the default file 'simulation_setup.txt'in the session_path directory, by default None.
-    impedance_format : str, optional
+    exp_format : str, optional
         Format of the impedance data, possible values are: 'Cf', 'Gf', 'Nyquist', 'BodeImZ', 'BodeReZ', 'Bode', by default 'Cf'.
-    metric : str, optional
+    metric : str or list of str, optional
         Metric to evaluate the model, see optimpv.general.calc_metric for options, by default 'mse'.
-    loss : str, optional
+    loss : str or list of str, optional
         Loss function to use, see optimpv.general.loss_function for options, by default 'linear'.
-    yerr : array-like, optional
+    threshold : int or list of int, optional
+        Threshold value for the loss function used when doing multi-objective optimization, by default 100.
+    minimize : bool or list of bool, optional
+        If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.
+    yerr : array-like or list of array-like, optional 
         Errors in the current values, by default None.
-    weight : array-like, optional
+    weight : array-like or list of array-like, optional
         Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.
+    name : str, optional
+        Name of the agent, by default 'Imp'.
     **kwargs : dict
         Additional keyword arguments.
     """   
-    def __init__(self, params, X, y, session_path, f_min, f_max, f_steps, V_0, G_frac=1, del_V=0.01, simulation_setup=None, impedance_format = 'Cf', metric = 'mse', loss = 'linear', yerr=None,weight=None,**kwargs):    
+    def __init__(self, params, X, y, session_path, f_min, f_max, f_steps, V_0, G_frac = 1, del_V = 0.01, simulation_setup = None, exp_format = ['Cf'], metric = ['mse'], loss = ['linear'], threshold = [100], minimize = [True], yerr = None, weight = None, name = 'Imp', **kwargs):    
 
         self.params = params
         self.session_path = session_path  
         if simulation_setup is None:
             self.simulation_setup = os.path.join(session_path,'simulation_setup.txt')
         else:
-            self.simulation_setup = simulation_setup  
-        self.X = np.asarray(X)
-        self.y = np.asarray(y)
-        self.yerr = np.asarray(yerr)
+            self.simulation_setup = simulation_setup
+
+        if not isinstance(X, (list, tuple)):
+            X = [np.asarray(X)]
+        if not isinstance(y, (list, tuple)):
+            y = [np.asarray(y)]
+
+        self.X = X
+        self.y = y
+        self.yerr = yerr
         self.metric = metric
         self.loss = loss
+        self.threshold = threshold
+        self.minimize = minimize
+
+        if self.loss is None:
+            self.loss = 'linear'
+        if self.metric is None:
+            self.metric = 'mse'
+
+        if isinstance(metric, str):
+            self.metric = [metric]
+        if isinstance(loss, str):
+            self.loss = [loss]
+        if isinstance(threshold, (int,float)):
+            self.threshold = [threshold]
+        if isinstance(minimize, bool):
+            self.minimize = [minimize]
+
         self.kwargs = kwargs
         self.f_min = f_min
         self.f_max = f_max
@@ -71,23 +102,42 @@ class ImpedanceAgent(SIMsalabimAgent):
         self.V_0 = V_0
         self.G_frac = G_frac
         self.del_V = del_V
+        self.name = name
         
-        if impedance_format not in ['Cf','Gf','Nyquist','BodeImZ','BodeReZ','Bode']:
-            raise ValueError('Invalid impedance format. Possible values are: Cf, Gf, Nyquist, BodeImZ, BodeReZ, Bode')
-        
-        self.impedance_format = impedance_format
+        self.exp_format = exp_format
+        if isinstance(exp_format, str):
+            self.exp_format = [exp_format]
 
-        if self.loss is None:
-            self.loss = 'linear'
+        # check that all elements in exp_format are valid
+        for imp_form in self.exp_format:
+            if imp_form not in ['Cf','Gf','CGf','Nyquist','BodeImZ','BodeReZ','Bode']:
+                raise ValueError('{imp_form} is an invalid impedance format. Possible values are: Cf, Gf, CGf,Nyquist, BodeImZ, BodeReZ, Bode')
 
         if weight is not None:
-            self.weight = np.asarray(weight)
+            # check that weight has the same length as y
+            if not len(weight) == len(y):
+                raise ValueError('weight must have the same length as y')
+            self.weight = []
+            for w in weight:
+                if isinstance(w, (list, tuple)):
+                    self.weight.append(np.asarray(w))
+                else:
+                    self.weight.append(w)
         else:
             if yerr is not None:
-                self.weight = 1/yerr**2
+                # check that yerr has the same length as y
+                if not len(yerr) == len(y):
+                    raise ValueError('yerr must have the same length as y')
+                self.weight = []
+                for yer in yerr:
+                    self.weight.append(1/np.asarray(yer)**2)
             else:
-                self.weight = None
+                self.weight = [None]*len(y)
 
+        # check that exp_format, metric, loss, threshold and minimize have the same length
+        if not len(self.exp_format) == len(self.metric) == len(self.loss) == len(self.threshold) == len(self.minimize) == len(self.X) == len(self.y) == len(self.weight):
+            raise ValueError('exp_format, metric, loss, threshold and minimize must have the same length')
+        
         while True: # need this to be thread safe
             try:
                 dev_par, layers = load_device_parameters(session_path, simulation_setup, run_mode = False)
@@ -109,7 +159,7 @@ class ImpedanceAgent(SIMsalabimAgent):
         self.pnames = pnames    
 
 
-    def target_metric(self,y,yfit,Xfit=None):
+    def target_metric(self, y, yfit, metric_name, X=None, Xfit=None,weight=None):
         """Calculate the target metric depending on self.metric
 
         Parameters
@@ -118,22 +168,30 @@ class ImpedanceAgent(SIMsalabimAgent):
             1-D array containing the target values.
         yfit : array-like
             1-D array containing the fitted values.
+        metric_name : str
+            Metric to evaluate the model, see optimpv.general.calc_metric for options.
+        X : array-like, optional
+            1-D array containing the x axis values, by default None.
+        Xfit : array-like, optional
+            1-D array containing the x axis values, by default None.
+        weight : array-like, optional
+            1-D array containing the weights, by default None.
 
         Returns
         -------
         float
             Target metric value.
         """        
-        if self.metric.lower() == 'mmeud':
+        if metric_name.lower() == 'mmeud':
             if Xfit is None:
                 raise ValueError('Xfit must be specified for the mmed metric')
-            return mean_min_euclidean_distance(self.X,y,Xfit,yfit)
-        elif self.metric.lower() == 'dmeud':
+            return mean_min_euclidean_distance(X,y,Xfit,yfit)
+        elif metric_name.lower() == 'dmeud':
             if Xfit is None:
                 raise ValueError('Xfit must be specified for the med metric')
-            return direct_mean_euclidean_distance(self.X,y,Xfit,yfit)
+            return direct_mean_euclidean_distance(X,y,Xfit,yfit)
         else:
-            return  calc_metric(y,yfit,sample_weight=self.weight,metric_name=self.metric)
+            return  calc_metric(y,yfit,sample_weight=weight,metric_name=metric_name)
     
 
     def run_Ax(self, parameters):
@@ -149,18 +207,25 @@ class ImpedanceAgent(SIMsalabimAgent):
         dict
             Dictionary with the target metric value.
         """  
+        df = self.run_impedance_simulation(parameters)
+        if df is np.nan:
+            dum_dict = {}
+            for i in range(len(self.exp_format)):
+                dum_dict[self.name+'_'+self.exp_format[i]+'_'+self.metric[i]] = np.nan
+            return dum_dict
+        
+        dum_dict = {}
 
-        if self.metric.lower() == 'mmeud' or self.metric.lower() == 'dmeud':
-            Xfit,yfit = self.run(parameters)
-            return {self.metric: loss_function(self.target_metric(self.y,yfit,Xfit),loss=self.loss)}
-        else:
-            yfit = self.run(parameters)
-            y = self.y
-            return {self.metric: loss_function(self.target_metric(y,yfit),loss=self.loss)}
+        for i in range(len(self.exp_format)):
+
+            Xfit, yfit = self.reformat_impedance_data(df,self.X[i],exp_format=self.exp_format[i])
+            
+            dum_dict[self.name+'_'+self.exp_format[i]+'_'+self.metric[i]] = loss_function(self.target_metric(self.y[i],yfit,self.metric[i],self.X[i],Xfit,weight=self.weight[i]),loss=self.loss[i])
+
+        return dum_dict
     
-    
-    def run(self, parameters):
-        """Run the simulation with the parameters and return the fitted current values
+    def run_impedance_simulation(self, parameters):
+        """Run the simulation with the parameters and return the simulated values
 
         Parameters
         ----------
@@ -169,8 +234,8 @@ class ImpedanceAgent(SIMsalabimAgent):
 
         Returns
         -------
-        array-like
-            1-D array containing the simulated current values.
+        dataframe
+            Dataframe with the simulated impedance values.
         """    
 
         parallel = self.kwargs.get('parallel', False)
@@ -191,11 +256,6 @@ class ImpedanceAgent(SIMsalabimAgent):
         else:
             cmd_pars = []
 
-        # get Gfracs from X
-        if len(self.X.shape) == 1:
-            Gfracs = None
-        else:
-            Gfracs = np.unique(self.X[:,1])
 
         # prepare the cmd_pars for the simulation
         custom_pars, clean_pars, VarNames = self.prepare_cmd_pars(parameters, custom_pars, clean_pars, VarNames)
@@ -233,20 +293,74 @@ class ImpedanceAgent(SIMsalabimAgent):
             if not all([(res == 0 or res == 95) for res in ret]):
                 # print('Error in running SIMsalabim: '+mess)
                 return np.nan
-
-        # save data for fitting freq ReZ ImZ ReErrZ ImErrZ C G errC errG
-        Xfit,yfit = [],[]
-        do_interp = True
+        
         try:
             df = pd.read_csv(os.path.join(self.session_path, 'freqZ_'+UUID+'.dat'), sep=r'\s+')
         except:
             print('No impedance data found for UUID '+UUID + ' and cmd_pars '+str(cmd_pars))
             return np.nan
 
-        if self.impedance_format == 'Cf':
+        return df
 
-            if len(self.X) == len(df['freq'].values):
-                if np.allclose(self.X, np.asarray(df['freq'].values)):
+    def run(self, parameters,X=None,exp_format='Cf'):
+        """Run the simulation with the parameters and return an array with the simulated values in the format specified by exp_format (default is 'Cf')
+
+        Parameters
+        ----------
+        parameters : dict
+            Dictionary with the parameter names and values.
+        X : array-like, optional
+            1-D array containing the x axis values, by default None.
+        exp_format : str, optional
+            Format of the experimental data, by default 'Cf'.
+
+        Returns
+        -------
+        array-like
+            1-D array with the simulated current values.
+        """     
+
+        df = self.run_impedance_simulation(parameters)
+        if df is np.nan:
+            return np.nan
+
+        if X is None:
+            X = self.X[0]
+
+        Xfit, yfit = self.reformat_impedance_data(df, X, exp_format)
+
+        return yfit
+
+
+    def reformat_impedance_data(self,df,X,exp_format='Cf'):
+        """ Reformat the data depending on the exp_format and X values
+        Also interpolates the data if the simulation did not return the same points as the experimental data (i.e. if some points did not converge)
+
+        Parameters
+        ----------
+        df : dataframe
+            Dataframe with the impedance dara from run_impedance_simulation function.
+        X : array-like, optional
+            1-D array containing the x axis values, by default None.
+        exp_format : str, optional
+            Format of the experimental data, by default 'Cf'.
+
+        Returns
+        -------
+        tuple
+            Tuple with the reformatted Xfit and yfit values.
+
+        Raises
+        ------
+        ValueError
+            If the exp_format is not valid.
+        """     
+        Xfit,yfit = [],[]
+        do_interp = True
+        if exp_format == 'Cf':
+
+            if len(X) == len(df['freq'].values):
+                if np.allclose(X, np.asarray(df['freq'].values)):
                     do_interp = False
             
             if do_interp:
@@ -256,18 +370,19 @@ class ImpedanceAgent(SIMsalabimAgent):
                         tck = interpolate.splrep(np.asarray(df['freq'].values)[::-1], np.asarray(df['C'].values)[::-1], s=0)   
                     else:
                         tck = interpolate.splrep(np.asarray(df['freq'].values), np.asarray(df['C'].values), s=0)
-                    yfit = interpolate.splev(self.X, tck, der=0, ext=0)
+                    yfit = interpolate.splev(X, tck, der=0, ext=0)
                 except:
                     f = interpolate.interp1d(df['freq'], df['C'], fill_value='extrapolate', kind='linear')
                     warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-                    yfit = f(self.X)
+                    yfit = f(X)
             else:
-                Xfit = self.X
+                Xfit = X
                 yfit = np.asarray(df['C'].values)
-        elif self.impedance_format == 'Gf':
 
-            if len(self.X) == len(df['freq'].values):
-                if np.allclose(self.X, np.asarray(df['freq'].values)):
+        elif exp_format == 'Gf':
+
+            if len(X) == len(df['freq'].values):
+                if np.allclose(X, np.asarray(df['freq'].values)):
                     do_interp = False
             
             if do_interp:
@@ -277,21 +392,61 @@ class ImpedanceAgent(SIMsalabimAgent):
                         tck = interpolate.splrep(np.asarray(df['freq'].values)[::-1], np.asarray(df['G'].values)[::-1], s=0)
                     else:
                         tck = interpolate.splrep(np.asarray(df['freq'].values), np.asarray(df['G'].values), s=0)
-                    yfit = interpolate.splev(self.X, tck, der=0, ext=0)
+                    yfit = interpolate.splev(X, tck, der=0, ext=0)
                 except:
                     f = interpolate.interp1d(df['freq'], df['G'], fill_value='extrapolate', kind='linear')
                     warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-                    yfit = f(self.X)
+                    yfit = f(X)
             else:
-                Xfit = self.X
+                Xfit = X
                 yfit = np.asarray(df['G'].values)
-        elif self.impedance_format == 'Nyquist':
 
-            Xfit = np.asarray(df['ReZ'].values) 
-            yfit = np.asarray(df['ImZ'].values)
+        elif exp_format == 'CGf':
+                freqs = self.kwargs.get('freqs',None)
+                if freqs is None:
+                    raise ValueError('freqs must be specified for Nyquist plot in case not all frequencies are returned by SIMsalabim')
+                
+                if len(X) == len(df['freq'].values):
+                    if np.allclose(X, np.asarray(df['freq'].values)):
+                        do_interp = False
+                freqs_fit = np.asarray(df['freq'].values)
+                if do_interp:
+                    # Do interpolation in case SIMsalabim did not return the same number of points 
+                    try:
+                        if df['freq'].values[0] > df['freq'].values[-1]:
+                            tck = interpolate.splrep(np.asarray(df['freq'].values)[::-1], np.asarray(df['C'].values)[::-1], s=0)
+                            tck2 = interpolate.splrep(np.asarray(df['freq'].values)[::-1], np.asarray(df['G'].values)[::-1], s=0)
+                        else:
+                            tck = interpolate.splrep(np.asarray(df['freq'].values), np.asarray(df['C'].values), s=0)
+                            tck2 = interpolate.splrep(np.asarray(df['freq'].values), np.asarray(df['G'].values), s=0)
+                        yfit = interpolate.splev(freqs, tck, der=0, ext=0)
+                        yfit2 = interpolate.splev(freqs, tck2, der=0, ext=0)
+                        Xfit = np.concatenate((freqs,freqs))
+                        yfit = np.concatenate((yfit,yfit2))
+                    except:
+                        f = interpolate.interp1d(df['freq'], df['C'], fill_value='extrapolate', kind='linear')
+                        yfit = f(freqs)
+                        f = interpolate.interp1d(df['freq'], df['G'], fill_value='extrapolate', kind='linear')
+                        yfit2 = f(freqs)
+                        warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
+                        # put C and G in the same array and double the length of Xfit
+                        Xfit = np.concatenate((freqs,freqs))
+                        yfit = np.concatenate((yfit,yfit2))
+                else:
+                    Xfit = np.concatenate((freqs,freqs))
+                    yfit = np.concatenate((np.asarray(df['C'].values),np.asarray(df['G'].values)))
+
+        elif exp_format == 'Bode':
+            
+            Xfit = np.asarray(df['freq'].values)
+            yfit = np.asarray(df['ReZ'].values) 
+            yfit2 = np.asarray(df['ImZ'].values)
+            # yfit = np.concatenate((yfit,yfit2))
+            # Xfit = np.concatenate((Xfit,Xfit))
             freqs_fit = np.asarray(df['freq'].values)
-            if len(self.X) == len(Xfit):
-                if np.allclose(self.X, Xfit):
+
+            if len(X) == len(Xfit):
+                if np.allclose(X, Xfit):
                     do_interp = False
             
             if do_interp:
@@ -305,31 +460,37 @@ class ImpedanceAgent(SIMsalabimAgent):
                         freqs_fit = freqs_fit[::-1]
                         dum_Xfit = Xfit[::-1]
                         dum_yfit = yfit[::-1]
+                        dum_yfit2 = yfit2[::-1]
                     else:
                         dum_Xfit = Xfit
                         dum_yfit = yfit
+                        dum_yfit2 = yfit2
+
                     # interpolate ReZ
-                    tck = interpolate.splrep(freqs_fit, dum_Xfit, s=0)
-                    Xfit = interpolate.splev(freqs, tck, der=0, ext=0)
-                    # interpolate ImZ
                     tck = interpolate.splrep(freqs_fit, dum_yfit, s=0)
                     yfit = interpolate.splev(freqs, tck, der=0, ext=0)
+                    # interpolate ImZ
+                    tck = interpolate.splrep(freqs_fit, dum_yfit2, s=0)
+                    yfit2 = interpolate.splev(freqs, tck, der=0, ext=0)
                 except:
-                    f = interpolate.interp1d(freqs_fit, Xfit, fill_value='extrapolate', kind='linear')
-                    Xfit = f(freqs)
                     f = interpolate.interp1d(freqs_fit, yfit, fill_value='extrapolate', kind='linear')
-                    yfit = f(freqs) 
+                    yfit = f(freqs)
+                    f = interpolate.interp1d(freqs_fit, yfit2, fill_value='extrapolate', kind='linear')
+                    yfit2 = f(freqs) 
                     # f = interpolate.interp1d(Xfit, yfit, fill_value='extrapolate', kind='linear')
                     warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-                    # yfit = f(self.X)
+                    # yfit = f(X)
+            
+            yfit = np.concatenate((yfit,yfit2))
+            Xfit = np.concatenate((Xfit,Xfit))
 
-        elif self.impedance_format == 'BodeImZ':
+        elif exp_format == 'BodeImZ':
             
             Xfit = np.asarray(df['freq'].values) 
             yfit = np.asarray(df['ImZ'].values)
 
-            if len(self.X) == len(Xfit):
-                if np.allclose(self.X, Xfit):
+            if len(X) == len(Xfit):
+                if np.allclose(X, Xfit):
                     do_interp = False
             
             if do_interp:
@@ -345,14 +506,15 @@ class ImpedanceAgent(SIMsalabimAgent):
                 except:
                     f = interpolate.interp1d(Xfit, yfit, fill_value='extrapolate', kind='linear')
                     warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-                    yfit = f(self.X)
-        elif self.impedance_format == 'BodeReZ':
+                    yfit = f(X)
+
+        elif exp_format == 'BodeReZ':
 
             Xfit = np.asarray(df['freq'].values) 
             yfit = np.asarray(df['ReZ'].values)
 
-            if len(self.X) == len(Xfit):
-                if np.allclose(self.X, Xfit):
+            if len(X) == len(Xfit):
+                if np.allclose(X, Xfit):
                     do_interp = False
             
             if do_interp:
@@ -365,25 +527,23 @@ class ImpedanceAgent(SIMsalabimAgent):
                         dum_Xfit = Xfit
                         dum_yfit = yfit
                     tck = interpolate.splrep(dum_Xfit, dum_yfit, s=0)
-                    yfit = interpolate.splev(self.X, tck, der=0, ext=0)
+                    yfit = interpolate.splev(X, tck, der=0, ext=0)
                 except:
                     f = interpolate.interp1d(Xfit, yfit, fill_value='extrapolate', kind='linear')
                     warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-                    yfit = f(self.X)
-        elif self.impedance_format == 'Bode':
-            
-            Xfit = np.asarray(df['freq'].values) 
-            yfit = np.asarray(df['ReZ'].values)
-            yfit2 = np.asarray(df['ImZ'].values)
-            # put ReZ and ImZ in the same array and double the length of Xfit
-            Xfit = np.repeat(Xfit,2)
-            yfit = np.abs(np.concatenate((yfit,yfit2)))
+                    yfit = f(X)
 
+        elif exp_format == 'Nyquist':
+            
             if self.metric.lower() == 'mmeud' or self.metric.lower() == 'dmeud':
-                return Xfit, yfit
+                Xfit = np.asarray(df['ReZ'].values)
+                yfit = np.asarray(df['ImZ'].values)
+            else:
+                raise ValueError('Invalid metric for Nyquist plot. Possible values are: mmeud, dmeud. This is because the other metrics results in the same optimization as Bode plot so it is not necessary to use Nyquist plot for those metrics')
+                           
             
-            if len(self.X) == len(Xfit):
-                if np.allclose(self.X, Xfit):
+            if len(X) == len(Xfit):
+                if np.allclose(X, Xfit):
                     do_interp = False
 
             if do_interp:
@@ -408,22 +568,20 @@ class ImpedanceAgent(SIMsalabimAgent):
                     tck = interpolate.splrep(dum_freqs, dum_Im, s=0)
                     yfit2 = interpolate.splev(freqs, tck, der=0, ext=0)
 
-                    # put ReZ and ImZ in the same array and double the length of Xfit
-                    Xfit = np.repeat(freqs,2)
-                    yfit = np.abs(np.concatenate((yfit,yfit2)))
-                    
+                    Xfit = yfit
+                    yfit = yfit2
+
                 except Exception as e:
                     f = interpolate.interp1d(np.asarray(df['freq'].values), np.asarray(df['ReZ'].values), fill_value='extrapolate', kind='linear')
                     yfit = f(freqs)
                     f = interpolate.interp1d(np.asarray(df['freq'].values), np.asarray(df['ImZ'].values), fill_value='extrapolate', kind='linear')
                     yfit2 = f(freqs)
                     # put ReZ and ImZ in the same array and double the length of Xfit
-                    Xfit = np.repeat(freqs,2)
-                    yfit = np.abs(np.concatenate((yfit,yfit2)))
-                    print(e)
+                    Xfit = yfit
+                    yfit = yfit2
+
                     warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-            
         else:
             raise ValueError('Invalid impedance format. Possible values are: Cf, Gf, Nyquist, BodeImZ, BodeReZ, Bode')
 
-        return yfit
+        return Xfit, yfit
