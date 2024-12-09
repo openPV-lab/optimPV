@@ -19,6 +19,7 @@ class SIMsalabimAgent(BaseAgent):
     
     def __init__(self) -> None:
         pass
+        
 
     def get_SIMsalabim_clean_cmd(self, parameters, sim_type='simss'):
         """Get the command line arguments for the SIMsalabim simulation with properly formatted parameters

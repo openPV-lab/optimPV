@@ -7,7 +7,7 @@ import numpy as np
 ######### Function Definitions ####################################################################
 
 class FitParam():
-    def __init__(self, name = '', type = 'range', value_type = 'float', value = None, bounds = None, values = None,  start_value = None, log_scale = False, rescale = True, fscale = None, stepsize = None, display_name='', unit='', axis_type = None, std = None,encoding = None, force_log = False):
+    def __init__(self, name = '', type = 'range', value_type = 'float', value = None, bounds = None, values = None,  start_value = None, log_scale = False, rescale = False, fscale = None, stepsize = None, display_name='', unit='', axis_type = None, std = None,encoding = None, force_log = False):
         """ Fitparam class object
 
         Parameters
