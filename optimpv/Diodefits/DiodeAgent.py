@@ -39,6 +39,8 @@ class DiodeAgent(BaseAgent):
         1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.
     y : array-like
         1-D array containing the current values.
+    T : float, optional
+        Temperature in K, by default 300.
     exp_format : str or list of str, optional
         Format of the experimental data, by default 'light'.
     metric : str or list of str, optional
@@ -54,7 +56,7 @@ class DiodeAgent(BaseAgent):
     weight : array-like or list of array-like, optional
         Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.
     name : str, optional
-        Name of the agent, by default 'JV'.
+        Name of the agent, by default 'diode'.
     use_pvlib : bool, optional
         If True then use the pvlib library to calculate the diode equation, by default False.
     **kwargs : dict

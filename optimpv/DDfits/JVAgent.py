@@ -266,7 +266,7 @@ class JVAgent(SIMsalabimAgent):
                 got_gfrac_none = True
             else:
                 if got_gfrac_none:
-                    raise ValueError('both X should have the same shape')
+                    raise ValueError('all X elements should have the same shape')
                 # append np.unique(xx[:,1]) to Gfracs list
                 Gfrac = np.unique(xx[:,1])
                 for g in Gfrac:

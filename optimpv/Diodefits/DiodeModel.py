@@ -1,3 +1,6 @@
+"""Diode Model"""
+######### Package Imports #########################################################################
+
 import numpy as np
 from scipy.special import lambertw
 from scipy import constants
@@ -7,11 +10,16 @@ q = constants.value(u'elementary charge')
 eps_0 = constants.value(u'electric constant')
 kb = constants.value(u'Boltzmann constant in eV/K')
 
+######### Function Definitions ####################################################################
 def NonIdealDiode_dark(V, J0, n, R_series, R_shunt, T = 300):
-    """ Solve non ideal diode equation for dark current
-        J = J0*[exp(-(V-J*R_series)/(n*Vt*)) - 1] + (V - J*R_series)/R_shunt
-        with the method described in:
-        Solid-State Electronics 44 (2000) 1861-1864,
+    """ Solve non ideal diode equation for dark current  
+
+        J = J0*[exp(-(V-J*R_series)/(n*Vt*)) - 1] + (V - J*R_series)/R_shunt  
+
+        Based on the beautiful work of:
+
+        Adelmo Ortiz-Conde and Francisco J Garcı́a Sánchez and Juan Muci
+        Solid-State Electronics 44 (2000) 1861-1864, https://doi.org/10.1016/S0038-1101(00)00132-5
         see equation (4)-(5)
     
 
@@ -42,10 +50,14 @@ def NonIdealDiode_dark(V, J0, n, R_series, R_shunt, T = 300):
     return Current.real
 
 def NonIdealDiode_light(V,J0,n,R_series,R_shunt,Jph,T=300):
-    """ Solve non ideal diode equation for light current
-        J = Jph - J0*[exp(-(V-J*R_series)/(n*Vt*)) - 1] - (V - J*R_series)/R_shunt
-        with the method described in:
-        Solar Energy Materials & Solar Cells 81 (2004) 269-277
+    """ Solve non ideal diode equation for light current  
+
+        J = Jph - J0*[exp(-(V-J*R_series)/(n*Vt*)) - 1] - (V - J*R_series)/R_shunt  
+
+        Based on the beautiful work of:
+        
+        Amit Jain and Avinashi Kapoor
+        Solar Energy Materials & Solar Cells 81 (2004) 269-277, https://doi.org/10.1016/j.solmat.2003.11.018
         see equation (1)-(2)
 
 
