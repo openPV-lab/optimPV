@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 from scipy import interpolate, constants
 
-
 from optimpv import *
 from optimpv.general.general import calc_metric, loss_function
 from optimpv.general.BaseAgent import BaseAgent
@@ -19,20 +18,65 @@ kb = constants.value(u'Boltzmann constant in eV/K')
 
 ######### Agent Definition #######################################################################
 class TransferMatrixAgent(BaseAgent):
+    """Initialize the TransferMatrixAgent
 
-    def __init__(self, params, y = None, layers = None, thicknesses=None, activeLayer=None,lambda_start=350, lambda_stop=800,lambda_step=1,x_step =1, mat_dir=None,spectrum_file=None,photopic_file=None,exp_format='Jsc', metric=None, loss=None, threshold=10, minimize=False, name='TM'):
-        
+        Parameters
+        ----------
+        params : dict
+            Dictionary of parameters.
+        y : array-like, optional
+            Experimental data, by default None.
+        layers : list, optional
+            List of material names in the stack, by default None. Note that these names will be used to find the refractive index files in the mat_dir. The filenames must be in the form of 'nk_materialname.txt'.
+        thicknesses : list, optional
+            List of thicknesses of the layers in the stack in meters, by default None.
+        lambda_min : float, optional
+            Start wavelength in m, by default 350e-9.
+        lambda_max : float, optional
+            Stop wavelength in m, by default 800e-9.
+        lambda_step : float, optional
+            Wavelength step in m, by default 1e-9.
+        x_step : float, optional
+            Step size for the x position in the stack in m, by default 1e-9.
+        activeLayer : int, optional
+            Index of the active layer in the stack, i.e. the layer where the generation profile will be calculated. Counting starts at 0, by default None.
+        spectrum : string, optional
+            Name of the file that contains the spectrum, by default None.
+        mat_dir : string, optional
+            Path to the directory where the refractive index files and the spectrum file are located, by default None.
+        photopic_file : string, optional
+            Name of the file that contains the photopic response (must be in the same directory as the refractive index files), by default None.
+        exp_format : str or list, optional
+            Expected format of the output, by default 'Jsc'.
+        metric : str or list, optional
+            Metric to be used for optimization, by default None.
+        loss : str or list, optional
+            Loss function to be used for optimization, by default None.
+        threshold : int, float or list, optional
+            Threshold value for the loss function, by default 10.
+        minimize : bool or list, optional
+            Whether to minimize the loss function, by default False.
+        name : str, optional
+            Name of the agent, by default 'TM'.
+
+        Raises
+        ------
+        ValueError
+            If any of the required parameters are not defined or if there is a mismatch in the lengths of metric, loss, threshold, minimize, and exp_format.
+    """    
+    def __init__(self, params, y = None, layers = None, thicknesses=None, activeLayer=None,lambda_min=350e-9, lambda_max=800e-9,lambda_step=1e-9,x_step =1e-9, mat_dir=None,spectrum=None,photopic_file=None,exp_format='Jsc', metric=None, loss=None, threshold=10, minimize=False, name='TM'):
+    
         self.params = params
         self.y = y
         self.layers = layers
         self.thicknesses = thicknesses
         self.activeLayer = activeLayer
-        self.lambda_start = lambda_start
-        self.lambda_stop = lambda_stop
+        self.lambda_min = lambda_min
+        self.lambda_max = lambda_max
         self.lambda_step = lambda_step
         self.x_step = x_step
         self.mat_dir = mat_dir
-        self.spectrum_file = spectrum_file
+        self.spectrum = spectrum
         self.photopic_file = photopic_file
         self.exp_format = exp_format
         self.metric = metric
@@ -66,15 +110,15 @@ class TransferMatrixAgent(BaseAgent):
                 self.metric[i] = ''
 
         
-        # check that layers, thicknesses and activeLayer and spectrum_file are not None
+        # check that layers, thicknesses and activeLayer and spectrum are not None
         if self.layers is None:
             raise ValueError('layers must be defined')
         if self.thicknesses is None:
             raise ValueError('thicknesses must be defined')
         if self.activeLayer is None:
             raise ValueError('activeLayer must be defined')
-        if self.spectrum_file is None:
-            raise ValueError('spectrum_file must be defined')
+        if self.spectrum is None:
+            raise ValueError('spectrum must be defined')
         if self.photopic_file is None and ('AVT' in self.exp_format or 'LUE' in self.exp_format):
             raise ValueError('photopic_file must be defined to calculate AVT or LUE')
         if self.mat_dir is None:
@@ -98,7 +142,7 @@ class TransferMatrixAgent(BaseAgent):
 
         parameters_rescaled = self.params_rescale(parameters, self.params)
 
-        Jsc, AVT, LUE = TMM(parameters_rescaled, self.layers, self.thicknesses, self.lambda_start, self.lambda_stop, self.lambda_step, self.x_step, self.activeLayer, self.spectrum_file, self.mat_dir, self.photopic_file)
+        Jsc, AVT, LUE = TMM(parameters_rescaled, self.layers, self.thicknesses, self.lambda_min, self.lambda_max, self.lambda_step, self.x_step, self.activeLayer, self.spectrum, self.mat_dir, self.photopic_file)
 
         return Jsc, AVT, LUE
     
@@ -134,6 +178,6 @@ class TransferMatrixAgent(BaseAgent):
 
 
 
-        
 
-        
+
+

@@ -1,3 +1,7 @@
+"""Transfer Matrix Model"""
+# Note: This class is inspired by the https://github.com/erichoke/Stanford repository and the paper:
+# Burkhard, G.F., Hoke, E.T. and McGehee, M.D. (2010), Accounting for Interference, Scattering, and Electrode Absorption to Make Accurate Internal Quantum Efficiency Measurements in Organic and Other Thin Solar Cells. Adv. Mater., 22: 3293-3297. https://doi.org/10.1002/adma.201000883
+######### Package Imports #########################################################################
 
 import os, uuid, sys, copy
 import numpy as np
@@ -12,6 +16,7 @@ q = constants.value(u'elementary charge')
 c = constants.value(u'speed of light in vacuum')
 h = constants.value(u'Planck constant')
 
+######### Function Definitions ####################################################################
 def openFile(fname):
     """ opens files and returns a list split at each new line
 
@@ -154,15 +159,33 @@ def L_mat(n,d,l):
     return L
 
 
-def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step, x_step, activeLayer, am15_file, mat_dir,photopic_file=None):
+def TMM(parameters, layers, thicknesses, lambda_min, lambda_max, lambda_step, x_step, activeLayer, spectrum, mat_dir,photopic_file=None): 
     """ Calculate the Jsc, AVT or LUE for a multilayer stack
 
     Parameters
     ----------
-    X : np.array
-        Array of fixed parameters (not really relevant here)
     parameters : dict
-        dictionary of parameters
+        dictionary of parameters note that all parameters must be in the form of 'd_i' or 'nk_i' where i is the index of the layer and the everything must be in SI units.
+    layers : list
+        list of material names in the stack. Note that this names will be used to find the refractive index files in the mat_dir. The filenames must be in the form of 'nk_materialname.txt'
+    thicknesses : list
+        list of thicknesses of the layers in the stack in meters
+    lambda_min : float
+        start wavelength in m
+    lambda_max : float
+        stop wavelength in m
+    lambda_step : float
+        wavelength step in m
+    x_step : float
+        step size for the x position in the stack in m
+    activeLayer : int
+        index of the active layer in the stack, i.e. the layer where the generation profile will be calculated. Counting starts at 0.
+    spectrum : string
+        name of file that contains the spectrum.
+    mat_dir : string
+        path to the directory where the refractive index files and the spectrum file are located.
+    photopic_file : string, optional
+        name of the file that contains the photopic response (must be in the same directory as the refractive index files), by default None
 
     Returns
     -------
@@ -179,6 +202,11 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
         Wrong indices for the thicknesses
     ValueError
         Wrong indices for the complex refractive index
+    ValueError
+        Wavelengths out of range for the layer
+    ValueError
+        photopic_file must be defined to calculate AVT or LUE
+
     """     
 
     if photopic_file is not None:
@@ -203,7 +231,7 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
         raise ValueError('nkindices must be below the number of layers')
 
     t = deepcopy(thicknesses)
-    lambdas	= np.arange(lambda_start,lambda_stop+lambda_step,lambda_step,np.float64)
+    lambdas	= np.arange(lambda_min,lambda_max+lambda_step,lambda_step,np.float64)
     layers = deepcopy(layers)
     # x_step = deepcopy(self.x_step)
     # activeLayer = deepcopy(self.activeLayer)
@@ -225,46 +253,18 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
 
     
     # load and interpolate AM1.5G Data
-    # am15_file = self.am15_file
-    # am15_data = openFile(am15_file)[1:]
-    am15 = pd.read_csv(am15_file, sep=r'\s+', header='infer')
+    am15 = pd.read_csv(spectrum, sep=r'\s+', header='infer')
     am15_xData = np.asarray(am15['lambda'])
     am15_yData = np.asarray(am15['I'])
-    # am15_xData = []
-    # am15_yData = []
-
-    # for l in am15_data:
-    #     if l[0].isdigit() == False:
-    #         continue
-    #     l = l.strip()
-    #     x,y = l.split(' ')
-    #     x,y = float(x),float(y)
-    #     am15_xData.append(x)
-    #     am15_yData.append(y)
-    # print(am15_xData)
-    # print(am15_yData)
     am15_interp = interp1d(am15_xData,am15_yData,'linear')
-    # print(am15
-    # am15_int_y  = am15_interp(lambdas)
-    # print(am15_xData)
     am15_int_y = am15_interp(lambdas)
-    # print(am15_int_y)
+
     # load and interpolate human eye response
     if photopic_file is not None:
         photopic_file = os.path.join(photopic_file)
         photopic_data = pd.read_csv(photopic_file, sep=r'\s+', header='infer')
-        # photopic_data = openFile(photopic_file)[0:]
         photopic_xData = np.asarray(photopic_data['lambda'])
         photopic_yData = np.asarray(photopic_data['photopic'])
-        # photopic_yData = []
-        # for l in photopic_data:
-        #     if l[0].isdigit() == False:
-        #         continue
-        #     l = l.strip()
-        #     x,y = l.split(' ')
-        #     x,y = float(x),float(y)
-        #     photopic_xData.append(x)
-        #     photopic_yData.append(y)
         photopic_interp = interp1d(photopic_xData,photopic_yData,'linear')
         photopic_int_y  = photopic_interp(lambdas)
 
@@ -347,7 +347,7 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
         Pos 		= np.nonzero(x_mat == matind)
         AbsRate 	= np.tile( (a[matind,:] * np.real(n[matind,:])),(len(Pos),1)) * (abs(E[Pos,:])**2)
         Absorption[matind,:] = np.sum(AbsRate,1)*x_step#*1.0e-7
-    # print(Absorption)
+
     # Transmittance
     Transmittance = 1 - Reflectance - np.sum(Absorption,0)
     Transmittance[Transmittance<0] = 0 # set negative values to zero
@@ -355,9 +355,8 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
     # calculate generation profile
     ActivePos = np.nonzero(x_mat == activeLayer)
     tmp1	= (a[activeLayer,:]*np.real(n[activeLayer,:])*am15_int_y)
-    # print(E[ActivePos,:])
     Q	 	= np.tile(tmp1,(np.size(ActivePos),1))*(abs(E[ActivePos,:])**2)
-    # print(Q)
+
     # Exciton generation rate
     Gxl		= (Q)*np.tile( (lambdas) , (np.size(ActivePos),1))/(h*c)
 
