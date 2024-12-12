@@ -112,7 +112,7 @@ class FitParam():
             if len(self.bounds) != 2:
                 raise ValueError('bounds must be a list of length 2')
             if self.value_type == 'int':
-                self.bounds = [int(self.bounds[0]), int(self.bounds[1])]
+                self.bounds = [self.bounds[0], self.bounds[1]]
         elif self.type == 'choice':
             if self.values is None:
                 raise ValueError('values must be defined for choice type')
@@ -122,11 +122,17 @@ class FitParam():
         else:
             raise ValueError('type must be range, choice or fixed')      
 
-        if self.value_type == 'float' or self.value_type == 'int':
+        if self.value_type == 'float' :
             if self.value > self.bounds[1] or self.value < self.bounds[0]:
                 raise ValueError('value must be within bounds')
             if self.start_value is not None:
                 if self.start_value > self.bounds[1] or self.start_value < self.bounds[0]:
+                    raise ValueError('start_value must be within bounds')
+        elif self.value_type == 'int':
+            if int(self.value) > self.bounds[1] or self.value < self.bounds[0]:
+                raise ValueError('value must be within bounds')
+            if self.start_value is not None:
+                if int(self.start_value) > self.bounds[1] or self.start_value < self.bounds[0]:
                     raise ValueError('start_value must be within bounds')
 
         if self.value_type == 'float':

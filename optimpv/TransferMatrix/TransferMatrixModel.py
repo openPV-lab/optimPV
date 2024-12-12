@@ -64,7 +64,7 @@ def get_ntotal(matName,lambdas,mat_dir):
         list of complex refractive index values
     """      
     matPrefix		= 'nk_'		    # materials data prefix  
-    fname = os.path.join(mat_dir,'%s%s.csv' % (matPrefix,matName))
+    fname = os.path.join(mat_dir,'%s%s.txt' % (matPrefix,matName))
     matHeader = 0
     # check number of lines with strings in the header
     for line in openFile(fname):
@@ -75,21 +75,31 @@ def get_ntotal(matName,lambdas,mat_dir):
             matHeader += 1
     
     fdata = openFile(fname)[matHeader:]
-    # get data from the file
-    lambList	= []
-    nList		= []
-    kList		= []
-    for l in fdata:
-        wl , n , k = l.split(',')
-        wl , n , k = float(wl) , float(n) , float(k)
-        lambList.append(wl)
-        nList.append(n)
-        kList.append(k)
+    fdata = pd.read_csv(fname, sep=r'\s+', header='infer')
+    lambList	= np.asarray(fdata['lambda'])
+    nList		= np.asarray(fdata['n'])
+    kList		= np.asarray(fdata['k'])
+    # # get data from the file
+    # lambList	= []
+    # nList		= []
+    # kList		= []
+
+    # for idx,l in enumerate(fdata):
+    #     # remove any whitespace at the beginning of the line end in the end
+    #     l = l.strip()
+    #     wl , n , k = l.split(' ')
+    #     wl , n , k = float(wl) , float(n) , float(k)
+    #     lambList.append(wl)
+    #     nList.append(n)
+    #     kList.append(k)
     # make interpolation functions
-    int_n	= interp1d(lambList,nList)
-    int_k	= interp1d(lambList,kList)
+    int_n	= interp1d(lambList,nList,fill_value='extrapolate')
+    int_k	= interp1d(lambList,kList,fill_value='extrapolate')
     # interpolate data
-    if min(lambdas) < min(lambList) or max(lambdas) > max(lambList):
+    # check if the wavelengths are within the range of the data with precision of float
+    epsilon = np.finfo(float).eps
+    if np.min(lambdas) < np.min(lambList) - epsilon or np.max(lambdas) > np.max(lambList) + epsilon:
+        print(np.min(lambdas),np.min(lambList),np.max(lambdas),np.max(lambList))
         raise ValueError('Wavelengths out of range for the %s layer. Please either change the wavelength range or provide and nk file with the proper range.' % matName)
     kintList	= int_k(lambdas)
     nintList	= int_n(lambdas)
@@ -193,7 +203,7 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
         raise ValueError('nkindices must be below the number of layers')
 
     t = deepcopy(thicknesses)
-    lambdas	= np.arange(lambda_start,lambda_stop+lambda_step,lambda_step,float)
+    lambdas	= np.arange(lambda_start,lambda_stop+lambda_step,lambda_step,np.float64)
     layers = deepcopy(layers)
     # x_step = deepcopy(self.x_step)
     # activeLayer = deepcopy(self.activeLayer)
@@ -216,28 +226,45 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
     
     # load and interpolate AM1.5G Data
     # am15_file = self.am15_file
-    am15_data = openFile(am15_file)[1:]
-    am15_xData = []
-    am15_yData = []
-    for l in am15_data:
-        x,y = l.split(',')
-        x,y = float(x),float(y)
-        am15_xData.append(x)
-        am15_yData.append(y)
+    # am15_data = openFile(am15_file)[1:]
+    am15 = pd.read_csv(am15_file, sep=r'\s+', header='infer')
+    am15_xData = np.asarray(am15['lambda'])
+    am15_yData = np.asarray(am15['I'])
+    # am15_xData = []
+    # am15_yData = []
+
+    # for l in am15_data:
+    #     if l[0].isdigit() == False:
+    #         continue
+    #     l = l.strip()
+    #     x,y = l.split(' ')
+    #     x,y = float(x),float(y)
+    #     am15_xData.append(x)
+    #     am15_yData.append(y)
+    # print(am15_xData)
+    # print(am15_yData)
     am15_interp = interp1d(am15_xData,am15_yData,'linear')
-    am15_int_y  = am15_interp(lambdas)
-    
+    # print(am15
+    # am15_int_y  = am15_interp(lambdas)
+    # print(am15_xData)
+    am15_int_y = am15_interp(lambdas)
+    # print(am15_int_y)
     # load and interpolate human eye response
     if photopic_file is not None:
         photopic_file = os.path.join(photopic_file)
-        photopic_data = openFile(photopic_file)[0:]
-        photopic_xData = []
-        photopic_yData = []
-        for l in photopic_data:
-            x,y = l.split(',')
-            x,y = float(x),float(y)
-            photopic_xData.append(x)
-            photopic_yData.append(y)
+        photopic_data = pd.read_csv(photopic_file, sep=r'\s+', header='infer')
+        # photopic_data = openFile(photopic_file)[0:]
+        photopic_xData = np.asarray(photopic_data['lambda'])
+        photopic_yData = np.asarray(photopic_data['photopic'])
+        # photopic_yData = []
+        # for l in photopic_data:
+        #     if l[0].isdigit() == False:
+        #         continue
+        #     l = l.strip()
+        #     x,y = l.split(' ')
+        #     x,y = float(x),float(y)
+        #     photopic_xData.append(x)
+        #     photopic_yData.append(y)
         photopic_interp = interp1d(photopic_xData,photopic_yData,'linear')
         photopic_int_y  = photopic_interp(lambdas)
 
@@ -280,6 +307,7 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
             S  = np.asarray(np.asmatrix(S)*np.asmatrix(mL)*np.asmatrix(mI))
         R[ind] = abs(S[1,0]/S[0,0])**2
         T2[ind] = abs((2/(1+n[0,ind])))/np.sqrt(1-R_glass[ind]*R[ind])
+
         # this is not the transmittance! 
         # good up to here
         # calculate all other transfer matrices
@@ -303,22 +331,23 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
                 # Normalized Electric Field Profile
                 num = T2[ind] * (S_dprime[0,0] * np.exp( complex(0,-1.0)*xi*(dj-x) ) + S_dprime[1,0]*np.exp(complex(0,1)*xi*(dj-x)))
                 den = S_prime[0,0]*S_dprime[0,0]*np.exp(complex(0,-1.0)*xi*dj) + S_prime[0,1]*S_dprime[1,0]*np.exp(complex(0,1)*xi*dj)
+                
                 E[x_indices,ind] = num / den
     # overall Reflection from device with incoherent reflections at first interface
     Reflectance = R_glass+T_glass**2*R/(1-R_glass*R)
-
+    
     # Absorption coefficient in 1/cm
     a = np.zeros( (len(t),len(lambdas)) )
     for matind in np.arange(1,len(t)):
-        a[matind,:] = ( 4 * np.pi * np.imag(n[matind,:]) ) / ( lambdas * 1.0e-7 )
+        a[matind,:] = ( 4 * np.pi * np.imag(n[matind,:]) ) / ( lambdas ) #* 1.0e-7 )
 
     # Absorption
     Absorption = np.zeros( (len(t),len(lambdas)) )
     for matind in np.arange(1,len(t)):
         Pos 		= np.nonzero(x_mat == matind)
         AbsRate 	= np.tile( (a[matind,:] * np.real(n[matind,:])),(len(Pos),1)) * (abs(E[Pos,:])**2)
-        Absorption[matind,:] = np.sum(AbsRate,1)*x_step*1.0e-7
-
+        Absorption[matind,:] = np.sum(AbsRate,1)*x_step#*1.0e-7
+    # print(Absorption)
     # Transmittance
     Transmittance = 1 - Reflectance - np.sum(Absorption,0)
     Transmittance[Transmittance<0] = 0 # set negative values to zero
@@ -326,17 +355,20 @@ def TMM(parameters, layers, thicknesses, lambda_start, lambda_stop, lambda_step,
     # calculate generation profile
     ActivePos = np.nonzero(x_mat == activeLayer)
     tmp1	= (a[activeLayer,:]*np.real(n[activeLayer,:])*am15_int_y)
+    # print(E[ActivePos,:])
     Q	 	= np.tile(tmp1,(np.size(ActivePos),1))*(abs(E[ActivePos,:])**2)
+    # print(Q)
     # Exciton generation rate
-    Gxl		= (Q*1.0e-3)*np.tile( (lambdas*1.0e-9) , (np.size(ActivePos),1))/(h*c)
+    Gxl		= (Q)*np.tile( (lambdas) , (np.size(ActivePos),1))/(h*c)
+
     if len(lambdas) == 1:
         lambda_step = 1
     else:
         lambda_step = (sorted(lambdas)[-1] - sorted(lambdas)[0])/(len(lambdas) - 1)
     Gx		= np.sum(Gxl,2)*lambda_step
-
+    
     # calculate Jsc 
-    Jsc = np.sum(Gx)*x_step*1.0e-7*q*1.0e3
+    Jsc = np.sum(Gx)*x_step*q
 
     # calculate AVT and LUE
     if calculate_AVT_LUE:

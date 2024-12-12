@@ -96,8 +96,9 @@ class TransferMatrixAgent(BaseAgent):
     
     def run(self,parameters):
 
+        parameters_rescaled = self.params_rescale(parameters, self.params)
 
-        Jsc, AVT, LUE = TMM(parameters, self.layers, self.thicknesses, self.lambda_start, self.lambda_stop, self.lambda_step, self.x_step, self.activeLayer, self.spectrum_file, self.mat_dir, self.photopic_file)
+        Jsc, AVT, LUE = TMM(parameters_rescaled, self.layers, self.thicknesses, self.lambda_start, self.lambda_stop, self.lambda_step, self.x_step, self.activeLayer, self.spectrum_file, self.mat_dir, self.photopic_file)
 
         return Jsc, AVT, LUE
     
@@ -115,6 +116,8 @@ class TransferMatrixAgent(BaseAgent):
             Loss function value.
         """    
 
+        # parameters_rescaled = self.params_rescale(parameters, self.params)
+        # print(parameters_rescaled)
         Jsc, AVT, LUE = self.run(parameters)
 
         res_dict = {'Jsc':Jsc,'AVT':AVT,'LUE':LUE}
