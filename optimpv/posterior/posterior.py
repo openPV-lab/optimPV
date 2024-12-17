@@ -133,7 +133,7 @@ def calculate_2d_posteriors(mse_array):
 
     return pairwise_posteriors
 
-def devils_plot(params, Nres, objective_name, model, loss, best_parameters = None, params_orig = None, optimizer_type = 'ax', **kwargs):
+def devils_plot(params, Nres, objective_name, model, loss, best_parameters = None, params_orig = None, grid_MSE = None, dims_GP = None, optimizer_type = 'ax', **kwargs):
     """Generate a devil's plot to visualize the posterior distributions of parameters.
 
     Parameters
@@ -167,8 +167,8 @@ def devils_plot(params, Nres, objective_name, model, loss, best_parameters = Non
 
     fig_size = kwargs.get('fig_size', (15, 15))
     marker_size = kwargs.get('marker_size', 200)
-
-    grid_MSE, dims_GP = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = optimizer_type)
+    if grid_MSE is None or dims_GP is None:
+        grid_MSE, dims_GP = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = optimizer_type)
     marginal_posteriors = calculate_1d_posteriors(grid_MSE)
     pairwise_posteriors = calculate_2d_posteriors(grid_MSE)
 
@@ -443,7 +443,7 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
                     if params_orig is not None:
                         ax.axvline(x=yval, color='yellow', linestyle='-')
                     if best_parameters is not None:
-                        ax.axvline(x=best_parameters[yy], color='r', linestyle='-')
+                        ax.axvline(x=best_parameters[yy], color='r', linestyle='--')
                     # put point at the best value top of the axis
                 
 
@@ -474,13 +474,13 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
 
 
                     # Plot as line over the full axis
-                    if best_parameters is not None:
-                        ax.axhline(y=best_parameters[xx], color='yellow', linestyle='--')
-                        ax.axvline(x=best_parameters[yy], color='yellow', linestyle='--')
                     if params_orig is not None:
-                        ax.axhline(y=params_orig[xx], color='r', linestyle='-')
-                        ax.axvline(x=params_orig[yy], color='r', linestyle='-')
-
+                        ax.axhline(y=params_orig[xx], color='yellow', linestyle='-')
+                        ax.axvline(x=params_orig[yy], color='yellow', linestyle='-')
+                    if best_parameters is not None:
+                        ax.axhline(y=best_parameters[xx], color='r', linestyle='--')
+                        ax.axvline(x=best_parameters[yy], color='r', linestyle='--')
+                    
                     ax.set_xlim(axis_limits[names.index(yy)])
                     ax.set_ylim(axis_limits[names.index(xx)])
                 else:
@@ -529,6 +529,7 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
         raise ValueError('This optimizer type is not supported')
     
     return fig, axes
+
 def plot_1D_2D_posterior(params, param_x, param_y, Nres, objective_name, model, loss, best_parameters=None, params_orig=None, optimizer_type='ax', **kwargs):
     """Generate a combined 2D and 1D posterior plot for a specific combination of 2 parameters.
 
