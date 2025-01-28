@@ -2,6 +2,7 @@
 ######### Package Imports #########################################################################
 
 import os,copy,warnings
+import numpy as np
 
 ######### Agent Definition #######################################################################
 class BaseAgent():
@@ -102,25 +103,47 @@ class BaseAgent():
                 
         return dum_dict
 
+    def params_descale(self, parameters, params):
+        """Descale the parameters dictionary to match the Fitparam() objects descaling 
 
-    # def format_func(self,value, tick_number):
-    #     """Format function for the x and y axis ticks  
-    #     to be passed to axo[ii,jj].xaxis.set_major_formatter(plt.FuncFormatter(format_func))  
-    #     to get the logarithmic ticks looking good on the plot  
+        Parameters
+        ----------
+        parameters : dict
+            dictionary of parameter names and values to descale the Fitparam() objects
 
-    #     Parameters
-    #     ----------
-    #     value : float
-    #         value to convert
-    #     tick_number : int
-    #         tick position
+        params : list of Fitparam() objects
+            list of Fitparam() objects to descale
 
-    #     Returns
-    #     -------
-    #     str
-    #         string representation of the value in scientific notation
-    #     """        
-    #     return sci_notation(10**value, sig_fig=-1)
+        Raises
+        ------
+        ValueError
+            If the value_type of the parameter is not 'float', 'int', 'str', 'cat', 'sub' or 'bool'
 
+        Returns
+        -------
+        dict
+            dictionary of parameter names and values descaled
+        """    
+        dum_dict = {}
+        for param in params:
+            if param.name in parameters.keys():
+                if param.value_type == 'float':
+                    if param.force_log:
+                        dum_dict[param.name] = np.log10(parameters[param.name])
+                    else:
+                        dum_dict[param.name] = parameters[param.name]/param.fscale
+                elif param.value_type == 'int':
+                    dum_dict[param.name] = int(parameters[param.name]/param.stepsize)
+                elif param.value_type == 'str':
+                    dum_dict[param.name] = str(parameters[param.name])
+                elif param.value_type == 'cat' or param.value_type == 'sub':
+                    dum_dict[param.name] = parameters[param.name]
+                elif param.value_type == 'bool':
+                    dum_dict[param.name] = bool(parameters[param.name])
+                else:
+                    raise ValueError('Failed to convert parameter name: {} to Fitparam() object'.format(param.name))
+                
+        return dum_dict
 
-    
+                       
+                       

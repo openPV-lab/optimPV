@@ -3,6 +3,7 @@
 ######### Package Imports #########################################################################
 
 import numpy as np
+from ax.service.ax_client import ObjectiveProperties
 
 ######### Function Definitions ####################################################################
 
@@ -59,3 +60,27 @@ def ConvertParamsAx(params):
             raise ValueError('Failed to convert parameter name: {} to Ax format'.format(param.name))
         
     return ax_params
+
+def CreateObjectiveFromAgent(agent):
+    """Create the objective function from the agent
+
+        Parameters
+        ----------
+        agent : Agent() object
+            the agent object
+
+        Returns
+        -------
+        function
+            the objective function
+        """ 
+
+    objectives = {}
+    for i in range(len(agent.metric)):
+        if hasattr(agent,'exp_format'):
+            objectives[agent.name+'_'+agent.exp_format[i]+'_'+agent.metric[i]] = ObjectiveProperties(minimize=agent.minimize[i], threshold=agent.threshold[i])
+        else:
+            objectives[agent.name+'_'+agent.metric[i]] = ObjectiveProperties(minimize=agent.minimize[i], threshold=agent.threshold[i])
+
+
+    return objectives

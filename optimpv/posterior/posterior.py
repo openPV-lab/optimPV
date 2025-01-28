@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import itertools
 from scipy.special import logsumexp
 from itertools import combinations
+import ax
+from ax import *
 from ax.core.observation import ObservationFeatures
 from ax.core.base_trial import TrialStatus as T
 from optimpv.general.general import inv_loss_function
@@ -375,14 +377,28 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
     if optimizer_type == 'ax':
         ax_client = optimizer.ax_client
         dumdic = {}
-        for key in ax_client.experiment.trials[0].arm.parameters.keys():
-            dumdic[key] = []
+        # create a dic with the keys of the parameters
+        if isinstance(ax_client.experiment.trials[0], BatchTrial):# check if trial is a BatchTrial
+            for key in ax_client.experiment.trials[0].arms[0].parameters.keys():
+                dumdic[key] = []
+            
+            # fill the dic with the values of the parameters
+            for i in range(len(ax_client.experiment.trials)):
+                if ax_client.experiment.trials[i].status == T.COMPLETED:
+                    for arm in ax_client.experiment.trials[i].arms:
+                        for key in arm.parameters.keys():
+                            dumdic[key].append(arm.parameters[key])
+                    # for key in ax_client.experiment.trials[i].arms[0].parameters.keys():
+                    #     dumdic[key].append(ax_client.experiment.trials[i].arms[0].parameters[key])
+        else:
+            for key in ax_client.experiment.trials[0].arm.parameters.keys():
+                dumdic[key] = []
 
-        # fill the dic with the values of the parameters
-        for i in range(len(ax_client.experiment.trials)):
-            if ax_client.experiment.trials[i].status == T.COMPLETED:
-                for key in ax_client.experiment.trials[i].arm.parameters.keys():
-                    dumdic[key].append(ax_client.experiment.trials[i].arm.parameters[key])
+            # fill the dic with the values of the parameters
+            for i in range(len(ax_client.experiment.trials)):
+                if ax_client.experiment.trials[i].status == T.COMPLETED:
+                    for key in ax_client.experiment.trials[i].arm.parameters.keys():
+                        dumdic[key].append(ax_client.experiment.trials[i].arm.parameters[key])
 
 
         data = ax_client.experiment.fetch_data().df

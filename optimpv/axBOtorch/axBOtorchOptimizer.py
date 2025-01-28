@@ -14,7 +14,7 @@ from ax.modelbridge.transforms.standardize_y import StandardizeY
 from ax.modelbridge.transforms.unit_x import UnitX
 from ax.modelbridge.transforms.remove_fixed import RemoveFixed
 from ax.modelbridge.transforms.log import Log
-
+from ax.runners.synthetic import SyntheticRunner
 from collections import defaultdict
 from torch.multiprocessing import Pool, set_start_method
 try: # needed for multiprocessing when using pytorch
@@ -85,13 +85,14 @@ class axBOtorchOptimizer():
                 model = model
             else:
                 raise ValueError('Model must be a string or a Models enum')
-            
+            print(self.model_gen_kwargs_list[i])
+            # if model !=
             steps.append(GenerationStep(
                 model=model,
                 num_trials=self.n_batches[i]*self.batch_size[i],
                 max_parallelism=min(self.max_parallelism,self.batch_size[i]),
                 model_kwargs= self.model_kwargs_list[i],
-                model_gen_kwargs= self.model_gen_kwargs_list[i]
+                model_gen_kwargs= self.model_gen_kwargs_list[i],
             ))
 
         gs = GenerationStrategy(steps=steps, )
@@ -106,7 +107,6 @@ class axBOtorchOptimizer():
         dict
             A dictionary of the objectives for the optimization process
         """        
-
 
         append_metrics = False
         if self.all_metrics is None:
@@ -175,6 +175,7 @@ class axBOtorchOptimizer():
             objectives=self.create_objectives(),
             outcome_constraints=outcome_constraints,
             parameter_constraints=parameter_constraints,
+            
         )
 
         # run optimization
@@ -190,7 +191,7 @@ class axBOtorchOptimizer():
                 curr_batch_size = curr_batch_size - (n-total_trials)
 
             parameters, trial_index = self.ax_client.get_next_trials(curr_batch_size)
-
+            
             if not parallel_agents:
                 results = []
                 for idx, agent in enumerate(self.agents):
@@ -231,4 +232,3 @@ class axBOtorchOptimizer():
                     self.ax_client.complete_trial(trial_index, raw_data=raw_data)
                 else:
                     self.ax_client.log_trial_failure(trial_index)
-
