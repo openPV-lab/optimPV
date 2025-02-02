@@ -3,6 +3,8 @@
 ######### Package Imports #########################################################################
 
 import numpy as np
+import ax
+from ax import *
 from ax.service.ax_client import ObjectiveProperties
 
 ######### Function Definitions ####################################################################
@@ -84,3 +86,26 @@ def CreateObjectiveFromAgent(agent):
 
 
     return objectives
+
+def search_spaceAx(search_space):
+    parameters = []
+    for param in search_space:
+        if param['type'] == 'range':
+            if param['value_type'] == 'int':
+                parameters.append(RangeParameter(name=param['name'], parameter_type=ParameterType.INT, lower=param['bounds'][0], upper=param['bounds'][1]))
+            else:
+                parameters.append(RangeParameter(name=param['name'], parameter_type=ParameterType.FLOAT, lower=param['bounds'][0], upper=param['bounds'][1]))
+        elif param['type'] == 'fixed':
+            if param['value_type'] == 'int':
+                parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.INT, value=param.value))
+            elif param['value_type'] == 'str':
+                parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.STRING, value=param.value))
+            elif param['value_type'] == 'bool':
+                parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.BOOL, value=param.value))
+            else:
+                parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.FLOAT, value=param.value))
+        elif param['type'] == 'choice':
+            parameters.append(ChoiceParameter(name=param.name, values=param.values))
+        else:
+            raise ValueError('The parameter type is not recognized')
+    return SearchSpace(parameters=parameters)
