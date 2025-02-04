@@ -1,24 +1,13 @@
+"""Module containing classes and functions for running Ax optimization with with a scheduler that usese a multiprocessing pool to run the jobs in parallel."""
 
+######### Package Imports #########################################################################
 import os,sys,json,uuid,time
 import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
-from functools import partial,reduce
 from typing import Any, Dict, NamedTuple, Union, Iterable, Set
-from optimpv import *
-from optimpv.axBOtorch.axUtils import *
-from optimpv.axBOtorch.axUtils import ConvertParamsAx, CreateObjectiveFromAgent
 import ax
 from ax import *
-from ax.service.ax_client import AxClient
-from ax.modelbridge.generation_strategy import GenerationStep, GenerationStrategy
-from ax import Models
-from ax.service.ax_client import AxClient, ObjectiveProperties
-from ax.modelbridge.transforms.standardize_y import StandardizeY
-from ax.modelbridge.transforms.unit_x import UnitX
-from ax.modelbridge.transforms.remove_fixed import RemoveFixed
-from ax.modelbridge.transforms.log import Log
-from ax.runners.synthetic import SyntheticRunner
 from ax.core.base_trial import BaseTrial
 from ax.core.base_trial import TrialStatus
 from ax.core.metric import Metric, MetricFetchResult, MetricFetchE
@@ -26,39 +15,9 @@ from ax.core.data import Data
 from ax.utils.common.result import Ok, Err
 from ax.core.runner import Runner
 from ax.core.trial import Trial
-from ax.service.scheduler import Scheduler, SchedulerOptions, TrialType
 from collections import defaultdict
-from torch.multiprocessing import Pool, set_start_method
-try: # needed for multiprocessing when using pytorch
-    set_start_method('spawn')
-except RuntimeError:
-    pass
 
-
-# def search_spaceAx(search_space):
-#     parameters = []
-#     for param in search_space:
-#         if param['type'] == 'range':
-#             if param['value_type'] == 'int':
-#                 parameters.append(RangeParameter(name=param['name'], parameter_type=ParameterType.INT, lower=param['bounds'][0], upper=param['bounds'][1]))
-#             else:
-#                 parameters.append(RangeParameter(name=param['name'], parameter_type=ParameterType.FLOAT, lower=param['bounds'][0], upper=param['bounds'][1]))
-#         elif param['type'] == 'fixed':
-#             if param['value_type'] == 'int':
-#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.INT, value=param.value))
-#             elif param['value_type'] == 'str':
-#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.STRING, value=param.value))
-#             elif param['value_type'] == 'bool':
-#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.BOOL, value=param.value))
-#             else:
-#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.FLOAT, value=param.value))
-#         elif param['type'] == 'choice':
-#             parameters.append(ChoiceParameter(name=param.name, values=param.values))
-#         else:
-#             raise ValueError('The parameter type is not recognized')
-#     return SearchSpace(parameters=parameters)
-
-
+######### Function Definitions ####################################################################
 class MockJob(NamedTuple):
     """Dummy class to represent a job scheduled on `MockJobQueue`."""
 
@@ -157,6 +116,19 @@ def get_mock_job_queue_client(MOCK_JOB_QUEUE_CLIENT) -> MockJobQueueClient:
 class MockJobRunner(Runner):  # Deploys trials to external system.
 
     def __init__(self, agents = None, pool = None, tmp_dir = None, parallel_agents = True):
+        """Initializes the `MockJobRunner`.
+
+        Parameters
+        ----------
+        agents : list of Agent() objects, optional
+        List of Agent() objects see optimpv/general/BaseAgent.py for a base class definition, by default None
+        pool : process pool, optional
+            process pool object for parallel processing, by default None
+        tmp_dir : str, optional
+            path to the temporary directory to store the results, by default None
+        parallel_agents : bool, optional
+            if True the agents will be run in parallel, by default True
+        """        
         self.agents = agents
         self.pool = pool
         self.tmp_dir = tmp_dir
@@ -305,195 +277,6 @@ class BraninForMockJobMetric(Metric):  # Pulls data for trial from external syst
             return Err(
                 MetricFetchE(message=f"Failed to fetch {self.name}", exception=e)
             )
-
-# from optimpv.axBOtorch.axBOtorchOptimizer import axBOtorchOptimizer
-# class axBOtorchOptimizer_runner(axBOtorchOptimizer):
-#     def __init__(self, params = None, agents = None, models = ['SOBOL','BOTORCH_MODULAR'],n_batches = [1,10], batch_size = [10,2], ax_client = None,  max_parallelism = 10,model_kwargs_list = None, model_gen_kwargs_list = None, name = 'ax_opti', **kwargs):
-
-#         self.params = params
-#         if not isinstance(agents, list):
-#             agents = [agents]
-#         self.agents = agents
-#         self.models = models
-#         self.n_batches = n_batches
-#         self.batch_size = batch_size
-#         self.all_metrics = None
-#         self.ax_client = ax_client
-#         self.max_parallelism = max_parallelism
-#         if max_parallelism == -1:
-#             self.max_parallelism = os.cpu_count()-1
-#         if model_kwargs_list is None:
-#             model_kwargs_list = [{}]*len(models)
-#         elif isinstance(model_kwargs_list,dict):
-#             model_kwargs_list = [model_kwargs_list]*len(models)
-#         elif len(model_kwargs_list) != len(models):
-#             raise ValueError('model_kwargs_list must have the same length as models')
-#         self.model_kwargs_list = model_kwargs_list
-#         if model_gen_kwargs_list is None:
-#             model_gen_kwargs_list = [{}]*len(models)
-#         elif isinstance(model_gen_kwargs_list,dict):
-#             model_gen_kwargs_list = [model_gen_kwargs_list]*len(models) 
-#         elif len(model_gen_kwargs_list) != len(models):
-#             raise ValueError('model_gen_kwargs_list must have the same length as models')
-#         self.model_gen_kwargs_list = model_gen_kwargs_list
-#         self.name = name
-#         self.kwargs = kwargs
-
-#         if len(n_batches) != len(models):
-#             raise ValueError('n_batches and models must have the same length')
-#         if type(batch_size) == int:
-#             self.batch_size = [batch_size]*len(models)
-#         if len(batch_size) != len(models):
-#             raise ValueError('batch_size and models must have the same length')
-
-#     def evaluate(self,args):
-#         """ Evaluate the agent on a parameter point
-
-#         Parameters
-#         ----------
-#         args : tuple
-#             Tuple containing the index of the agent, the agent, the index of the parameter point and the parameter point
-
-#         Returns
-#         -------
-#         tuple
-#             Tuple containing the index of the parameter point and the results of the agent on the parameter point
-#         """        
-#         idx, agent, p_idx, p = args
-#         res = agent.run_Ax(p)
-#         return p_idx, res
-    
-#     def create_generation_strategy_batch(self):
-#         """ Create a generation strategy for the optimization process using the models and the number of batches and batch sizes. See ax documentation for more details: https://ax.dev/tutorials/generation_strategy.html
-
-#         Returns
-#         -------
-#         GenerationStrategy
-#             The generation strategy for the optimization process
-
-#         Raises
-#         ------
-#         ValueError
-#             If the model is not a string or a Models enum
-#         """        
-
-#         steps = []
-#         for i, model in enumerate(self.models):
-#             if type(model) == str:
-#                 model = Models[model]
-#             elif isinstance(model, Models):
-#                 model = model
-#             else:
-#                 raise ValueError('Model must be a string or a Models enum')
-
-#             steps.append(GenerationStep(
-#                 model=model,
-#                 num_trials=self.n_batches[i],#*self.batch_size[i],
-#                 max_parallelism=min(self.max_parallelism,self.batch_size[i]),
-#                 model_kwargs= self.model_kwargs_list[i],
-#                 model_gen_kwargs= self.model_gen_kwargs_list[i],
-#             ))
-
-#         gs = GenerationStrategy(steps=steps, )
-
-#         return gs
-     
-#     def _optimize(self):
-#         # from kwargs
-#         enforce_sequential_optimization = self.kwargs.get('enforce_sequential_optimization',False)
-#         global_max_parallelism = self.kwargs.get('global_max_parallelism',-1)
-#         verbose_logging = self.kwargs.get('verbose_logging',False)
-#         global_stopping_strategy = self.kwargs.get('global_stopping_strategy',None)
-#         outcome_constraints = self.kwargs.get('outcome_constraints',None)
-#         parameter_constraints = self.kwargs.get('parameter_constraints',None)
-#         parallel_agents = self.kwargs.get('parallel_agents',True)
-#         max_number_cores = self.kwargs.get('max_number_cores',-1)
-#         if max_number_cores == -1:
-#             max_number_cores = os.cpu_count()-1
-#         tmp_dir = self.kwargs.get('tmp_dir',None)
-#         tmp_dir = os.path.join(os.getcwd(),'.tmp_dir') if tmp_dir is None else tmp_dir
-
-#         # create parameters space from params
-#         parameters_space = ConvertParamsAx(self.params)
-
-#         # create generation strategy
-#         gs = self.create_generation_strategy_batch()
-#         # gs.use_batch_trials = True
-
-#         # create ax client
-#         if self.ax_client is None:
-#             self.ax_client = AxClient(generation_strategy=gs, enforce_sequential_optimization=enforce_sequential_optimization)
-        
-#         _obj = self.create_objectives()
-
-#         is_multi_obj = False
-#         if len(_obj.keys()) > 1:
-#             is_multi_obj = True
-
-#         q = Pool(max_number_cores)
-#         if not is_multi_obj:
-#             # obj = Objective(metric=BraninForMockJobMetric(name=list(_obj.keys())[0]+'_', agents = self.agents, pool = q, tmp_dir = tmp_dir, parallel_agents = parallel_agents), minimize=True)
-#             obj = Objective(metric=BraninForMockJobMetric(name=list(_obj.keys())[0], agents = self.agents, pool = q, tmp_dir = tmp_dir, parallel_agents = parallel_agents), minimize=_obj[list(_obj.keys())[0]].minimize)
-#         else:
-#             objectives_list = []
-#             objectives_thresholds = []
-
-#             for key in _obj.keys():
-#                 lower_is_better = _obj[key].minimize
-#                 metric = BraninForMockJobMetric(name=key, agents = self.agents, pool = q, tmp_dir = tmp_dir, parallel_agents = parallel_agents,lower_is_better=lower_is_better)
-#                 objectives_list.append(Objective(metric=metric, minimize=lower_is_better))
-#                 objectives_thresholds.append(ObjectiveThreshold(metric=metric, bound=_obj[key].threshold,relative=False))
-#             obj = MultiObjective(objectives=objectives_list, objective_thresholds=objectives_thresholds)
-#             # raise ValueError('The objective must be a single metric')
-
-#         # create experiment
-#         self.ax_client.create_experiment(
-#             name=self.name,
-#             parameters=parameters_space,
-#             # objectives=self.create_objectives(),
-#             outcome_constraints=outcome_constraints,
-#             parameter_constraints=parameter_constraints,
-            
-#         )
-#         # threshold=
-#         if not is_multi_obj:
-#             self.ax_client.experiment.optimization_config=OptimizationConfig(objective=obj)
-#         else:
-#             self.ax_client.experiment.optimization_config=MultiObjectiveOptimizationConfig(objective=obj)
-#             # self.ax_client.experiment.optimization_config.objective_thresholds = objectives_thresholds
-        
-#         # create runner
-#         runner = MockJobRunner(agents = self.agents, pool = q, tmp_dir = tmp_dir, parallel_agents = parallel_agents)
-#         self.ax_client.experiment.runner = runner
-#         # run optimization
-#         n = 0
-#         total_trials = sum(np.asarray(self.n_batches)*np.asarray(self.batch_size))
-#         n_step_points = np.cumsum(np.asarray(self.n_batches)*np.asarray(self.batch_size))
-        
-#         while n < total_trials:
-#             # check the current batch size
-#             curr_batch_size = self.batch_size[np.argmax(n_step_points>n)]
-
-#             # Create a new scheduler for each batch with the current batch size
-#             scheduler = Scheduler(
-#                 experiment=self.ax_client.experiment,
-#                 generation_strategy=self.ax_client.generation_strategy,
-#                 options=SchedulerOptions(run_trials_in_batches=True,init_seconds_between_polls=0.1,trial_type=TrialType.BATCH_TRIAL,batch_size=curr_batch_size),
-#             )
-
-#             n += curr_batch_size
-#             i = 0
-#             if n > total_trials:
-#                 curr_batch_size = curr_batch_size - (n-total_trials)
-            
-#             scheduler.run_n_trials(max_trials=1)
-#             print('Batch:',n,'/',total_trials)
-
-#             i += 1
-
-#         q.close()
-#         q.join()
-    
 
 
 if __name__ == '__main__':

@@ -219,7 +219,8 @@ def initial_carrier_density(t, fpu, N0, background = 0, G_frac = 1):
     n = np.zeros(len(t))
     # repeat the initial carrier density every 1/fpu
     count = 1
-    n[0] = N0*G_frac
+    # n[0] = N0*G_frac # was like this but it is actually redondant with the fact that N0 is passed to the solver directly in RateEqModel
+    n[0] = 0
     for idx, tt in enumerate(t):
         if idx == 0:
             continue
