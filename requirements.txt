@@ -1,0 +1,11 @@
+pySIMsalabim
+scikit-optimize
+ax-platform
+torch
+torchvision
+torchaudio
+ax-platform
+gitpython
+tk
+pyodbc
+openpyxl

@@ -3,12 +3,12 @@
 
 import numpy as np
 from joblib import Parallel, delayed
-# from functools import partial,reduce
+from functools import partial
 from optimpv import *
 from optimpv.axBOtorch.axUtils import *
 from optimpv.axBOtorch.axUtils import *
 from optimpv.axBOtorch.axSchedulerUtils import *
-import ax
+import ax, os, shutil
 from ax import *
 from ax.service.ax_client import AxClient
 from ax.modelbridge.generation_strategy import GenerationStep, GenerationStrategy
@@ -22,6 +22,15 @@ try: # needed for multiprocessing when using pytorch
 except RuntimeError:
     pass
 
+from logging import Logger
+from ax.utils.common.logger import get_logger, _round_floats_for_logging
+
+logger: Logger = get_logger(__name__)
+ROUND_FLOATS_IN_LOGS_TO_DECIMAL_PLACES: int = 6
+round_floats_for_logging = partial(
+    _round_floats_for_logging,
+    decimal_places=ROUND_FLOATS_IN_LOGS_TO_DECIMAL_PLACES,
+)
 
 ######### Optimizer Definition #######################################################################
 class axBOtorchOptimizer():
@@ -61,7 +70,7 @@ class axBOtorchOptimizer():
     ValueError
         raised if the model_gen_kwargs_list and models do not have the same length
     """ 
-    def __init__(self, params = None, agents = None, models = ['SOBOL','BOTORCH_MODULAR'],n_batches = [1,10], batch_size = [10,2], ax_client = None,  max_parallelism = 10,model_kwargs_list = None, model_gen_kwargs_list = None, name = 'ax_opti', **kwargs):
+    def __init__(self, params = None, agents = None, models = ['SOBOL','BOTORCH_MODULAR'],n_batches = [1,10], batch_size = [10,2], ax_client = None,  max_parallelism = 10,model_kwargs_list = None, model_configs = None, model_gen_kwargs_list = None, name = 'ax_opti', **kwargs):
                
         self.params = params
         if not isinstance(agents, list):
@@ -91,6 +100,7 @@ class axBOtorchOptimizer():
         self.model_gen_kwargs_list = model_gen_kwargs_list
         self.name = name
         self.kwargs = kwargs
+        self.model_configs = model_configs
 
         if len(n_batches) != len(models):
             raise ValueError('n_batches and models must have the same length')
@@ -331,7 +341,8 @@ class axBOtorchOptimizer():
                     self.ax_client.log_trial_failure(trial_index)
 
 
-    
+    # def call_logger(self,curr_batch_size,count):
+        # logger.info(f'Finished batch "{round_floats_for_logging(count)}" and starting batch "{round_floats_for_logging(count+1)}" with "{round_floats_for_logging(curr_batch_size)}" trials')
      
     def optimize_batch(self):
         """ Run the optimization process using the agents and the parameters. The optimization process uses the Ax library. The optimization process runs the agents in parallel if the parallel_agents attribute is True. The optimization process runs using the parameters, agents, models, n_batches, batch_size, max_parallelism, model_kwargs_list, model_gen_kwargs_list, name and kwargs attributes of the class. The optimization process runs using the create_generation_strategy and create_objectives methods of the class. The optimization process runs using the run_Ax method of the agents.
@@ -347,12 +358,16 @@ class axBOtorchOptimizer():
         enforce_sequential_optimization = self.kwargs.get('enforce_sequential_optimization',False)
         global_max_parallelism = self.kwargs.get('global_max_parallelism',-1)
         verbose_logging = self.kwargs.get('verbose_logging',True)
+        scheduler_logging_level = self.kwargs.get('scheduler_logging_level',0)
         global_stopping_strategy = self.kwargs.get('global_stopping_strategy',None)
         outcome_constraints = self.kwargs.get('outcome_constraints',None)
         parameter_constraints = self.kwargs.get('parameter_constraints',None)
         parallel_agents = self.kwargs.get('parallel_agents',True)
         max_number_cores = self.kwargs.get('max_number_cores',-1)
         init_seconds_between_polls = self.kwargs.get('init_seconds_between_polls',0.1)
+        logging_level = self.kwargs.get('logging_level',20)
+        keep_tmp_dir = self.kwargs.get('keep_tmp_dir',False)
+
         if max_number_cores == -1:
             max_number_cores = os.cpu_count()-1
         tmp_dir = self.kwargs.get('tmp_dir',None)
@@ -414,13 +429,26 @@ class axBOtorchOptimizer():
         n = 0
         total_trials = sum(np.asarray(self.n_batches)*np.asarray(self.batch_size))
         n_step_points = np.cumsum(np.asarray(self.n_batches)*np.asarray(self.batch_size))
-        
+        if verbose_logging:
+            logger.info('Starting optimization with %d batches and a total of %d trials',sum(np.asarray(self.n_batches)),total_trials)
+        count = 1
         while n < total_trials:
             # check the current batch size
             if n == 0:
                 old_batch_size = self.batch_size[np.argmax(n_step_points>n)]
+                # logger.info('Starting first batch with %d trials',old_batch_size)
             else:
                 old_batch_size = curr_batch_size
+                # logger.info('Finished batch %d and starting batch %d with %d trials',count-1,count,curr_batch_size)
+            curr_batch_size = self.batch_size[np.argmax(n_step_points>n)]
+
+            if verbose_logging:
+                logging_level = 20
+                logger.setLevel(logging_level)
+                if n == 0:
+                    logger.info(f'Starting batch {round_floats_for_logging(count)} with {round_floats_for_logging(curr_batch_size)} trials')
+                else:
+                    logger.info(f'Finished batch {round_floats_for_logging(count)} and starting batch {round_floats_for_logging(count+1)} with {round_floats_for_logging(curr_batch_size)} trials')
 
             curr_batch_size = self.batch_size[np.argmax(n_step_points>n)]
 
@@ -429,7 +457,7 @@ class axBOtorchOptimizer():
                 scheduler = Scheduler(
                     experiment=self.ax_client.experiment,
                     generation_strategy=self.ax_client.generation_strategy,
-                    options=SchedulerOptions(run_trials_in_batches=True,init_seconds_between_polls=init_seconds_between_polls,trial_type=TrialType.BATCH_TRIAL,batch_size=curr_batch_size,logging_level=0,global_stopping_strategy=global_stopping_strategy),
+                    options=SchedulerOptions(run_trials_in_batches=True,init_seconds_between_polls=init_seconds_between_polls,trial_type=TrialType.BATCH_TRIAL,batch_size=curr_batch_size,logging_level=scheduler_logging_level,global_stopping_strategy=global_stopping_strategy),
                 )
 
             n += curr_batch_size
@@ -437,9 +465,20 @@ class axBOtorchOptimizer():
                 curr_batch_size = curr_batch_size - (n-total_trials)
             
             scheduler.run_n_trials(max_trials=1)
-
+            count += 1
+            
+            
         q.close()
         q.join()
+        if verbose_logging:
+            logging_level = 20
+            logger.setLevel(logging_level)
+            logger.info('Finished optimization with %d number of batches and a total of %d trials',len(self.n_batches),total_trials)
+
+        # clean up the tmp_dir
+        if not keep_tmp_dir:
+            if os.path.exists(tmp_dir):
+                shutil.rmtree(tmp_dir)
 
 if __name__ == '__main__':
     pass
