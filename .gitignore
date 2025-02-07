@@ -54,8 +54,9 @@ venv_boar/
 !requirements.txt
 !requirements_main.txt
 !requirements_torch_CPU.txt
-/pySIMsalabim_/
+/pySIMsalabim/
 /Data/
 /testing_notebooks/
 /.tmp_dir/
+/SIMsalabim/
 

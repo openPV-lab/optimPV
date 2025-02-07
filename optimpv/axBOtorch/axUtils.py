@@ -105,7 +105,7 @@ def search_spaceAx(search_space):
             else:
                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.FLOAT, value=param.value))
         elif param['type'] == 'choice':
-            parameters.append(ChoiceParameter(name=param.name, values=param.values))
+            parameters.append(ChoiceParameter(name=param.name, values=param.values, is_ordered=param.is_ordered, is_sorted=param.is_sorted))
         else:
             raise ValueError('The parameter type is not recognized')
     return SearchSpace(parameters=parameters)

@@ -7,7 +7,7 @@ import numpy as np
 ######### Function Definitions ####################################################################
 
 class FitParam():
-    def __init__(self, name = '', type = 'range', value_type = 'float', value = None, bounds = None, values = None,  start_value = None, log_scale = False, rescale = False, fscale = None, stepsize = None, display_name='', unit='', axis_type = None, std = None,encoding = None, force_log = False):
+    def __init__(self, name = '', type = 'range', value_type = 'float', value = None, bounds = None, values = None,  start_value = None, log_scale = False, rescale = False, fscale = None, stepsize = None, display_name='', unit='', axis_type = None, std = None,encoding = None, is_ordered = False, is_sorted = False, force_log = False):
         """ Fitparam class object
 
         Parameters
@@ -44,6 +44,10 @@ class FitParam():
             standard deviation if returned by optimization, by default None
         encoding : str, optional
             encoding of the parameter (not yet in use), by default None
+        is_ordered : bool, optional
+            if True and value_type is 'str', 'cat' or 'sub' the values are ordered, by default False
+        is_sorted : bool, optional
+            if True and value_type is 'str', 'cat' or 'sub' the values are sorted, by default False
         force_log : bool, optional
             take the log of the parameter prior to passing it to the model, ignoring the log_scale and rescale, by default False
 
@@ -86,6 +90,8 @@ class FitParam():
             self.axis_type = 'log' if log_scale else 'linear'
         self.std = std
         self.encoding = encoding
+        self.is_ordered = is_ordered
+        self.is_sorted = is_sorted
         self.force_log = force_log
 
         # Checks

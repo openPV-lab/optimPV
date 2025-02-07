@@ -41,18 +41,23 @@ def get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = 'ax
     ValueError
         If the optimizer type is not recognized.
     """    
-    dims_GP = []
+    dims_GP, dims = [], []
     dic_fixed = {}
     for idx, param in enumerate(params):
         if param.type != 'fixed':
             if param.axis_type == 'log':
-                parax = np.logspace(np.log10(param.bounds[0]),np.log10(param.bounds[1]),Nres)
+                if param.force_log:
+                    parax = np.linspace(np.log10(param.bounds[0]),np.log10(param.bounds[1]),Nres)
+                else:
+                    parax = np.logspace(np.log10(param.bounds[0]/param.fscale),np.log10(param.bounds[1]/param.fscale),Nres)
+                parax_rescaled = np.logspace(np.log10(param.bounds[0]),np.log10(param.bounds[1]),Nres)
             else:
-                parax = np.linspace(param.bounds[0],param.bounds[1],Nres)
+                parax = np.linspace(param.bounds[0]/param.fscale,param.bounds[1]/param.fscale,Nres)
+                parax_rescaled = np.linspace(param.bounds[0],param.bounds[1],Nres)
             dims_GP.append(parax)
+            dims.append(parax_rescaled)
         else:
             dic_fixed[param.name] = param.value
-
     Xc = np.array(list(itertools.product(*dims_GP)))
     mean_predictions = np.zeros(len(Xc))
     observation_features = []
@@ -72,7 +77,7 @@ def get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = 'ax
     # invert the loss
     mean_predictions = inv_loss_function(mean_predictions, loss) 
 
-    return mean_predictions.reshape(*[Nres for i in range(len(params))]) , dims_GP
+    return mean_predictions.reshape(*[Nres for i in range(len(params))]) , dims_GP, dims
 
 # grid_MSE, dims_GP = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = 'ax')
 
@@ -170,7 +175,7 @@ def devils_plot(params, Nres, objective_name, model, loss, best_parameters = Non
     fig_size = kwargs.get('fig_size', (15, 15))
     marker_size = kwargs.get('marker_size', 200)
     if grid_MSE is None or dims_GP is None:
-        grid_MSE, dims_GP = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = optimizer_type)
+        grid_MSE, dims_GP, dims = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = optimizer_type)
     marginal_posteriors = calculate_1d_posteriors(grid_MSE)
     pairwise_posteriors = calculate_2d_posteriors(grid_MSE)
 
@@ -178,6 +183,7 @@ def devils_plot(params, Nres, objective_name, model, loss, best_parameters = Non
     names = [ param.name for param in params if param.type != 'fixed']
     comb = list(itertools.combinations(names, 2))
 
+    dims_GP = dims
     fig, ax = plt.subplots(n, n, figsize=fig_size)
     for i in range(n):
         for j in range(n):
@@ -219,18 +225,25 @@ def devils_plot(params, Nres, objective_name, model, loss, best_parameters = Non
             if j > 0:
                 if i != j:
                     ax[i, j].set_yticklabels([])
+                    ax[i, j].set_yticklabels([],minor=True)
                     # remove the y axis label
                     ax[i, j].set_ylabel('')
 
             if i < n - 1:
                 ax[i, j].set_xticklabels([])
+                ax[i, j].set_xticklabels([],minor=True)
                 # remove the x axis label
                 ax[i, j].set_xlabel('')
 
             if i == n - 1:
                 ax[i, j].set_xlabel(params[j].display_name + ' [' +params[j].unit+']')
                 # rotate x axis label
-                ax[i, j].tick_params(axis='x', rotation=45)
+                ax[i, j].tick_params(axis='x', rotation=45, which='both')
+                if j != 0:
+                    ax[i, j].set_yticklabels([])
+                    ax[i, j].set_yticklabels([],minor=True)
+                    ax[i, j].set_ylabel('')
+
             if j == 0:
                 ax[i, j].set_ylabel(params[i].display_name + ' [' +params[i].unit+']')
 
@@ -303,10 +316,10 @@ def plot_1d_posteriors(params, Nres, objective_name, model, loss, best_parameter
     if n > 3:
         l = int(np.ceil(n/3))
 
-    grid_MSE, dims_GP = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = optimizer_type)
+    grid_MSE, dims_GP, dims = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type = optimizer_type)
     marginal_posteriors = calculate_1d_posteriors(grid_MSE)
 
-
+    dims_GP = dims
     fig, axes = plt.subplots(l, 3, figsize=fig_size)
     for i, ax in enumerate(axes.flat):
         if i >= n:
@@ -337,6 +350,56 @@ def plot_1d_posteriors(params, Nres, objective_name, model, loss, best_parameter
     plt.tight_layout()
     return fig, ax
 
+def get_df_from_ax(params, objective_name, optimizer):
+    ax_client = optimizer.ax_client
+
+    data = ax_client.experiment.fetch_data().df
+    
+    dumdic = {}
+    # create a dic with the keys of the parameters
+    if isinstance(ax_client.experiment.trials[0], BatchTrial):# check if trial is a BatchTrial
+        for key in ax_client.experiment.trials[0].arms[0].parameters.keys():
+            dumdic[key] = []
+        
+        # fill the dic with the values of the parameters
+        for i in range(len(ax_client.experiment.trials)):
+
+            if ax_client.experiment.trials[i].status == T.COMPLETED:
+                for arm in ax_client.experiment.trials[i].arms:
+                    if arm.name in data['arm_name'].values: # only add the arm if it is in the data i.e. if it was completed
+                        for key in arm.parameters.keys():
+                            dumdic[key].append(arm.parameters[key])       
+    else:
+        for key in ax_client.experiment.trials[0].arm.parameters.keys():
+            dumdic[key] = []
+
+        # fill the dic with the values of the parameters
+        for i in range(len(ax_client.experiment.trials)):
+            if ax_client.experiment.trials[i].status == T.COMPLETED:
+                for key in ax_client.experiment.trials[i].arm.parameters.keys():
+                    dumdic[key].append(ax_client.experiment.trials[i].arm.parameters[key])
+
+    
+    dumdic['iteration'] = list(data[data['metric_name'] == objective_name]['trial_index'])
+
+    dumdic[objective_name] = list(data[data['metric_name'] == objective_name]['mean'])
+
+    df = pd.DataFrame(dumdic)
+
+    # add iteration column with 
+    for par in params:
+        if par.name in df.columns:
+            if par.rescale or par.force_log:
+                if par.value_type == 'int':
+                    df[par.name] = df[par.name] * par.stepsize
+                elif par.value_type == 'float':
+                    if par.force_log:
+                        df[par.name] = 10 ** df[par.name]
+                    else:
+                        df[par.name] = df[par.name] * par.fscale
+                else: 
+                    raise ValueError('Trying to rescale a parameter that is not int or float')
+    return df
 
 def plot_density_exploration(params, objective_name, optimizer = None, best_parameters = None, params_orig = None, optimizer_type = 'ax', **kwargs):
     """Generate density plots to visualize the exploration of parameter space.
@@ -375,52 +438,8 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
     levels = kwargs.get('levels', 100)
     
     if optimizer_type == 'ax':
-        ax_client = optimizer.ax_client
-        dumdic = {}
-        # create a dic with the keys of the parameters
-        if isinstance(ax_client.experiment.trials[0], BatchTrial):# check if trial is a BatchTrial
-            for key in ax_client.experiment.trials[0].arms[0].parameters.keys():
-                dumdic[key] = []
-            
-            # fill the dic with the values of the parameters
-            for i in range(len(ax_client.experiment.trials)):
-                if ax_client.experiment.trials[i].status == T.COMPLETED:
-                    for arm in ax_client.experiment.trials[i].arms:
-                        for key in arm.parameters.keys():
-                            dumdic[key].append(arm.parameters[key])
-                    # for key in ax_client.experiment.trials[i].arms[0].parameters.keys():
-                    #     dumdic[key].append(ax_client.experiment.trials[i].arms[0].parameters[key])
-        else:
-            for key in ax_client.experiment.trials[0].arm.parameters.keys():
-                dumdic[key] = []
-
-            # fill the dic with the values of the parameters
-            for i in range(len(ax_client.experiment.trials)):
-                if ax_client.experiment.trials[i].status == T.COMPLETED:
-                    for key in ax_client.experiment.trials[i].arm.parameters.keys():
-                        dumdic[key].append(ax_client.experiment.trials[i].arm.parameters[key])
-
-
-        data = ax_client.experiment.fetch_data().df
-
-        target1 = data[data['metric_name'] == objective_name]['mean']
-
-        dumdic[objective_name] = list(target1)
-
-
-        dumdic['iteration'] = list(data[data['metric_name'] == objective_name]['trial_index'])
-
-        df = pd.DataFrame(dumdic)
-
-
-        for par in params:
-            if par.name in df.columns:
-                if par.rescale:
-                    if par.value_type == 'int':
-                        df[par.name] = df[par.name] * par.stepsize
-                    else:
-                        df[par.name] = df[par.name] * par.fscale
-                        
+        df = get_df_from_ax(params, objective_name, optimizer)
+        
         names = []
         log_scale = []
         axis_limits = []
@@ -505,10 +524,12 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
                 if j > 0:
                     if i != j:
                         ax.set_yticklabels([])
+                        ax.set_yticklabels([],minor=True)
                         # remove the y axis label
                         ax.set_ylabel('')
                 if i < n - 1:
                     ax.set_xticklabels([])
+                    ax.set_xticklabels([],minor=True)
                     # remove the x axis label
                     ax.set_xlabel('')
 
@@ -516,7 +537,7 @@ def plot_density_exploration(params, objective_name, optimizer = None, best_para
                     for p in params:
                         if p.name == yy:
                             ax.set_xlabel(p.display_name + ' (' + p.unit + ')')
-                    ax.tick_params(axis='x', rotation=45)
+                    ax.tick_params(axis='x', rotation=45, which='both')
                 if j == 0:
                     for p in params:
                         if p.name == xx:
@@ -585,13 +606,14 @@ def plot_1D_2D_posterior(params, param_x, param_y, Nres, objective_name, model, 
     marker_size = kwargs.get('marker_size', 200)
     levels = kwargs.get('levels', Nres)
 
-    grid_MSE, dims_GP = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type=optimizer_type)
+    grid_MSE, dims_GP, dims  = get_MSE_grid(params, Nres, objective_name, model, loss, optimizer_type=optimizer_type)
     marginal_posteriors = calculate_1d_posteriors(grid_MSE)
     pairwise_posteriors = calculate_2d_posteriors(grid_MSE)
 
     param_x_idx = [i for i, param in enumerate(params) if param.name == param_x][0]
     param_y_idx = [i for i, param in enumerate(params) if param.name == param_y][0]
 
+    dims_GP = dims
     fig, ax = plt.subplots(2, 2, figsize=fig_size, gridspec_kw={'height_ratios': [1, 4], 'width_ratios': [4, 1], 'hspace': 0.05, 'wspace': 0.05})
 
     # 2D posterior plot
@@ -616,7 +638,7 @@ def plot_1D_2D_posterior(params, param_x, param_y, Nres, objective_name, model, 
     # 1D posterior plot for param_x
     ax[0, 0].plot(dims_GP[param_x_idx], marginal_posteriors[param_x_idx])
     # rotate the x-axis labels
-    ax[0, 0].tick_params(axis='x', rotation=45)
+    ax[0, 0].tick_params(axis='x', rotation=45, which='both')
     if params_orig is not None:
         ax[0, 0].axvline(x=params_orig[param_x], color='tab:red', linestyle='-')
     if best_parameters is not None:
@@ -626,6 +648,7 @@ def plot_1D_2D_posterior(params, param_x, param_y, Nres, objective_name, model, 
     # set x lim
     ax[0, 0].set_xlim([params[param_x_idx].bounds[0], params[param_x_idx].bounds[1]])
     ax[0, 0].set_xticklabels([])
+    ax[0, 0].set_xticklabels([],minor=True)
     ax[0, 0].set_ylabel('P('+params[param_x_idx].display_name + '|Data)')
 
     # 1D posterior plot for param_y
@@ -639,9 +662,10 @@ def plot_1D_2D_posterior(params, param_x, param_y, Nres, objective_name, model, 
     if params[param_y_idx].axis_type == 'log':
         ax[1, 1].set_yscale('log')
     ax[1, 1].set_yticklabels([])
+    ax[1, 1].set_yticklabels([],minor=True)
     ax[1, 1].set_xlabel('P('+params[param_y_idx].display_name + '|Data)')
     # rotate the x-axis labels
-    ax[1, 1].tick_params(axis='x', rotation=45)
+    ax[1, 1].tick_params(axis='x', rotation=45, which='both')
     ax[0, 1].axis('off')
     
     # legend customisation

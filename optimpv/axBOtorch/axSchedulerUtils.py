@@ -83,6 +83,7 @@ class MockJobQueueClient:
                 # check is nan in res_dic
                 for key in res_dic.keys():
                     if np.isnan(res_dic[key]):
+                        print(f'Job {job_id} failed')
                         return TrialStatus.FAILED
                     
                 return TrialStatus.COMPLETED
@@ -192,11 +193,30 @@ class MockJobRunner(Runner):  # Deploys trials to external system.
         """
         status_dict = defaultdict(set)
         for trial in trials:
-            mock_job_queue = self._get_mock_job_queue_client()
-            status = mock_job_queue.get_job_status(
-                job_id=trial.run_metadata.get("job_id")
-            )
-            status_dict[status].add(trial.index)
+            if isinstance(trial, BatchTrial):
+                all_status = []
+                for arm in trial.arms:
+                    mock_job_queue = self._get_mock_job_queue_client()
+                    status = mock_job_queue.get_job_status(
+                        job_id=arm.run_metadata.get("job_id")
+                    )
+                    all_status.append(status)
+                if all(status == TrialStatus.COMPLETED for status in all_status):
+                    status_dict[status].add(trial.index)
+                elif all(status == TrialStatus.FAILED for status in all_status):
+                    status_dict[status].add(trial.index)
+                # if one arm is running the whole trial is running
+                elif any(status == TrialStatus.RUNNING for status in all_status):
+                    status_dict[TrialStatus.RUNNING].add(trial.index)
+                # if none are running and all are either completed or failed
+                elif all(status == TrialStatus.FAILED or status == TrialStatus.COMPLETED for status in all_status):
+                    status_dict[TrialStatus.COMPLETED].add(trial.index)
+            else:
+                mock_job_queue = self._get_mock_job_queue_client()
+                status = mock_job_queue.get_job_status(
+                    job_id=trial.run_metadata.get("job_id")
+                )
+                status_dict[status].add(trial.index)
 
         return status_dict
     
@@ -238,17 +258,21 @@ class BraninForMockJobMetric(Metric):  # Pulls data for trial from external syst
                     )
 
                     name_ = list(branin_data.keys())[0]
-
+                    if np.isnan(branin_data.get(self.name)):
+                        # trial.mark_arm_abandoned(arm_name=arm.name)
+                        continue
+                    if isinstance(branin_data.get(self.name), tuple):
+                        mean_ = branin_data.get(self.name)[0]
+                        sem_ = branin_data.get(self.name)[1]
+                    else:
+                        mean_ = branin_data.get(self.name)
+                        sem_ = None
                     df_dict = {
                         "trial_index": trial.index,
                         "metric_name": self.name,
                         "arm_name": arm.name,
-                        "mean": branin_data.get(self.name),
-                        # Can be set to 0.0 if function is known to be noiseless
-                        # or to an actual value when SEM is known. Setting SEM to
-                        # `None` results in Ax assuming unknown noise and inferring
-                        # noise level from data.
-                        "sem": None,
+                        "mean": mean_,
+                        "sem": sem_,
                     }
                     lst_df_dict.append(df_dict)
                 return Ok(value=Data(df=pd.DataFrame.from_records(lst_df_dict)))
@@ -261,16 +285,23 @@ class BraninForMockJobMetric(Metric):  # Pulls data for trial from external syst
                         job_id=arm.run_metadata.get("job_id")
                     )
                 name_ = list(branin_data.keys())[0]
+                if np.isnan(branin_data.get(self.name)):
+                    trial.mark_as_failed()
+                    return Ok(value=Data(df=pd.DataFrame()))
+                
+                if isinstance(branin_data.get(self.name), tuple):
+                    mean_ = branin_data.get(self.name)[0]
+                    sem_ = branin_data.get(self.name)[1]
+                else:
+                    mean_ = branin_data.get(self.name)
+                    sem_ = None
+
                 df_dict = {
                     "trial_index": trial.index,
                     "metric_name": self.name,
                     "arm_name": arm.name,
-                    "mean": branin_data.get(self.name),
-                    # Can be set to 0.0 if function is known to be noiseless
-                    # or to an actual value when SEM is known. Setting SEM to
-                    # `None` results in Ax assuming unknown noise and inferring
-                    # noise level from data.
-                    "sem": None,
+                    "mean": mean_,
+                    "sem": sem_,
                 }
                 return Ok(value=Data(df=pd.DataFrame.from_records([df_dict])))
         except Exception as e:

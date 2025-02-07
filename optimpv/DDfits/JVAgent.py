@@ -308,6 +308,16 @@ class JVAgent(SIMsalabimAgent):
         if Gfracs is None:
             try:
                 df = pd.read_csv(os.path.join(self.session_path, 'JV_'+UUID+'.dat'), sep=r'\s+')
+                # delete the file if it exists
+                if os.path.exists(os.path.join(self.session_path, 'JV_'+UUID+'.dat')):
+                    os.remove(os.path.join(self.session_path, 'JV_'+UUID+'.dat'))
+                # same for log
+                if os.path.exists(os.path.join(self.session_path, 'log_'+UUID+'.txt')):
+                    os.remove(os.path.join(self.session_path, 'log_'+UUID+'.txt'))
+                # and scPars
+                if os.path.exists(os.path.join(self.session_path, 'scPars_'+UUID+'.txt')):
+                    os.remove(os.path.join(self.session_path, 'scPars_'+UUID+'.txt'))
+
                 return df
             except:
                 print('No JV data found for UUID '+UUID + ' and cmd_pars '+str(cmd_pars))
@@ -323,6 +333,16 @@ class JVAgent(SIMsalabimAgent):
                     else:
                         # concatenate the dataframes
                         df_all = pd.concat([df_all,df],ignore_index=True)
+                    # delete the file if it exists
+                    if os.path.exists(os.path.join(self.session_path, 'JV_Gfrac_'+str(Gfrac)+'_'+UUID+'.dat')):
+                        os.remove(os.path.join(self.session_path, 'JV_Gfrac_'+str(Gfrac)+'_'+UUID+'.dat'))
+                    # same for log
+                    if os.path.exists(os.path.join(self.session_path, 'log_Gfrac_'+str(Gfrac)+'_'+UUID+'.txt')):
+                        os.remove(os.path.join(self.session_path, 'log_Gfrac_'+str(Gfrac)+'_'+UUID+'.txt'))
+                    # and scPars
+                    if os.path.exists(os.path.join(self.session_path, 'scPars_Gfrac_'+str(Gfrac)+'_'+UUID+'.txt')):
+                        os.remove(os.path.join(self.session_path, 'scPars_Gfrac_'+str(Gfrac)+'_'+UUID+'.txt'))
+
                 except Exception as e:
                     print('No JV data found for UUID '+UUID + ' and cmd_pars '+str(cmd_pars))
                     # print(e)
@@ -330,6 +350,7 @@ class JVAgent(SIMsalabimAgent):
 
             #reset the index
             # df_all = df_all.reset_index(drop=True)
+            # delete the files
 
             return df_all
     

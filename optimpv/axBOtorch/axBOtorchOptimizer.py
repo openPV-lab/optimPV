@@ -70,7 +70,7 @@ class axBOtorchOptimizer():
     ValueError
         raised if the model_gen_kwargs_list and models do not have the same length
     """ 
-    def __init__(self, params = None, agents = None, models = ['SOBOL','BOTORCH_MODULAR'],n_batches = [1,10], batch_size = [10,2], ax_client = None,  max_parallelism = 10,model_kwargs_list = None, model_configs = None, model_gen_kwargs_list = None, name = 'ax_opti', **kwargs):
+    def __init__(self, params = None, agents = None, models = ['SOBOL','BOTORCH_MODULAR'],n_batches = [1,10], batch_size = [10,2], ax_client = None,  max_parallelism = 10,model_kwargs_list = None, model_gen_kwargs_list = None, name = 'ax_opti', **kwargs):
                
         self.params = params
         if not isinstance(agents, list):
@@ -100,8 +100,7 @@ class axBOtorchOptimizer():
         self.model_gen_kwargs_list = model_gen_kwargs_list
         self.name = name
         self.kwargs = kwargs
-        self.model_configs = model_configs
-
+        
         if len(n_batches) != len(models):
             raise ValueError('n_batches and models must have the same length')
         if type(batch_size) == int:
@@ -132,8 +131,7 @@ class axBOtorchOptimizer():
                 model = model
             else:
                 raise ValueError('Model must be a string or a Models enum')
-            print(self.model_gen_kwargs_list[i])
-            # if model !=
+
             steps.append(GenerationStep(
                 model=model,
                 num_trials=self.n_batches[i]*self.batch_size[i],

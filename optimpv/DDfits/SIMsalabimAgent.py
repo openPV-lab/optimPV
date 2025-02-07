@@ -42,7 +42,10 @@ class SIMsalabimAgent(BaseAgent):
             dummy_pars = {}
             for param in parameters:
                 if param.value_type == 'float':
-                    dummy_pars[param.name] = param.value/param.fscale
+                    if param.force_log:
+                        dummy_pars[param.name] = np.log10(param.value)
+                    else:
+                        dummy_pars[param.name] = param.value/param.fscale
                 elif param.value_type == 'int':
                     dummy_pars[param.name] = param.value/param.stepsize
                 else:

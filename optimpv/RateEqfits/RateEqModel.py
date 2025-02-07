@@ -112,7 +112,7 @@ def BT_model(parameters, t, Gpulse, t_span, N0=0, G_frac = 1,  equilibrate=True,
                 rend = r[-1] # last time point
             elif solver_func == 'solve_ivp':
                 # r = solve_ivp(dndt, [t[0], t[-1]], rstart, args=(t_span, Gpulse, k_trap, k_direct), method = method, rtol=rtol)
-                r = solve_ivp(partial(dndt,t_span = t_span, Gpulse = Gpulse, k_trap = k_trap, k_direct = k_direct), [t[0], t[-1]], [N0], t_eval = t, method = method, rtol=rtol)
+                r = solve_ivp(partial(dndt,t_span = t_span, Gpulse = Gpulse, k_trap = k_trap, k_direct = k_direct), [t[0], t[-1]], [N0*G_frac], t_eval = t, method = method, rtol=rtol)
     
                 RealChange  = (r.y[:,-1] -rend)/rend # relative change of mean
                 rend = r.y[:,-1] # last time point
@@ -129,7 +129,7 @@ def BT_model(parameters, t, Gpulse, t_span, N0=0, G_frac = 1,  equilibrate=True,
         return r[:,0], r[:,0]
     elif solver_func == 'solve_ivp':
         # r = solve_ivp(dndt, [t[0], t[-1]], rstart, t_eval = t, args=(t, Gpulse_eq, k_trap, k_direct), method = method, rtol=rtol)
-        r = solve_ivp(partial(dndt,t_span = t, Gpulse = Gpulse_eq, k_trap = k_trap, k_direct = k_direct), [t[0], t[-1]], rend + N0, t_eval = t, method = method, rtol=rtol)
+        r = solve_ivp(partial(dndt,t_span = t, Gpulse = Gpulse_eq, k_trap = k_trap, k_direct = k_direct), [t[0], t[-1]], rend + N0*G_frac, t_eval = t, method = method, rtol=rtol)
 
         # return n and p concentrations (they are the same)
         return r.y[0] , r.y[0]
