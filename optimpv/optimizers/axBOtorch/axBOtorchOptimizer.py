@@ -43,6 +43,7 @@ from optimpv.optimizers.axBOtorch.axUtils import *
 from optimpv.optimizers.axBOtorch.TuRBOGenerationNode import TuRBOGenerationNode
 from optimpv.optimizers.axBOtorch.TuRBOGenerationNode import TuRBOGlobalStoppingStrategy
 from optimpv.optimizers.axBOtorch.MorboGenerationNode import MorboGenerationNode
+from optimpv.optimizers.axBOtorch.REITuRBOGenerationNode import REITuRBOGenerationNode
 from optimpv.general.logger import get_logger, _round_floats_for_logging
 from optimpv.general.BaseAgent import BaseAgent
 
@@ -195,6 +196,13 @@ class axBOtorchOptimizer(BaseAgent):
                 generators.append(node_name)
                 names.append(node_name)
                 continue
+
+            if type(model) == str and model.lower() in ('rei_turbo', 'reiturbo'):
+                node_name = 'REITuRBO'
+                Gen_strat_name += 'REITuRBO'
+                generators.append(node_name)
+                names.append(node_name)
+                continue
                 
             if type(model) == str:
                 node_name = model
@@ -277,6 +285,36 @@ class axBOtorchOptimizer(BaseAgent):
                                                       ))
 
                 continue
+            
+            if names[i].lower() == 'reiturbo':
+                objective = self.create_objectives()
+                if "," in objective:
+                    raise ValueError('REITuRBOGenerationNode does not support multiple objectives')
+
+                minimize = objective.startswith('-')
+                acq = self.model_kwargs_list[i].get('acq', 'ts')
+                tkwargs = {}
+                if self.model_kwargs_list[i].get("torch_device") is not None:
+                    tkwargs["device"] = self.model_kwargs_list[i].get("torch_device")
+                else:
+                    tkwargs["device"] = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+                if self.model_kwargs_list[i].get("torch_dtype") is not None:
+                    tkwargs["dtype"] = self.model_kwargs_list[i].get("torch_dtype")
+
+                # REI-TuRBO uses REI for region seeding and TS/EI for local trust-region steps.
+                nodes_list.append(
+                    REITuRBOGenerationNode(
+                        name=names[i],
+                        model_options=self.model_kwargs_list[i],
+                        batch_size=self.batch_size[i],
+                        acqf=acq,
+                        **tkwargs,
+                        maximize=not minimize,
+                    )
+                )
+
+                continue
+
             # Create the generator spec
             generator_spec = GeneratorSpec(
                                             generator_enum=model,
@@ -540,7 +578,15 @@ class axBOtorchOptimizer(BaseAgent):
                 curr_batch_size = curr_batch_size - (num-total_trials)
 
             # parameters, trial_index = self.ax_client.get_next_trials(curr_batch_size)
-            trials = self.ax_client.get_next_trials(curr_batch_size)
+            try:
+                trials = self.ax_client.get_next_trials(curr_batch_size)
+            except Exception as e:
+                if verbose_logging:
+                    logging_level = 20
+                    logger.setLevel(logging_level)
+                    logger.info(f"Failed to get next trials. We are termintating the optimization process. Error: {e}.")
+                # exit the while loop if we cannot get the next trials
+                break
             if verbose_logging:
                 logging_level = 20
                 logger.setLevel(logging_level)
@@ -578,7 +624,9 @@ class axBOtorchOptimizer(BaseAgent):
             idx = 0
             for trial_index_, raw_data in zip(trials_index, main_results):
                 got_nan = False
-                for key in raw_data.keys():
+                # self.all_metrics
+                # for key in raw_data.keys():
+                for key in self.all_metrics:
                     if np.isnan(raw_data[key]):
                         got_nan = True
                         break
@@ -593,7 +641,8 @@ class axBOtorchOptimizer(BaseAgent):
                         logging_level = 20
                         logger.setLevel(logging_level)
                         logger.info(f"Trial {trial_index_} failed with results: {raw_data} and parameters: {parameters[idx]}")
-                    self.ax_client.mark_trial_failed(trial_index_)
+                    # self.ax_client.mark_trial_failed(trial_index_)
+                    self.ax_client.mark_trial_abandoned(trial_index_) # cannot be resuggested, but does not count as a failure for the generation strategy
                 idx += 1
 
             # check global stopping strategy

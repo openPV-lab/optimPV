@@ -476,50 +476,26 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         if len(metric_names) != 1:
             raise ValueError("This generation node only supports a single metric.")
 
-        # Try building tensors row-by-row from (sorted) completed trials so missing metrics or
-        # invalid values are skipped without breaking X / Y alignment
-        completed_trials = sorted(
-            (trial for trial in experiment.trials.values() if trial.status == TrialStatus.COMPLETED),
-            key=lambda trial: trial.index,
-        )
+        # Get the data for the completed trials.
+        num_completed_trials = len(experiment.trials_by_status[TrialStatus.COMPLETED])
+        X = torch.zeros([num_completed_trials, len(parameter_names)], dtype=self.dtype, device=self.device)
+        Y = torch.zeros([num_completed_trials, 1], dtype=self.dtype, device=self.device)
 
-        X_rows: list[torch.Tensor] = [] # parameter vectors
-        Y_rows: list[torch.Tensor] = [] # metric values
-
-        for trial in completed_trials:
-            trial_parameters = trial.arm.parameters # dict for the specific trial  # pyright: ignore[reportAttributeAccessIssue]
-            trial_df = data.df[data.df["trial_index"] == trial.index] # take only rows belonging to the specific trial
-            filtered_df = trial_df[trial_df["metric_name"] == metric_names[0]] # keep only row for the objective metric(SingleObjective) 
-            if filtered_df.empty:
-                continue
-
-            value = float(filtered_df["mean"].iloc[0])
-            if not math.isfinite(value): # check for valid finite number (should catch NaN or inf vals)
-                continue
-                
-            # conversion below after the filtering
-            X_rows.append(
-                torch.tensor(
-                    [float(trial_parameters.get(name, 0.0)) for name in parameter_names],
-                    dtype=self.dtype,
-                    device=self.device,
-                )
-            )
-            Y_rows.append(
-                torch.tensor(
-                    [value],
-                    dtype=self.dtype,
-                    device=self.device,
-                )
-            )
-
-        if len(X_rows) == 0: # no valid completed trials
-            return
+        for t_idx, trial in experiment.trials.items():
+            if trial.status == TrialStatus.COMPLETED:
+                trial_parameters = trial.arm.parameters  # pyright: ignore[reportAttributeAccessIssue]
+                X[t_idx, :] = torch.tensor([trial_parameters.get(p, 0) for p in parameter_names], dtype=self.dtype)
+                trial_df = data.df[data.df["trial_index"] == t_idx]
+                filtered_df = trial_df[trial_df["metric_name"] == metric_names[0]]
+                if not filtered_df.empty:
+                    Y[t_idx, 0] = torch.tensor(filtered_df["mean"].item(), dtype=self.dtype)
+                else:
+                    Y[t_idx, 0] = torch.tensor(float("nan"), dtype=self.dtype)  # Handle missing data
 
         # Normalize X to [0, 1]^d
-        X = torch.stack(X_rows)
-        Y_new = torch.stack(Y_rows)
         X_normalized = self.to_unit_cube(X)
+        Y_new = Y[~torch.isnan(Y).any(dim=1)]  # Filter out NaN values
+        X_normalized = X_normalized[~torch.isnan(X_normalized).any(dim=1)]
         self.state = self.state.update_state(Y_next=Y_new)
 
         self.candidate_queue.clear() 
