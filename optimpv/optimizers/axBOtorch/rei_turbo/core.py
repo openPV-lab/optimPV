@@ -14,6 +14,7 @@ import torch
 import gpytorch
 from botorch.acquisition.analytic import LogExpectedImprovement
 from botorch.acquisition.logei import qLogExpectedImprovement
+from botorch_community.acquisition.rei import LogRegionalExpectedImprovement, qLogRegionalExpectedImprovement
 from botorch.fit import fit_gpytorch_mll
 from botorch.generation import MaxPosteriorSampling
 from botorch.models import SingleTaskGP
@@ -27,8 +28,6 @@ from gpytorch.likelihoods import GaussianLikelihood
 from gpytorch.mlls import ExactMarginalLogLikelihood
 from gpytorch.priors.torch_priors import GammaPrior
 from torch.quasirandom import SobolEngine
-
-from .rei import LogRegionalExpectedImprovement, qRegionalExpectedImprovement
 
 
 @dataclass
@@ -190,26 +189,16 @@ class REITuRBOEngine:
                 acq_value = torch.max(samples, dim=1)[0].reshape((-1, 1))
             return X_next, acq_value
 
-        if batch_size <= 1:
-            ei = LogExpectedImprovement(model, Y.max())
+        elif acqf == "EI":
+            ei = qLogExpectedImprovement(model, Y.max())
             return optimize_acqf(
                 ei,
                 bounds=torch.stack([tr_lb, tr_ub]),
-                q=1,
+                q=batch_size,
                 num_restarts=num_restarts,
                 raw_samples=raw_samples,
                 inequality_constraints=inequality_constraints,
             )
-
-        ei = qLogExpectedImprovement(model, Y.max())
-        return optimize_acqf(
-            ei,
-            bounds=torch.stack([tr_lb, tr_ub]),
-            q=batch_size,
-            num_restarts=num_restarts,
-            raw_samples=raw_samples,
-            inequality_constraints=inequality_constraints,
-        )
 
     def fit_local_model(
         self,
@@ -297,8 +286,9 @@ class REITuRBOEngine:
         with gpytorch.settings.max_cholesky_size(max_cholesky_size):
             fit_gpytorch_mll(mll)
 
+            # Build the regional acquisition function
             if racqf == "QREI":
-                racq_function = qRegionalExpectedImprovement(
+                racq_function = qLogRegionalExpectedImprovement(
                     X_dev=X_dev,
                     model=model,
                     best_f=train_Y.max(),
@@ -306,17 +296,6 @@ class REITuRBOEngine:
                     length=length_init,
                     bounds=bounds,
                 )
-                candidates, _ = optimize_acqf(
-                    acq_function=racq_function,
-                    bounds=bounds,
-                    q=q_batch,
-                    num_restarts=rei_num_restarts,
-                    raw_samples=rei_raw_samples,
-                    options={"batch_limit": 5, "maxiter": 200},
-                    sequential=True,
-                )
-                X_center = candidates.detach()
-
             elif racqf == "REI":
                 racq_function = LogRegionalExpectedImprovement(
                     X_dev=X_dev,
@@ -330,17 +309,17 @@ class REITuRBOEngine:
             else:
                 raise ValueError(f"Unsupported regional acquisition function '{racqf}'.")
 
-            if racqf != "QREI":
-                candidates, _ = optimize_acqf(
-                    acq_function=racq_function,
-                    bounds=bounds,
-                    q=q_batch,
-                    num_restarts=rei_num_restarts,
-                    raw_samples=rei_raw_samples,
-                    options={"batch_limit": 5, "maxiter": 200},
-                    sequential=True,
-                )
-                X_center = candidates.detach()
+            # Optimize the acquisition function to find candidate center(s)
+            candidates, _ = optimize_acqf(
+                acq_function=racq_function,
+                bounds=bounds,
+                q=q_batch,
+                num_restarts=rei_num_restarts,
+                raw_samples=rei_raw_samples,
+                options={"batch_limit": 5, "maxiter": 200},
+                sequential=True,
+            )
+            X_center = candidates.detach()
 
         if n_init <= 1:
             return X_center.clone()

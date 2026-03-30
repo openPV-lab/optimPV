@@ -287,17 +287,12 @@ class TurboState(BaseModel):
                 X_cand_un = X_cand_un[constraint_mask] # keep only filtered candidates in unnormalized space
 
                 # trigger a warning if the constraints are too strict, however, it's likely that there will be an error raised during the initial seeding
-                if X_cand_un.shape[0] < batch_size:
-                    print(
-                        "Reduced candidate size from "
-                        f"{constraint_mask.shape[0]} to {X_cand_un.shape[0]} due to constraints. "
-                        "This may lead to suboptimal results. Consider increasing n_candidates."
+             
+                if X_cand_un.shape[0] == 0:
+                    raise RuntimeError(
+                        "No candidates left after applying constraints. "
+                        "Your trust region might be too small or your constraints too strict."
                     )
-                    if X_cand_un.shape[0] == 0:
-                        raise RuntimeError(
-                            "No candidates left after applying constraints. "
-                            "Your trust region might be too small or your constraints too strict."
-                        )
 
                 X_cand = (X_cand_un - lower) / (upper - lower) 
 

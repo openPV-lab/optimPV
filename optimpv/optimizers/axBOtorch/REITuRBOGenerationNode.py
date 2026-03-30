@@ -270,12 +270,13 @@ class REITuRBOGenerationNode(ExternalGenerationNode):
         """Use the offloaded local TuRBO engine across all active trust regions.
         Implements multi-region local candidate generation. 
         Mainly fits a local GP, generates local TuRBO batch, attaches acq scores. 
-        Pools all candidates across regions and keeps the globally best amount basedon barch_size 
+        Pools either pointwise candidates or region batches depending on the returned score semantics. 
         """
         if self.bounds_tensor is None:
             raise RuntimeError("Bounds not initialized.")
 
-        candidate_items: list[dict[str, Any]] = []
+        pointwise_candidates: list[dict[str, Any]] = [] # list of candidate dicts collected across all regions, each candidate scored individually for TS/single-point EI
+        region_candidates: list[dict[str, Any]] = [] # list of region batch scores collected across all regions, each batch gets one score for qEI/qLogEI with q>1
         # loop through active regions
         for region_index in self._active_initialized_regions():
             turbo_state = self.state.turbo_states[region_index]
@@ -303,31 +304,71 @@ class REITuRBOGenerationNode(ExternalGenerationNode):
                 bounds=self.bounds_tensor,
             )
             X_next_un = self.from_unit_cube(X_next)
-            acq_flat = acq_value.reshape(-1)
-            for row_idx, candidate in enumerate(X_next_un):
+            acq_flat = acq_value.reshape(-1) # 1D tensor from the acq function output
+            params_list: list[dict[str, Any]] = []
+            for candidate in X_next_un:
                 params: dict[str, Any] = {}
                 for idx, name in enumerate(self.param_names):
                     raw_value = float(candidate[idx].item())
                     params[name] = int(round(raw_value)) if name in self.int_param_names else raw_value
-                candidate_items.append(
+                params_list.append(params)
+
+            # TS returns one score per selected point, 
+            # so we implement global pooling across all candidate rows.
+            # qEI/qLogEI with q>1 returns one joint score for the whole region batch,
+            # so rank region batches against each other and enqueue the winning batch.
+            if acq_flat.numel() == len(params_list):  # Pointwise scores: TS and EI with q=1
+                for row_idx, params in enumerate(params_list):
+                    pointwise_candidates.append(
+                        {
+                            "params": params,
+                            "region_index": region_index,
+                            "score": float(acq_flat[row_idx].item()),
+                        }
+                    )
+            elif acq_flat.numel() == 1:  # Batch score: qEI/qLogEI with q>1
+                region_candidates.append(
                     {
-                        "params": params,
+                        "params_list": params_list,
                         "region_index": region_index,
-                        "score": float(acq_flat[row_idx].item()),
+                        "score": float(acq_flat[0].item()),
                     }
                 )
+            else:
+                raise RuntimeError(
+                    "Unexpected acquisition score shape returned by REI-TuRBO local generation."
+                )
 
-        if len(candidate_items) == 0:
+        if len(pointwise_candidates) == 0 and len(region_candidates) == 0:
             raise RuntimeError("No initialized REI-TuRBO regions are ready to generate local candidates.")
 
-        candidate_items.sort(key=lambda item: item["score"], reverse=True)
-        for item in candidate_items[: self.batch_size]:
-            self.state.candidate_queue.append(
-                {
-                    "params": item["params"],
-                    "region_index": item["region_index"],
-                }
-            )
+        # Pointwise scoring path used by TS and single-point EI.
+        if len(pointwise_candidates) > 0:
+            pointwise_candidates.sort(key=lambda item: item["score"], reverse=True)
+            for item in pointwise_candidates[: self.batch_size]:
+                self.state.candidate_queue.append(
+                    {
+                        "params": item["params"],
+                        "region_index": item["region_index"],
+                    }
+                )
+            return
+
+        # Batchwise scoring path used by batched qEI/qLogEI.
+        # if the batch_size = x there will be x candidates per region, but only the x number of points from the best region will be proposed to Ax, meaning points only from one region are proposed
+        region_candidates.sort(key=lambda item: item["score"], reverse=True) # sort regions by score and enqueue candidates from the best regions
+        remaining_points = self.batch_size
+        for item in region_candidates:
+            if remaining_points <= 0:
+                break
+            for params in item["params_list"][:remaining_points]:
+                self.state.candidate_queue.append(
+                    {
+                        "params": params,
+                        "region_index": item["region_index"],
+                    }
+                )
+            remaining_points -= len(item["params_list"][:remaining_points])
 
     # logic similar to orignal turbo-m restart where restarted regions are replaced by fresh seeded regions from the global model.
     # exception is that with the Ax adapter, the restart trigger is only checked when the candidate queue is empty 
@@ -519,8 +560,9 @@ class REITuRBOGenerationNode(ExternalGenerationNode):
                 elif len(self._active_uninitialized_regions()) > 0: # if there is an actuve region that is partially seeded/not full initialized  
                     raise RuntimeError( # here is where the error is raised meaning there is at least one region that is has not a fully initialized state
                         # This error is needed as it prevents the generation from happening when there are still pending trials for initial seeding, making TR unusable 
+                        # Current solution implements a constraint in AxBoTorchOptimizer that region_init_points must be divisible by batch_size
                         "Waiting for REI-TuRBO seed trials to complete before proposing more points."
-                    ) # TODO: add a logic that would wait for it to complete, maybe the logic in AxBotorchOptimize could have a flag that makes it wait and call get_next_candidate after the seeding trials are done.
+                    ) # TODO: add a logic that would wait for it to complete
                 else:
                     # Local trust-region candidate generation follows the original
                     # TuRBO-m pattern: generate from each active region, then keep

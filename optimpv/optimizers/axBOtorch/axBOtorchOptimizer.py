@@ -293,6 +293,12 @@ class axBOtorchOptimizer(BaseAgent):
 
                 minimize = objective.startswith('-')
                 acq = self.model_kwargs_list[i].get('acq', 'ts')
+                
+                region_init_points = self.model_kwargs_list[i].get("region_init_points")
+                if region_init_points % self.batch_size[i] != 0:
+                    raise ValueError("region_init_points must be divisible by batch_size. "
+                                     "Otherwise, the initial seeding and restart logic of the TRs will not work properly.")
+                
                 tkwargs = {}
                 if self.model_kwargs_list[i].get("torch_device") is not None:
                     tkwargs["device"] = self.model_kwargs_list[i].get("torch_device")
@@ -578,15 +584,7 @@ class axBOtorchOptimizer(BaseAgent):
                 curr_batch_size = curr_batch_size - (num-total_trials)
 
             # parameters, trial_index = self.ax_client.get_next_trials(curr_batch_size)
-            try:
-                trials = self.ax_client.get_next_trials(curr_batch_size)
-            except Exception as e:
-                if verbose_logging:
-                    logging_level = 20
-                    logger.setLevel(logging_level)
-                    logger.info(f"Failed to get next trials. We are termintating the optimization process. Error: {e}.")
-                # exit the while loop if we cannot get the next trials
-                break
+            trials = self.ax_client.get_next_trials(curr_batch_size)
             if verbose_logging:
                 logging_level = 20
                 logger.setLevel(logging_level)
@@ -624,9 +622,7 @@ class axBOtorchOptimizer(BaseAgent):
             idx = 0
             for trial_index_, raw_data in zip(trials_index, main_results):
                 got_nan = False
-                # self.all_metrics
-                # for key in raw_data.keys():
-                for key in self.all_metrics:
+                for key in raw_data.keys():
                     if np.isnan(raw_data[key]):
                         got_nan = True
                         break
@@ -641,8 +637,7 @@ class axBOtorchOptimizer(BaseAgent):
                         logging_level = 20
                         logger.setLevel(logging_level)
                         logger.info(f"Trial {trial_index_} failed with results: {raw_data} and parameters: {parameters[idx]}")
-                    # self.ax_client.mark_trial_failed(trial_index_)
-                    self.ax_client.mark_trial_abandoned(trial_index_) # cannot be resuggested, but does not count as a failure for the generation strategy
+                    self.ax_client.mark_trial_failed(trial_index_)
                 idx += 1
 
             # check global stopping strategy
