@@ -62,4 +62,5 @@ temp/
 !/Data/pero_MOO_opti/*
 !/Data/FAPI_trPL/*
 !/Data/pero_JV_QFLS/*
+!/optimpv/tests/HPA/hpa/airfoil_info/*.xlsx
 
