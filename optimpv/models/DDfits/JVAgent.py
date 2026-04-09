@@ -704,7 +704,10 @@ class JVAgent(SIMsalabimAgent):
                     Vext = np.asarray(df_dum['Vext'].values)
                     Jext = np.asarray(df_dum['Jext'].values)
                     G = np.ones_like(Vext)*Gfrac
-                    Voc_dum = np.interp(0, Jext, Vext)
+                    if Vext[0] > Vext[-1]:
+                        Voc_dum = np.interp(0, Jext[::-1], Vext[::-1])
+                    else:
+                        Voc_dum = np.interp(0, Jext, Vext)
                     idx_Voc = (np.abs(df_dum['Vext']-Voc_dum)).idxmin()
                     JdirOC = df_dum['JdirL'+sign+str(value)].iloc[idx_Voc]
                     kb = constants.value(u'Boltzmann constant in eV/K')

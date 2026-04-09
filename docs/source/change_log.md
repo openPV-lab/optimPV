@@ -6,16 +6,17 @@ v1.05 - 2026-03-11 - VMLC-PV
 -----------------------------
 - axBOtorchOptimizer: skipping center and sobol as "models" when creating the ax client instance, this is to make sure that the client has a trainable model. Fixed small error in best Sobol value print. Also made sure that the SuggestOnly agent can work with SOBOL.
 - SIMsalabimAgent: Remove the check that enforces left-to-right or right-to-left arrangement of the energy level offsets (differences in designated energy levels). This is not necessary, as a later check ensures that each parameter is specified only once. Fix some small bugs.   
-- JVAgent: Added new exp_format ‘^QFLSL-?\d+$’ i.e. QFLSL plus an integer. This is to simulate QFLS vs Vext curves. Added a G_eff parameter that get multiplied to the G_frac this helps when using the transfer matrix model ('calc' option in SIMsalabim) and the n,k data are not perfect.
+- JVAgent: Added new exp_format ‘^QFLSL-?\d+$’ i.e. QFLSL plus an integer. This is to simulate QFLS vs Vext curves. Added a G_eff parameter that get multiplied to the G_frac this helps when using the transfer matrix model ('calc' option in SIMsalabim) and the n,k data are not perfect. Small fix for the Voc calculation in the Kirchartz QFLS version.
 - RateEqModel: Removed a factor 2 in the p1s expression. Added N0 as a potential fit parameter.  
 - scipyOptimizer: Added optimize_least_squares method to perform optimization using the least squares method from scipy. This is useful for fitting problems and can provide better results than the standard scipy.optimize.minimize method for certain problems.
 - posterior: Added new possibility to calculate the approximate posterior distributions with approx_posteriot.py and lazy_posterior.py. posterior.py will be retired soon. exploration_density.py was created to keep the density exploration plotting functions.
 - general.py: Changed the way to specify transformations for the data. We used to have compare_type in all the agents. Now we can specify transformations as a string or a list of strings in the transform_data function. The available transforms are: 'log', 'linear', 'abs', and 'normalize'. The default is 'linear' if nothing is specified. This change was made to make the code more consistent and easier to use across all agents.
 - New data and Notebooks for testing the JVAgent with QFLS vs Vext curves.
+- New JVSweepAgent to simulate JV sweeps with the SIMsalabimAgent. 
 - New and updated Notebooks for the new functionalities.
 - update requirements for ax-platform to 1.2.4
-- Rearranged the optimizers and models to have their own folders.
-- Added two External Generation Nodes for ax. The TuRBOGenerationNode and the MorboGenerationNode. This allows to use these optimizers with the ax-platform in a more seamless way and to take advantage of the features of the ax-platform.
+- Rearranged the optimizers,  models and Notebooks.
+- Added three External Generation Nodes for ax. The TuRBOGenerationNode, MorboGenerationNode and REITuRBOGenerationNode. This allows to use these optimizers with the ax-platform in a more seamless way and to take advantage of the features of the ax-platform.
 - Since step_size is implemented in the ax-platform I changed the way the stepsize argument was used. It is now possible to specify stepsize also for float parameters and not just for intergers. The stepsize argument is now passed to the ax client instance and is used by the ax-platform to determine the step size for the optimization process. This allows for more flexibility in the optimization process and can lead to better results.
 - Added 'update_version_param_files.py' script to update the version number in the parameter files used by SIMsalabim and stored in the Data folder.
 
