@@ -6,7 +6,7 @@
 
 ## Authors
 [Vincent M. Le Corre](https://github.com/VMLC-PV)  
-[Filip Fekete](https://github.com/FilipFekete)
+[Filip Fekete](https://github.com/FilipFekete)  
 [Larry Lüer](https://github.com/larryluer)
 
 ## Institution

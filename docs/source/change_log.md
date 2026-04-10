@@ -2,8 +2,8 @@ Change Log
 ==========
 All notable changes to this project will be documented in this file.
 
-v1.05 - 2026-03-11 - VMLC-PV
------------------------------
+v1.05 - 2026-03-11 - VMLC-PV, FFil 
+--------------------------------------
 - axBOtorchOptimizer: skipping center and sobol as "models" when creating the ax client instance, this is to make sure that the client has a trainable model. Fixed small error in best Sobol value print. Also made sure that the SuggestOnly agent can work with SOBOL.
 - SIMsalabimAgent: Remove the check that enforces left-to-right or right-to-left arrangement of the energy level offsets (differences in designated energy levels). This is not necessary, as a later check ensures that each parameter is specified only once. Fix some small bugs.   
 - JVAgent: Added new exp_format ‘^QFLSL-?\d+$’ i.e. QFLSL plus an integer. This is to simulate QFLS vs Vext curves. Added a G_eff parameter that get multiplied to the G_frac this helps when using the transfer matrix model ('calc' option in SIMsalabim) and the n,k data are not perfect. Small fix for the Voc calculation in the Kirchartz QFLS version.
@@ -19,6 +19,7 @@ v1.05 - 2026-03-11 - VMLC-PV
 - Added three External Generation Nodes for ax. The TuRBOGenerationNode, MorboGenerationNode and REITuRBOGenerationNode. This allows to use these optimizers with the ax-platform in a more seamless way and to take advantage of the features of the ax-platform.
 - Since step_size is implemented in the ax-platform I changed the way the stepsize argument was used. It is now possible to specify stepsize also for float parameters and not just for intergers. The stepsize argument is now passed to the ax client instance and is used by the ax-platform to determine the step size for the optimization process. This allows for more flexibility in the optimization process and can lead to better results.
 - Added 'update_version_param_files.py' script to update the version number in the parameter files used by SIMsalabim and stored in the Data folder.
+- FilipFekete is now shorten as FFil.
 
 v1.04 - 2025-09-25 - VMLC-PV
 -----------------------------
