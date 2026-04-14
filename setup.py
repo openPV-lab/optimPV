@@ -44,6 +44,7 @@ setuptools.setup(
         'pymoo>=0.6',
         'ax-platform>=1.2.4',
         'arviz>=0.15.1',
+        'pydantic'
     ],
     extras_require = {
         'dev': [

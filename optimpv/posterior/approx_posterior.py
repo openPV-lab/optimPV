@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from scipy.special import logsumexp
+from torch import logsumexp as torch_logsumexp
 from functools import partial
 from botorch.models import SingleTaskGP
 from gpytorch.kernels import MaternKernel, ScaleKernel
@@ -473,9 +474,11 @@ class ApproximatePosterior(BaseAgent):
                     y_eval = torch.logsumexp(mean.squeeze(), dim=0) - torch.log(torch.tensor(n_points, device=self.device)) + torch.log(torch.tensor(vol, device=self.device))
             
             mc_inte_rd[run] = y_eval.detach().item()
-
+        
         marg_LH = torch.mean(torch.exp(mc_inte_rd)).item()
-        self.marg_LH = marg_LH
+        
+        self.marg_LH_log = torch_logsumexp(mc_inte_rd, dim=0).item() - torch.log(torch.tensor(num_runs, device=self.device)).item() 
+        self.marg_LH = torch.exp(torch.tensor(self.marg_LH_log)).item()
         return marg_LH
         
     ##############################################################################################
@@ -555,7 +558,7 @@ class ApproximatePosterior(BaseAgent):
             mean = pred.mean
             logLH = mean.cpu().detach().numpy().flatten()
 
-        LHS = logLH - np.log(self.marg_LH)
+        LHS = logLH - self.marg_LH_log#- np.log(self.marg_LH)
         LHS[LHS < vmin] = vmin
         vmax =int(np.max(LHS) + 1)
 
@@ -653,7 +656,7 @@ class ApproximatePosterior(BaseAgent):
             pred = self.model.posterior(par_mat_tensor)
             mean = pred.mean
             logLH = mean.cpu().detach().numpy().flatten()
-        LHS = logLH - np.log(self.marg_LH)
+        LHS = logLH - self.marg_LH_log#- np.log(self.marg_LH)
         LHS[LHS < vmin] = vmin
         vmax =int(np.max(LHS) + 1)
 
@@ -975,7 +978,7 @@ class ApproximatePosterior(BaseAgent):
             mean = pred.mean
             logLH = mean.cpu().detach().numpy().flatten()
         
-        LHS = logLH - np.log(self.marg_LH)
+        LHS = logLH - self.marg_LH_log#- np.log(self.marg_LH)
         LHS[LHS < vmin] = vmin
         vmax =int(np.max(LHS) + 1)
 
@@ -1380,7 +1383,7 @@ class ApproximatePosterior(BaseAgent):
                 
 
                 initial_params[name] = best_params_init.squeeze()[:,idx]
-            print("Initializing MCMC chains with best parameters:", initial_params)
+            # print("Initializing MCMC chains with best parameters:", initial_params)
 
 
             
@@ -1418,6 +1421,10 @@ class ApproximatePosterior(BaseAgent):
             mcmc.run(torch.log(torch.tensor(self.marg_LH).to(self.device)))
             samples = mcmc.get_samples()
          #plot with arvi traceplot
+        
+        # try:
+        #     az_data = az.convert_to_inference_data(az_data)
+        # except Exception as e:
         az_data = az.from_pyro(mcmc)
         # az.plot_trace(az_data)
         # az.plot_autocorr(az_data)

@@ -50,7 +50,7 @@ class SIMsalabimAgent(BaseAgent):
         self.tracking_transforms = tracking_transforms
         self.name = name
         self.kwargs = kwargs
-        print(name, 'initialized with the following parameters:')
+        
         # Do some checks and set some default values
         if simulation_setup is None:
             self.simulation_setup = os.path.join(session_path,'simulation_setup.txt')

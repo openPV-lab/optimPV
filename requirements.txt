@@ -13,3 +13,4 @@ emcee
 corner
 pymoo
 jupyterlab
+pydantic
