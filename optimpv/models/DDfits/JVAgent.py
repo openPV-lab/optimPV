@@ -56,6 +56,8 @@ class JVAgent(SIMsalabimAgent):
         Weights for tracking metrics, by default None.
     transforms : str or list of str, optional
         Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default 'linear'.
+    tracking_transforms : str or list of str, optional
+        Type of transformation to apply to tracking metrics data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default 'linear'.
     name : str, optional
         Name of the agent, by default 'JV'.
     **kwargs : dict
@@ -64,215 +66,44 @@ class JVAgent(SIMsalabimAgent):
     def __init__(self, params, X, y, session_path, simulation_setup = None, exp_format = ['JV'], 
                  metric = ['mse'], loss = ['linear'], threshold = [100], minimize = [True], 
                  yerr = None, weight = None, tracking_metric = None, tracking_loss = None, 
-                 tracking_exp_format = None, tracking_X = None, tracking_y = None, tracking_weight = None, transforms = 'linear',
+                 tracking_exp_format = None, tracking_X = None, tracking_y = None, tracking_weight = None, transforms = 'linear', tracking_transforms = 'linear',
                  name = 'JV', **kwargs):       
 
-        self.params = params
-        self.session_path = session_path  
-        if simulation_setup is None:
-            self.simulation_setup = os.path.join(session_path,'simulation_setup.txt')
-        else:
-            self.simulation_setup = simulation_setup
+        super().__init__(params, X, y, session_path, simulation_setup, exp_format, metric, loss, threshold, minimize, yerr, weight, tracking_metric, tracking_loss, tracking_exp_format, tracking_X, tracking_y, tracking_weight, transforms, tracking_transforms, name, **kwargs)
 
-        if not isinstance(X, (list, tuple)):
-            X = [np.asarray(X)]
-        if not isinstance(y, (list, tuple)):
-            y = [np.asarray(y)]
-
-        self.X = X
-        self.y = y
-        self.yerr = yerr
-        self.metric = metric
-        self.loss = loss
-        self.threshold = threshold
-        self.minimize = minimize
-        self.tracking_metric = tracking_metric
-        self.tracking_loss = tracking_loss
-        self.tracking_exp_format = tracking_exp_format
-        self.tracking_X = tracking_X
-        self.tracking_y = tracking_y
-        self.tracking_weight = tracking_weight
-        self.transforms = transforms
-
-        if self.loss is None:
-            self.loss = 'linear'
-        if self.metric is None:
-            self.metric = 'mse'
-        if isinstance(metric, str):
-            self.metric = [metric]
-        if isinstance(loss, str):
-            self.loss = [loss]
-        if isinstance(threshold, (int,float)):
-            self.threshold = [threshold]
-        if isinstance(minimize, bool):
-            self.minimize = [minimize]
-
-        self.kwargs = kwargs
-        self.name = name
-        self.exp_format = exp_format
-        if isinstance(exp_format, str):
-            self.exp_format = [exp_format]
-
-        # check that all elements in exp_format are valid
-        for JV_form in self.exp_format:
-            is_valid = (JV_form == 'JV' or re.match(r'^QFLSL-?\d+$', JV_form) or re.match(r'^K_QFLSL-?\d+$', JV_form))
-    
-            if not is_valid:
-                raise ValueError(f'{JV_form} is an invalid JV format. Possible values are: JV or QFLSL followed by an integer (e.g., QFLSL1, QFLSL2, etc.)')
-            # if JV_form not in ['JV'] or 'QFLS' not in JV_form:
-            #     raise ValueError('{JV_form} is an invalid JV format. Possible values are: JV or QFLS')
-        if weight is not None:
-            # check that weight has the same length as y
-            if not len(weight) == len(y):
-                raise ValueError('weight must have the same length as y')
-            self.weight = []
-            for w in weight:
-                if isinstance(w, (list, tuple)):
-                    self.weight.append(np.asarray(w))
-                else:
-                    self.weight.append(w)
-        else:
-            if yerr is not None:
-                # check that yerr has the same length as y
-                if not len(yerr) == len(y):
-                    raise ValueError('yerr must have the same length as y')
-                self.weight = []
-                for yer in yerr:
-                    self.weight.append(1/np.asarray(yer)**2)
-            else:
-                self.weight = [None]*len(y)
-
-        # check that exp_format, metric, loss, threshold and minimize have the same length
-        if not len(self.exp_format) == len(self.metric) == len(self.loss) == len(self.threshold) == len(self.minimize) == len(self.X) == len(self.y) == len(self.weight):
-            raise ValueError('exp_format, metric, loss, threshold and minimize must have the same length')
-        self.all_agent_metrics = self.get_all_agent_metric_names()       
-
-        # Process tracking metrics and losses
-        if self.tracking_metric is not None:
-            if isinstance(self.tracking_metric, str):
-                self.tracking_metric = [self.tracking_metric]
-            
-            if self.tracking_loss is None:
-                self.tracking_loss = ['linear'] * len(self.tracking_metric)
-            elif isinstance(self.tracking_loss, str):
-                self.tracking_loss = [self.tracking_loss] * len(self.tracking_metric)
-                
-            # Ensure tracking_metric and tracking_loss have the same length
-            if len(self.tracking_metric) != len(self.tracking_loss):
-                raise ValueError('tracking_metric and tracking_loss must have the same length')
-
-            # Process tracking_exp_format
-            if self.tracking_exp_format is None:
-                # Default to the main experiment formats if not specified
-                self.tracking_exp_format = self.exp_format
-            elif isinstance(self.tracking_exp_format, str):
-                self.tracking_exp_format = [self.tracking_exp_format]
-                
-            # check that all elements in tracking_exp_format are valid
-            for form in self.tracking_exp_format:
-                is_valid = (form == 'JV' or re.match(r'^QFLSL-?\d+$', form))
-                if not is_valid:
-                    raise ValueError(f'{form} is an invalid tracking_exp_format, must be "JV" or "QFLSL" followed by an integer')
-
-            # Process tracking_X and tracking_y
-            # Check if all tracking formats are in main exp_format
-            all_formats_in_main = all(fmt in self.exp_format for fmt in self.tracking_exp_format)
-            if self.tracking_X is None or self.tracking_y is None:
-                
-                if not all_formats_in_main:
-                    raise ValueError('tracking_X and tracking_y must be provided when tracking_exp_format contains formats not in exp_format')
-                
-                # Construct tracking_X and tracking_y from main X and y based on matching formats
-                self.tracking_X = []
-                self.tracking_y = []
-                
-                for fmt in self.tracking_exp_format:
-                    fmt_indices = [i for i, main_fmt in enumerate(self.exp_format) if main_fmt == fmt]
-                    if fmt_indices:
-                        # Use the first matching format's data
-                        idx = fmt_indices[0]
-                        self.tracking_X.append(self.X[idx])
-                        self.tracking_y.append(self.y[idx])
-            
-            # Ensure tracking_X and tracking_y are lists
-            if not isinstance(self.tracking_X, list):
-                self.tracking_X = [self.tracking_X]
-            if not isinstance(self.tracking_y, list):
-                self.tracking_y = [self.tracking_y]
-                
-            # Check that tracking_X and tracking_y have the right lengths
-            if len(self.tracking_X) != len(self.tracking_exp_format) or len(self.tracking_y) != len(self.tracking_exp_format):
-                raise ValueError('tracking_X and tracking_y must have the same length as tracking_exp_format')
-            
-            # Process tracking_weight
-            if self.tracking_weight is None and all_formats_in_main:
-                # Use the main weights if available
-                self.tracking_weight = []
-                if all_formats_in_main:
-                    for fmt in self.tracking_exp_format:
-                        fmt_indices = [i for i, main_fmt in enumerate(self.exp_format) if main_fmt == fmt]
-                        if fmt_indices:
-                            idx = fmt_indices[0]
-                            self.tracking_weight.append(self.weight[idx])
-                        else:
-                            self.tracking_weight.append(None)
-                else:
-                    self.tracking_weight = [None] * len(self.tracking_exp_format)
-            elif not isinstance(self.tracking_weight, list):
-                self.tracking_weight = [self.tracking_weight]
-                
-            # Ensure tracking_weight has the right length
-            if len(self.tracking_weight) != len(self.tracking_exp_format):
-                raise ValueError('tracking_weight must have the same length as tracking_exp_format')
-
-        if tracking_exp_format is not None:
-            # check that tracking_exp_format, tracking_metric and tracking_loss have the same length
-            if not len(self.tracking_exp_format) == len(self.tracking_metric) == len(self.tracking_loss):
-                raise ValueError('tracking_exp_format, tracking_metric and tracking_loss must have the same length')
-        self.all_agent_tracking_metrics = self.get_all_agent_tracking_metric_names()
-        
         # Are we doing Gfrac transformations?
         self.do_G_frac_transform = self.kwargs.get('do_G_frac_transform', False)
-        if 'do_G_frac_transform' in self.kwargs.keys():
+        if 'do_G_frac_transform' in self.kwargs.keys(): # remove do_G_frac_transform from kwargs 
             self.kwargs.pop('do_G_frac_transform')
-   
-        # check if simulation_setup file exists
-        if not os.path.exists(os.path.join(self.session_path,self.simulation_setup)):
-            raise ValueError('simulation_setup file does not exist: {}'.format(os.path.join(self.session_path,self.simulation_setup)))
-        if os.name != 'nt':
-            try:
-                dev_par, layers = load_device_parameters(session_path, simulation_setup, run_mode = False)
-            except Exception as e:
-                raise ValueError('Error loading device parameters check that all the input files are in the right directory. \n Error: {}'.format(e))
+        if isinstance(self.do_G_frac_transform, bool):
+            self.do_G_frac_transform = [self.do_G_frac_transform] * len(self.exp_format)
         else:
-            warning_timeout = self.kwargs.get('warning_timeout', 10)
-            exit_timeout = self.kwargs.get('exit_timeout', 60)
-            t_wait = 0
-            while True: # need this to be thread safe
-                try:
-                    dev_par, layers = load_device_parameters(session_path, simulation_setup, run_mode = False)
-                    break
-                except Exception as e:
-                    time.sleep(0.002)
-                    t_wait = t_wait + 0.002
-                    if t_wait > warning_timeout:
-                        print('Warning: SIMsalabim is not responding, please check that all the input files are in the right directory')
-                    if t_wait > exit_timeout:
-                        raise ValueError('Error loading device parameters check that all the input files are in the right directory. \n Error: {}'.format(e))
-                    
-        self.dev_par = dev_par
-        self.layers = layers
-        SIMsalabim_params  = {}
+            if len(self.do_G_frac_transform) != len(self.exp_format):
+                raise ValueError('do_G_frac_transform must be a boolean or a list of booleans with the same length as exp_format')
+        if self.tracking_exp_format is not None:
+            self.tracking_do_G_frac_transform = self.kwargs.get('tracking_do_G_frac_transform', [False] * len(self.tracking_exp_format))
+            if 'tracking_do_G_frac_transform' in self.kwargs.keys(): # remove tracking_do_G_frac_transform from kwargs 
+                self.kwargs.pop('tracking_do_G_frac_transform')
 
-        for layer in layers:
-            SIMsalabim_params[layer[1]] = ReadParameterFile(os.path.join(session_path,layer[2]))
+    def validate_exp_format(self, exp_format):
+        """Validate the exp_format parameter to ensure it is in the correct format for JVAgent
 
-        self.SIMsalabim_params = SIMsalabim_params
-        pnames = list(SIMsalabim_params[list(SIMsalabim_params.keys())[0]].keys())
-        pnames = pnames + list(SIMsalabim_params[list(SIMsalabim_params.keys())[1]].keys())
-        self.pnames = pnames    
+        Parameters
+        ----------
+        exp_format : str
+            Format of the experimental data, must be one of allowed formats for JV data, which are: 'JV' or 'QFLSL' followed by an integer (e.g., QFLSL1, QFLSL2, etc.) or 'K_QFLSL' followed by an integer (e.g., K_QFLSL1, K_QFLSL2, etc.)
 
+        Raises
+        ------
+        ValueError
+            If the exp_format is not valid or not found in self.exp_format.
+        """            
+        
+        is_valid = (exp_format == 'JV' or re.match(r'^QFLSL-?\d+$', exp_format) or re.match(r'^K_QFLSL-?\d+$', exp_format))
 
+        if not is_valid:
+            raise ValueError(f'{exp_format} is an invalid JV format. Possible values are: JV or QFLSL followed by an integer (e.g., QFLSL1, QFLSL2, etc.) or K_QFLSL followed by an integer (e.g., K_QFLSL1, K_QFLSL2, etc.)')
+        
     def target_metric(self,y,yfit,metric_name, X=None, Xfit=None,weight=None):
         """Calculate the target metric depending on self.metric
 
@@ -331,95 +162,9 @@ class JVAgent(SIMsalabimAgent):
         """  
 
         df = self.run_JV(parameters)
-        if df is np.nan or len(df) == 0:
-            dum_dict = {}
-            for i in range(len(self.all_agent_metrics)):
-                dum_dict[self.all_agent_metrics[i]] = np.nan
 
-                # Add NaN values for tracking metrics
-                if self.tracking_metric is not None:
-                    for j in range(len(self.all_agent_tracking_metrics)):
-                        dum_dict[self.all_agent_tracking_metrics[j]] = np.nan
+        return self._run_Ax(df,self.reformat_JV_data)
 
-            return dum_dict
-        
-        dum_dict = {}
-        
-        # First loop: calculate main metrics for each exp_format
-        for i in range(len(self.exp_format)):
-            Xfit, yfit = self.reformat_JV_data(df, self.X[i], self.exp_format[i])
-            
-            # Apply data transformation based on transforms
-            if self.transforms == 'linear':
-                metric_value = self.target_metric(
-                    self.y[i],
-                    yfit,
-                    self.metric[i],
-                    self.X[i],
-                    Xfit,
-                    weight=self.weight[i]
-                )
-            else:
-                y_true_transformed, y_pred_transformed = transform_data(
-                    self.y[i], 
-                    yfit, 
-                    X=self.X[i],
-                    X_pred=Xfit,
-                    transforms=self.transforms,
-                    do_G_frac_transform=self.do_G_frac_transform
-                )
-                
-                # Calculate metric with transformed data
-                metric_value = calc_metric(
-                    y_true_transformed, 
-                    y_pred_transformed, 
-                    sample_weight=self.weight[i], 
-                    metric_name=self.metric[i]
-                )
-            
-            dum_dict[self.all_agent_metrics[i]] = loss_function(metric_value, loss=self.loss[i])
-        
-        # Second loop: calculate all tracking metrics
-        if self.tracking_metric is not None:
-            for j in range(len(self.all_agent_tracking_metrics)):
-                exp_fmt = self.tracking_exp_format[j]
-                metric_name = self.tracking_metric[j]
-                loss_type = self.tracking_loss[j]
-                
-                Xfit, yfit = self.reformat_JV_data(df, self.tracking_X[j], exp_fmt)
-                
-                # Apply data transformation based on transforms
-                if self.transforms == 'linear':
-                    metric_value = self.target_metric(
-                        self.tracking_y[j],
-                        yfit,
-                        metric_name,
-                        self.tracking_X[j],
-                        Xfit,
-                        weight=self.tracking_weight[j]
-                    )
-                else:
-                    # Transform data for each format
-                    y_true_transformed, y_pred_transformed = transform_data(
-                        self.tracking_y[j], 
-                        yfit, 
-                        X=self.tracking_X[j],
-                        X_pred=Xfit,
-                        transforms=self.transforms,
-                        do_G_frac_transform=self.do_G_frac_transform
-                    )
-                    
-                    # Calculate metric with transformed data
-                    metric_value = calc_metric(
-                        y_true_transformed, 
-                        y_pred_transformed, 
-                        sample_weight=self.tracking_weight[j], 
-                        metric_name=metric_name
-                    )
-
-                dum_dict[self.all_agent_tracking_metrics[j]] = loss_function(metric_value, loss=loss_type)
-
-        return dum_dict
     
     def run_JV(self, parameters):
         """Run the simulation with the parameters and return the simulated values

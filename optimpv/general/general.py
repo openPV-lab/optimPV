@@ -394,7 +394,7 @@ def transform_data_old(y, y_pred, X=None, X_pred=None, transform_type='linear', 
         else:
             raise ValueError(f'The transformation type {transform_type} is not implemented.')
         
-def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=None, do_G_frac_transform=False):
+def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=None, do_G_frac_transform=None):
     """Transform data according to specified transformation type
     
     Parameters
@@ -430,6 +430,8 @@ def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=
     ValueError
         If the transformation type is not implemented
     """
+    if do_G_frac_transform is None:
+        do_G_frac_transform = False 
     # Make deep copies
     y_t = np.copy(y)
     ypred_t = np.copy(y_pred)

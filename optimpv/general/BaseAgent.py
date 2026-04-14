@@ -304,8 +304,13 @@ class BaseAgent():
 
         return all_agent_metrics
     
-    def get_all_agent_tracking_metric_names(self):
+    def get_all_agent_tracking_metric_names(self,add_tracking_suffix=True):
         """Get all tracking metric names from the agent
+
+        Parameters
+        ----------
+        add_tracking_suffix : bool, optional
+            Whether to add a '_tracking' suffix to the metric names, by default True
 
         Returns
         -------
@@ -353,7 +358,10 @@ class BaseAgent():
             else:
                 #remove the first underscore if no name is provided
                 name = name.lstrip('_')
-            all_agent_tracking_metrics.append(name)
+            if add_tracking_suffix:
+                all_agent_tracking_metrics.append(name+'_tracking')
+            else:
+                all_agent_tracking_metrics.append(name)
 
         return all_agent_tracking_metrics
     

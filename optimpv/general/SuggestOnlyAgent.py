@@ -116,7 +116,7 @@ class SuggestOnlyAgent(BaseAgent):
             elif isinstance(self.tracking_exp_format, str):
                 self.tracking_exp_format = [self.tracking_exp_format]
 
-        self.all_agent_tracking_metrics = self.get_all_agent_tracking_metric_names()
+        self.all_agent_tracking_metrics = self.get_all_agent_tracking_metric_names(add_tracking_suffix=False)
 
 
 

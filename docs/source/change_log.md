@@ -16,6 +16,7 @@ v1.05 - 2026-03-11 - VMLC-PV, FFil
 - New and updated Notebooks for the new functionalities.
 - update requirements for ax-platform to 1.2.4
 - Rearranged the optimizers,  models and Notebooks.
+- Drift-diffusion agents: refactoring of the code to put more common code in the SIMsalabimAgent class and to make the code more modular and easier to maintain.
 - Added three External Generation Nodes for ax. The TuRBOGenerationNode, MorboGenerationNode and REITuRBOGenerationNode. This allows to use these optimizers with the ax-platform in a more seamless way and to take advantage of the features of the ax-platform.
 - Since step_size is implemented in the ax-platform I changed the way the stepsize argument was used. It is now possible to specify stepsize also for float parameters and not just for intergers. The stepsize argument is now passed to the ax client instance and is used by the ax-platform to determine the step size for the optimization process. This allows for more flexibility in the optimization process and can lead to better results.
 - Added 'update_version_param_files.py' script to update the version number in the parameter files used by SIMsalabim and stored in the Data folder.

@@ -5,9 +5,10 @@ import numpy as np
 import pandas as pd
 import os, uuid, sys, copy, shutil
 from scipy import interpolate
+from abc import abstractmethod
 
 from optimpv import *
-from optimpv.general.general import calc_metric, loss_function
+from optimpv.general.general import calc_metric, loss_function, transform_data
 from optimpv.general.BaseAgent import BaseAgent
 from pySIMsalabim import *
 
@@ -17,8 +18,371 @@ class SIMsalabimAgent(BaseAgent):
     
     """
     
-    def __init__(self) -> None:
+    def __init__(self, params, X, y, session_path, simulation_setup=None, exp_format=None, 
+                 metric='mse', loss='linear', threshold=100, minimize=True, yerr=None, weight=None, 
+                 tracking_metric=None, tracking_loss=None, tracking_exp_format=None, 
+                 tracking_X=None, tracking_y=None, tracking_weight=None, transforms='linear', tracking_transforms='linear',
+                 name='SIMsalabim', **kwargs) -> None:
+        
+        self.params = params
+        if not isinstance(X, (list, tuple)):
+            X = [np.asarray(X)]
+        if not isinstance(y, (list, tuple)):
+            y = [np.asarray(y)]
+        self.X = X
+        self.y = y
+        self.session_path = session_path
+        self.simulation_setup = simulation_setup
+        self.exp_format = exp_format
+        self.metric = metric
+        self.loss = loss
+        self.threshold = threshold
+        self.minimize = minimize
+        self.yerr = yerr
+        self.weight = weight
+        self.tracking_metric = tracking_metric
+        self.tracking_loss = tracking_loss
+        self.tracking_exp_format = tracking_exp_format
+        self.tracking_X = tracking_X
+        self.tracking_y = tracking_y
+        self.tracking_weight = tracking_weight
+        self.transforms = transforms
+        self.tracking_transforms = tracking_transforms
+        self.name = name
+        self.kwargs = kwargs
+        print(name, 'initialized with the following parameters:')
+        # Do some checks and set some default values
+        if simulation_setup is None:
+            self.simulation_setup = os.path.join(session_path,'simulation_setup.txt')
+        else:
+            self.simulation_setup = simulation_setup
+
+        if self.loss is None:
+            self.loss = 'linear'
+        if self.metric is None:
+            self.metric = 'mse'
+        if self.transforms is None:
+            self.transforms = 'linear'
+
+        if isinstance(metric, str):
+            self.metric = [metric]
+        if isinstance(loss, str):
+            self.loss = [loss]
+        if isinstance(self.transforms, str):
+            self.transforms = [self.transforms]
+        if isinstance(threshold, (int,float)):
+            self.threshold = [threshold]
+        if isinstance(minimize, bool):
+            self.minimize = [minimize]
+        if isinstance(exp_format, str):
+            self.exp_format = [exp_format]
+
+        if weight is not None:
+            # check that weight has the same length as y
+            if not len(weight) == len(self.y):
+                raise ValueError('weight must have the same length as y')
+            self.weight = []
+            for w in weight:
+                if isinstance(w, (list, tuple)):
+                    self.weight.append(np.asarray(w))
+                else:
+                    self.weight.append(w)
+        else:
+            if yerr is not None:
+                # check that yerr has the same length as y
+                if not len(yerr) == len(self.y):
+                    raise ValueError('yerr must have the same length as y')
+                self.weight = []
+                for yer in yerr:
+                    self.weight.append(1/np.asarray(yer)**2)
+            else:
+                self.weight = [None]*len(y)
+
+        for exp_format in self.exp_format:
+            self.validate_exp_format(exp_format)
+
+        # check that exp_format, metric, loss, threshold and minimize have the same length
+        if not len(self.exp_format) == len(self.metric) == len(self.loss) == len(self.threshold) == len(self.minimize) == len(self.X) == len(self.y) == len(self.weight) == len(self.transforms):
+            print('Length of exp_format: {}, metric: {}, loss: {}, threshold: {}, minimize: {}, X: {}, y: {}, weight: {}, transforms: {}'.format(len(self.exp_format), len(self.metric), len(self.loss), len(self.threshold), len(self.minimize), len(self.X), len(self.y), len(self.weight), len(self.transforms)))
+            raise ValueError('exp_format, metric, loss, threshold, minimize, and transforms must have the same length')
+        self.all_agent_metrics = self.get_all_agent_metric_names()    
+
+        # check if simulation_setup file exists
+        if not os.path.exists(os.path.join(self.session_path,self.simulation_setup)):
+            raise ValueError('simulation_setup file does not exist: {}'.format(os.path.join(self.session_path,self.simulation_setup)))
+        if os.name != 'nt':
+            try:
+                dev_par, layers = load_device_parameters(session_path, simulation_setup, run_mode = False)
+            except Exception as e:
+                raise ValueError('Error loading device parameters check that all the input files are in the right directory. \n Error: {}'.format(e))
+        else:
+            warning_timeout = self.kwargs.get('warning_timeout', 10)
+            exit_timeout = self.kwargs.get('exit_timeout', 60)
+            t_wait = 0
+            while True: # need this to be thread safe
+                try:
+                    dev_par, layers = load_device_parameters(session_path, simulation_setup, run_mode = False)
+                    break
+                except Exception as e:
+                    time.sleep(0.002)
+                    t_wait = t_wait + 0.002
+                    if t_wait > warning_timeout:
+                        print('Warning: SIMsalabim is not responding, please check that all the input files are in the right directory')
+                    if t_wait > exit_timeout:
+                        raise ValueError('Error loading device parameters check that all the input files are in the right directory. \n Error: {}'.format(e))
+                    
+        self.dev_par = dev_par
+        self.layers = layers
+        SIMsalabim_params  = {}
+
+        for layer in layers:
+            SIMsalabim_params[layer[1]] = ReadParameterFile(os.path.join(session_path,layer[2]))
+
+        self.SIMsalabim_params = SIMsalabim_params
+        pnames = list(SIMsalabim_params[list(SIMsalabim_params.keys())[0]].keys())
+        pnames = pnames + list(SIMsalabim_params[list(SIMsalabim_params.keys())[1]].keys())
+        self.pnames = pnames   
+
+        # Process tracking metrics and losses
+        if self.tracking_metric is not None:
+            if isinstance(self.tracking_metric, str):
+                self.tracking_metric = [self.tracking_metric]
+            
+            if self.tracking_loss is None:
+                self.tracking_loss = ['linear'] * len(self.tracking_metric)
+            elif isinstance(self.tracking_loss, str):
+                self.tracking_loss = [self.tracking_loss] * len(self.tracking_metric)
+                
+            # Ensure tracking_metric and tracking_loss have the same length
+            if len(self.tracking_metric) != len(self.tracking_loss):
+                raise ValueError('tracking_metric and tracking_loss must have the same length')
+
+            # Process tracking_exp_format
+            if self.tracking_exp_format is None:
+                # Default to the main experiment formats if not specified
+                self.tracking_exp_format = self.exp_format
+            elif isinstance(self.tracking_exp_format, str):
+                self.tracking_exp_format = [self.tracking_exp_format]
+                
+            # check that all elements in tracking_exp_format are valid
+            for form in self.tracking_exp_format:
+                self.validate_exp_format(form)
+
+            if isinstance(self.tracking_transforms, str):
+                self.tracking_transforms = [self.tracking_transforms] * len(self.tracking_metric)
+                
+
+            # Process tracking_X and tracking_y
+            # Check if all tracking formats are in main exp_format
+            all_formats_in_main = all(fmt in self.exp_format for fmt in self.tracking_exp_format)
+            if self.tracking_X is None or self.tracking_y is None:
+                
+                if not all_formats_in_main:
+                    raise ValueError('tracking_X and tracking_y must be provided when tracking_exp_format contains formats not in exp_format')
+                
+                # Construct tracking_X and tracking_y from main X and y based on matching formats
+                self.tracking_X = []
+                self.tracking_y = []
+                
+                for fmt in self.tracking_exp_format:
+                    fmt_indices = [i for i, main_fmt in enumerate(self.exp_format) if main_fmt == fmt]
+                    if fmt_indices:
+                        # Use the first matching format's data
+                        idx = fmt_indices[0]
+                        self.tracking_X.append(self.X[idx])
+                        self.tracking_y.append(self.y[idx])
+            
+            # Ensure tracking_X and tracking_y are lists
+            if not isinstance(self.tracking_X, list):
+                self.tracking_X = [self.tracking_X]
+            if not isinstance(self.tracking_y, list):
+                self.tracking_y = [self.tracking_y]
+                
+            # Check that tracking_X and tracking_y have the right lengths
+            if len(self.tracking_X) != len(self.tracking_exp_format) or len(self.tracking_y) != len(self.tracking_exp_format):
+                raise ValueError('tracking_X and tracking_y must have the same length as tracking_exp_format')
+            
+            # Process tracking_weight
+            if self.tracking_weight is None and all_formats_in_main:
+                # Use the main weights if available
+                self.tracking_weight = []
+                if all_formats_in_main:
+                    for fmt in self.tracking_exp_format:
+                        fmt_indices = [i for i, main_fmt in enumerate(self.exp_format) if main_fmt == fmt]
+                        if fmt_indices:
+                            idx = fmt_indices[0]
+                            self.tracking_weight.append(self.weight[idx])
+                        else:
+                            self.tracking_weight.append(None)
+                else:
+                    self.tracking_weight = [None] * len(self.tracking_exp_format)
+            elif not isinstance(self.tracking_weight, list):
+                self.tracking_weight = [self.tracking_weight]
+                
+            # Ensure tracking_weight has the right length
+            if len(self.tracking_weight) != len(self.tracking_exp_format):
+                raise ValueError('tracking_weight must have the same length as tracking_exp_format')
+
+        if tracking_exp_format is not None:
+            # check that tracking_exp_format, tracking_metric and tracking_loss have the same length
+            if not len(self.tracking_exp_format) == len(self.tracking_metric) == len(self.tracking_loss) == len(self.tracking_transforms):
+                raise ValueError('tracking_exp_format, tracking_metric, tracking_loss and tracking_transforms must have the same length')
+        self.all_agent_tracking_metrics = self.get_all_agent_tracking_metric_names()
+                   
+        
+    @abstractmethod
+    def validate_exp_format(self, exp_format):
+        """
+        Validate the exp_format. Must be overridden by child classes.
+        """
         pass
+
+    @abstractmethod
+    def target_metric(self,y,yfit,metric_name, X=None, Xfit=None,weight=None):
+        """
+        Calculate the target metric. Must be overridden by child classes.
+        """
+        pass
+    
+    def transform_metrics(self, y_true, y_fit, metric, X=None, X_fit=None, weight=None, transforms='linear', do_G_frac_transform=False):
+        """Calculate the transformed metrics.
+        Transformations can be specified as strings such as 'linear', 'normalize' and more or by a list, see transform_data() function for more details. 
+
+        Parameters
+        ----------
+        y_true : array-like
+            True values.
+        y_fit : array-like
+            Predicted values.
+        metric : str
+            Name of the metric to calculate.
+        X : array-like, optional
+            array, by default None
+        X_fit : array-like, optional
+            array, by default None
+        weight : array-like, optional
+            Sample weights, by default None
+        transforms : str or list, optional
+            Transformation(s) to apply, by default 'linear'
+        do_G_frac_transform : bool, optional
+            Whether to apply G fraction transformation, by default False
+
+        Returns
+        -------
+        float
+            Calculated metric value.
+        """        
+        # Apply data transformation based on transforms
+        if transforms == 'linear' and not do_G_frac_transform:
+            metric_value = self.target_metric(
+                y_true,
+                y_fit,
+                metric,
+                X,
+                X_fit,
+                weight=weight
+            )
+        else:
+            # Transform data for each format
+            y_true_transformed, y_pred_transformed = transform_data(
+                y_true, 
+                y_fit, 
+                X=X,
+                X_pred=X_fit,
+                transforms=transforms,
+                do_G_frac_transform=do_G_frac_transform
+            )
+            
+            # Calculate metric with transformed data
+            metric_value = calc_metric(
+                y_true_transformed, 
+                y_pred_transformed, 
+                sample_weight=weight, 
+                metric_name=metric
+            )
+        return metric_value
+    
+    def _run_Ax(self, df, reformat_function):
+        """Format the simulation results and calculate the metrics for the Ax optimization loop. 
+        It will be used by the run_Ax function defined in each agent class and it will return a dictionary with the metric names and values to be used by Ax.
+
+        Parameters
+        ----------
+        df : dataframe
+            Dataframe containing the simulation results.
+        reformat_function : function
+            Function to reformat the simulation results into the format required for metric calculation, it takes as input the dataframe, the X values and the exp_format and returns Xfit and yfit.
+
+        Returns
+        -------
+        dict
+            Dictionary containing the calculated metrics.
+        """        
+
+        if df is np.nan or len(df) == 0:
+            dum_dict = {}
+            for i in range(len(self.all_agent_metrics)):
+                dum_dict[self.all_agent_metrics[i]] = np.nan
+
+                # Add NaN values for tracking metrics
+                if self.tracking_metric is not None:
+                    for j in range(len(self.all_agent_tracking_metrics)):
+                        dum_dict[self.all_agent_tracking_metrics[j]] = np.nan
+
+            return dum_dict
+        
+        dum_dict = {}
+        #check if Agent has do_Gfrac_transform attribute and set it to False if not
+        if not hasattr(self, 'do_G_frac_transform'):
+            self.do_G_frac_transform = [False]*len(self.exp_format)
+        if not hasattr(self, 'tracking_do_G_frac_transform'):
+            if self.tracking_metric is not None:
+                self.tracking_do_G_frac_transform = [False]*len(self.tracking_exp_format)
+            else:
+                self.tracking_do_G_frac_transform = None
+
+        # First loop: calculate main metrics for each exp_format
+        for i in range(len(self.exp_format)):
+            Xfit, yfit = reformat_function(df, self.X[i], self.exp_format[i])
+            
+            # Apply data transformation based on transforms
+            metric_value = self.transform_metrics(
+                self.y[i],
+                yfit,
+                self.metric[i],
+                X=self.X[i],
+                X_fit=Xfit,
+                weight=self.weight[i],
+                transforms=self.transforms[i],
+                do_G_frac_transform=self.do_G_frac_transform[i]
+            )
+
+            dum_dict[self.all_agent_metrics[i]] = loss_function(metric_value, loss=self.loss[i])
+        
+        # Second loop: calculate all tracking metrics
+        if self.tracking_metric is not None:
+            for j in range(len(self.all_agent_tracking_metrics)):
+                exp_fmt = self.tracking_exp_format[j]
+                metric_name = self.tracking_metric[j]
+                loss_type = self.tracking_loss[j]
+                
+                Xfit, yfit = reformat_function(df, self.tracking_X[j], exp_fmt)
+                
+                # Apply data transformation based on transforms
+                metric_value = self.transform_metrics(
+                self.tracking_y[j],
+                yfit,
+                metric_name,
+                X=self.tracking_X[j],
+                X_fit=Xfit,
+                weight=self.tracking_weight[j],
+                transforms=self.tracking_transforms[j],
+                do_G_frac_transform=self.tracking_do_G_frac_transform[j]
+                )
+
+                dum_dict[self.all_agent_tracking_metrics[j]] = loss_function(metric_value, loss=loss_type)
+
+        return dum_dict
 
     def get_SIMsalabim_clean_cmd_pars(self, parameters):
         """Get the clean cmd_pars list for the SIMsalabim simulation with properly formatted parameters
