@@ -943,8 +943,8 @@ def DBTD_multi_trap(parameters, t, Gpulse, t_span, N0=0, G_frac = 1, equilibrate
 
         for j in range(number_of_traps):
             idx_trap = idx_traps[j]
-            # Assign trap diagonal block (important!)
-            J[idx_trap, idx_trap] = -Bn[j] * n - Bn[j] * exp_e[j] - Bp[j] * p + Bp[j] * exp_h[j]
+            # Assign trap diagonal block (important!), sign change for the hole emission to (-) and not (+). Does not affect the final decays, just makes the solver struggle in the regions where this term is important.
+            J[idx_trap, idx_trap] = -Bn[j] * n - Bn[j] * exp_e[j] - Bp[j] * p - Bp[j] * exp_h[j]
 
             # Trap eqns derivatives w.r.t n and p (diagonal only)
             J[idx_trap, idx_n] = Bn[j] * (Bulk_tr[j] - ntr[j])
