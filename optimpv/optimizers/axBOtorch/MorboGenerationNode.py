@@ -16,7 +16,6 @@
 # Please consider citing the original paper if you use this code in your research. 
 
 import copy
-# dataclasses might not be strictly necessary here, and can be removed, used mostly for reruning cells without restarting kernel, makes the code little more safe
 from dataclasses import dataclass, field # field for mutable default across instances, gives each instance its own default value
 from typing import Any, Optional, override
 
@@ -26,7 +25,7 @@ from ax.core.experiment import Experiment
 from ax.core.parameter import RangeParameter
 from ax.core.trial_status import TrialStatus
 from ax.core.types import TParameterization
-from ax.exceptions.core import DataRequiredError, OptimizationShouldStop
+from ax.exceptions.core import DataRequiredError
 from ax.generation_strategy.external_generation_node import ExternalGenerationNode
 
 # MORBO internals
@@ -34,15 +33,22 @@ from optimpv.optimizers.axBOtorch.morbo.gen import TS_select_batch_MORBO
 from optimpv.optimizers.axBOtorch.morbo.state import TRBOState
 from optimpv.optimizers.axBOtorch.morbo.trust_region import TurboHParams
 
-class MorboConvergedError(OptimizationShouldStop):
-    """Raised when MORBO reaches the configured evaluation budget."""
-
-    pass
-
 # MORBO state wraps a delegated engine object
 @dataclass
 class MorboNodeState:
-    """Mutable runtime state owned by the generation node."""
+    """Runtime state owned by the generation node.
+
+    Attributes
+    ----------
+    trbo_state : TRBOState | None
+        Current TRBO engine state.
+    seen_trial_indices : set[int]
+        Completed Ax trial indices already processed by the node.
+    pending_tr_index_by_key : dict[tuple[Any, ...], int]
+        Mapping from candidate keys to proposing trust-region indices for pending Ax trials.
+    candidate_queue : list[dict[str, Any]]
+        Queue of generated candidates waiting to be returned to Ax.
+    """
 
     trbo_state: Optional[TRBOState] = None # current MORBO/TRBO engine state
     seen_trial_indices: set[int] = field(default_factory=set) # completed trials
@@ -57,10 +63,19 @@ class MorboGenerationNode(ExternalGenerationNode):
     - MORBO internally normalizes using the bounds we pass to TRBOState.
     Parameters
     ----------
-    ExternalGenerationNode : _type_
-        _description_
+    model_options : dict[str, Any] | None, optional
+        Options controlling MORBO state construction, objective handling, and
+        trust-region hyperparameters, by default None.
+    batch_size : int, optional
+        Number of candidates proposed per generation step, by default 1.
+    device : torch.device | None, optional
+        Torch device used for tensors and MORBO internals, by default None.
+    dtype : torch.dtype | None, optional
+        Torch dtype used for tensors and MORBO internals, by default None.
+    name : str, optional
+        Node name used in the Ax generation strategy, by default ``"MorboGenerationNode"``.
     """
-    def __init__(
+    def __init__( 
         self,
         model_options: Optional[dict[str, Any]] = None,
         batch_size: int = 1,
@@ -69,17 +84,14 @@ class MorboGenerationNode(ExternalGenerationNode):
         dtype: Optional[torch.dtype] = None,
         name: str = "MorboGenerationNode",
     ) -> None:
+        
         super().__init__(name=name) # call parent class contructor to run base-class setup and register the node name
 
         self.model_options = dict(model_options or {})
 
-        # Objective metadata is inferred from Ax experiment by default.
-        # Optional override for advanced cases:
-        # model_options["metric_names"], model_options["minimize_flags"], however these are passed in from optimizer in notebook setups
-        self.metric_names = self.model_options.get("metric_names")
-        self.minimize_flags = self.model_options.get("minimize_flags")
+        self.metric_names = None
+        self.minimize_flags = None
         self.batch_size = int(batch_size)
-
         self.reference_point = self.model_options.get("reference_point")
         self.max_evals = int(self.model_options.get("max_evals", 200))
         self.n_initial_points = int(self.model_options.get("n_initial_points", 20))
@@ -105,7 +117,23 @@ class MorboGenerationNode(ExternalGenerationNode):
 
     # safer method to pull objective metadata from Ax experiment, with fallback logic and warnings
     def _get_objectives_from_experiment(self, experiment: Experiment) -> tuple[list[str], list[bool]]:
-        """Get objective metric names + directions from Ax optimization config."""
+        """Get objective metric names + directions from Ax optimization config.
+
+        Parameters
+        ----------
+        experiment : Experiment
+            Ax experiment object containing the optimization configuration.
+
+        Returns
+        -------
+        tuple[list[str], list[bool]]
+            Objective metric names and metric minimization flags.
+
+        Raises
+        ------
+        ValueError
+            If the experiment has no optimization config or no optimization metrics.
+        """
         # Pulls per-metric direction from Ax
         if experiment.optimization_config is None:
             raise ValueError("Experiment has no optimization_config configured.")
@@ -147,7 +175,18 @@ class MorboGenerationNode(ExternalGenerationNode):
         return metric_names, minimize_flags
 
     def _ensure_objectives(self, experiment: Experiment) -> None:
-        """Resolve objective metadata from model_options or Ax config."""
+        """Resolve objective metadata from model_options or Ax config.
+
+        Parameters
+        ----------
+        experiment : Experiment
+            Ax experiment object containing the optimization configuration.
+
+        Raises
+        ------
+        ValueError
+            If objective metadata is empty or inconsistent.
+        """
         if self.metric_names is None or self.minimize_flags is None:
             self.metric_names, self.minimize_flags = self._get_objectives_from_experiment(experiment)
 
@@ -165,45 +204,21 @@ class MorboGenerationNode(ExternalGenerationNode):
                 "single-objective runs may be better served by TuRBO."
             )
 
-    # @classmethod # alternative constructor for optimizer focused notebook setups
-    # def from_optimizer(
-    #     cls,
-    #     optimizer,
-    #     *,
-    #     batch_size: int = 1,
-    #     reference_point: Optional[list[float]] = None,
-    #     tr_hparam_overrides: Optional[dict[str, Any]] = None,
-    #     device: Optional[torch.device] = None,
-    #     dtype: Optional[torch.dtype] = None,
-    #     param_key_precision: int = 12,
-    #     name: str = "MorboGenerationNodeScratch",
-    # ) -> "MorboGenerationNodeScratch":
-    #     """Convenience constructor for optimizer-centric notebook setups."""
-    #     n_initial_points = int(optimizer.n_batches[0] * optimizer.batch_size[0])
-    #     max_evals = int(sum(b * s for b, s in zip(optimizer.n_batches, optimizer.batch_size)))
-    #     metric_names = list(getattr(optimizer, "all_metrics", []) or []) or None
-    #     minimize_flags = list(getattr(optimizer, "all_minimize", []) or []) or None
-    #     model_options = {
-    #         "reference_point": reference_point,
-    #         "max_evals": max_evals,
-    #         "n_initial_points": n_initial_points,
-    #         "tr_hparam_overrides": tr_hparam_overrides,
-    #         "param_key_precision": param_key_precision,
-    #         "metric_names": metric_names,
-    #         "minimize_flags": minimize_flags,
-    #     }
-    #     return cls(
-    #         model_options=model_options,
-    #         batch_size=batch_size,
-    #         device=device,
-    #         dtype=dtype,
-    #         name=name,
-    #     )
-
     def _initialize_ax_parameter_cache(self, experiment: Experiment) -> None:
         """Cache parameter metadata from Ax experiment creating optimizer space.
            Reads the created Ax search space and stores what MORBO needs (parameter names, bounds)
            in a form of tensor for later use in TRBOState.
+
+        Parameters
+        ----------
+        experiment : Experiment
+            Ax experiment object its search space defines the parameter metadata.
+
+        Raises
+        ------
+        NotImplementedError
+            If the search space contains parameters other than
+            ``RangeParameter`` instances.
         """
         search_space = experiment.search_space
         if any(not isinstance(p, RangeParameter) for p in search_space.parameters.values()):
@@ -232,7 +247,20 @@ class MorboGenerationNode(ExternalGenerationNode):
         return tuple(key_vals)
     
     def _build_tr_hparams(self) -> TurboHParams:
-        """Build MORBO trust-region hyperparameters for TRBOState."""
+        """Build MORBO trust-region hyperparameters for TRBOState.
+
+        Returns
+        -------
+        TurboHParams
+            MORBO trust region hyperparameters passed to ``TRBOState``.
+
+        Raises
+        ------
+        RuntimeError
+            If objective directions are not initialized.
+        ValueError
+            If the configured reference point has the wrong dimension.
+        """
         if self.minimize_flags is None:
             raise RuntimeError("Objective directions are not initialized.")
         tr_kwargs = copy.deepcopy(self.tr_hparam_overrides)
@@ -263,7 +291,24 @@ class MorboGenerationNode(ExternalGenerationNode):
     def _initialize_trbo(
         self, X_init: torch.Tensor, Y_init: torch.Tensor, tr_indices: torch.Tensor
     ) -> None:
-        """Create initial TRBO state from completed Sobol/Ax trials."""
+        """Create initial TRBO state from completed Sobol/Ax trials.
+
+        Parameters
+        ----------
+        X_init : torch.Tensor
+            Initial observed points in Ax parameter space.
+        Y_init : torch.Tensor
+            Initial objective values oriented to MORBO's maximize convention.
+        tr_indices : torch.Tensor
+            Trust-region indices assigned to the initial observations.
+
+        Raises
+        ------
+        RuntimeError
+            If bounds have not been initialized.
+        ValueError
+            If the trust-region hyperparameters are inconsistent.
+        """
         if self.bounds_tensor is None:
             raise RuntimeError("Bounds not initialized.")
         # build TRBO hyperparamters, class from MORBO implementation
@@ -299,7 +344,22 @@ class MorboGenerationNode(ExternalGenerationNode):
         self.state.trbo_state = trbo_state
 
     def update_generator_state(self, experiment: Experiment, data: Data) -> None:
-        """Pull completed Ax trials, orient objectives, and update TRBO state."""
+        """Pull completed Ax trials, objectives, and update TRBO state.
+
+        Parameters
+        ----------
+        experiment : Experiment
+            Ax experiment object containing the search space and trial objects.
+        data : Data
+            Ax data object containing completed trial results.
+
+        Raises
+        ------
+        DataRequiredError
+            If no completed trials are available yet.
+        RuntimeError
+            If objective metadata cannot be resolved.
+        """
         if self.parameters is None:
             self._initialize_ax_parameter_cache(experiment=experiment)
         self._ensure_objectives(experiment=experiment)
@@ -387,20 +447,21 @@ class MorboGenerationNode(ExternalGenerationNode):
         self.state.seen_trial_indices.update(new_trial_indices)
 
     def _enqueue_batch_from_morbo(self) -> None:
-        """Get a new batch of candidates from MORBO and store them one-by-one in queue."""
+        """Get a new batch of candidates from MORBO and store them in FIFO queue.
+
+        Raises
+        ------
+        RuntimeError
+            If the MORBO / TRBO state has not been initialized.
+        """
         trbo_state = self.state.trbo_state # pull current state
         if trbo_state is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")
-        
-        # not needed
-        # if int(trbo_state.n_evals.item()) >= self.max_evals:
-        #     raise MorboConvergedError("MORBO reached max_evals.")
 
         # Candidate generation itself is delegated to original MORBO logic.
         selection = TS_select_batch_MORBO(trbo_state=trbo_state) # returns a batch of candidate points (tensor) and their TR indices 
         trbo_state.tabu_set.log_iteration()
-
-        
+      
         for cand_idx in range(len(selection.X_cand)):
             x = selection.X_cand[cand_idx]
             tr_idx = selection.tr_indices[cand_idx]
@@ -415,7 +476,23 @@ class MorboGenerationNode(ExternalGenerationNode):
 
     @override
     def get_next_candidate(self, pending_parameters: list[TParameterization]) -> TParameterization:
-        """Return one candidate to Ax, skipping duplicates against pending trials."""
+        """Return one candidate to Ax, skipping duplicates against pending trials.
+
+        Parameters
+        ----------
+        pending_parameters : list[TParameterization]
+            Candidates already proposed by Ax that are still pending.
+
+        Returns
+        -------
+        TParameterization
+            Parameterization for the next candidate to evaluate.
+
+        Raises
+        ------
+        RuntimeError
+            If the MORBO / TRBO state has not been initialized.
+        """
         # ensure state exists
         if self.state.trbo_state is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")

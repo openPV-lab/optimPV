@@ -44,6 +44,7 @@ from optimpv.optimizers.axBOtorch.TuRBOGenerationNode import TuRBOGenerationNode
 from optimpv.optimizers.axBOtorch.TuRBOGenerationNode import TuRBOGlobalStoppingStrategy
 from optimpv.optimizers.axBOtorch.MorboGenerationNode import MorboGenerationNode
 from optimpv.optimizers.axBOtorch.REITuRBOGenerationNode import REITuRBOGenerationNode
+from optimpv.optimizers.axBOtorch.CasmopolitanGenerationNode import CasmopolitanGenerationNode
 from optimpv.general.logger import get_logger, _round_floats_for_logging
 from optimpv.general.BaseAgent import BaseAgent
 
@@ -203,6 +204,13 @@ class axBOtorchOptimizer(BaseAgent):
                 generators.append(node_name)
                 names.append(node_name)
                 continue
+
+            if type(model) == str and model.lower() == 'casmopolitan':
+                node_name = 'Casmopolitan'
+                Gen_strat_name += 'Casmopolitan'
+                generators.append(node_name)
+                names.append(node_name)
+                continue
                 
             if type(model) == str:
                 node_name = model
@@ -315,6 +323,23 @@ class axBOtorchOptimizer(BaseAgent):
                         batch_size=self.batch_size[i],
                         acqf=acq,
                         **tkwargs,
+                        maximize=not minimize,
+                    )
+                )
+                
+                continue
+
+            if names[i].lower() == 'casmopolitan':
+                objective = self.create_objectives()
+                if "," in objective:
+                    raise ValueError('CasmopolitanGenerationNode does not support multiple objectives')
+                minimize = objective.startswith('-')
+
+                nodes_list.append(
+                    CasmopolitanGenerationNode(
+                        name=names[i],
+                        model_options=self.model_kwargs_list[i],
+                        batch_size=self.batch_size[i],
                         maximize=not minimize,
                     )
                 )

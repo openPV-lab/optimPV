@@ -10,26 +10,14 @@ from typing import Callable, NamedTuple, Tuple
 
 import gpytorch
 import torch
-# from botorch.acquisition.multi_objective.monte_carlo import (
-#     qExpectedHypervolumeImprovement,
-# ) // replaced by qLogExpectedHypervolumeImprovement
 from botorch.acquisition.multi_objective.logei import qLogExpectedHypervolumeImprovement
 
-from botorch.acquisition.multi_objective.monte_carlo import (
-    qExpectedHypervolumeImprovement,
-)
 from botorch.acquisition.multi_objective.utils import (
-    get_default_partitioning_alpha,
-    # prune_inferior_points_multi_objective,
+    get_default_partitioning_alpha
 )
 
 from botorch.models.deterministic import GenericDeterministicModel
 from botorch.models.model_list_gp_regression import ModelListGP
-# from botorch.sampling import SobolQMCNormalSampler // not used 
-# from botorch.sampling import IIDNormalSampler  // not used
-
-# from botorch.utils.gp_sampling import get_gp_samples 
-# no longer exists in BoTorch replacement -> draw_matheron_paths
 from botorch.sampling.pathwise import draw_matheron_paths
 
 from botorch.utils.multi_objective.pareto import is_non_dominated
@@ -46,11 +34,9 @@ from .state import TRBOState
 from .utils import (
     decay_function,
     get_indices_in_hypercube,
-    # sample_tr_discrete_points, // not used
     sample_tr_discrete_points_subset_d,
 )
 from torch import Tensor
-# from torch.quasirandom import SobolEngine // not used
 
 
 class CandidateSelectionOutput(NamedTuple):
@@ -61,7 +47,22 @@ class CandidateSelectionOutput(NamedTuple):
 def get_partitioning(
     trbo_state: TRBOState, ref_point: Tensor, Y: Tensor
 ) -> BoxDecomposition:
-    """Helper method for constructing a box decomposition"""
+    """Helper method for constructing a box decomposition.
+
+    Parameters
+    ----------
+    trbo_state : TRBOState
+        MORBO state containing hypervolume settings.
+    ref_point : Tensor
+        Reference point used for partitioning.
+    Y : Tensor
+        Objective values used to build the box decomposition.
+
+    Returns
+    -------
+    BoxDecomposition
+        Box decomposition used for hypervolume computations.
+    """
     if trbo_state.tr_hparams.use_approximate_hv_computations:
         alpha = (
             trbo_state.tr_hparams.approximate_hv_alpha
@@ -73,7 +74,7 @@ def get_partitioning(
         partitioning = FastNondominatedPartitioning(ref_point=ref_point, Y=Y)
     return partitioning
 
-
+# not used 
 def _make_unstandardizer(Y_mean: Tensor, Y_std: Tensor) -> Callable[[Tensor], Tensor]:
     def unstandardizer(Y: Tensor) -> Tensor:
         return Y * Y_std + Y_mean
@@ -84,7 +85,22 @@ def _make_unstandardizer(Y_mean: Tensor, Y_std: Tensor) -> Callable[[Tensor], Te
 def preds_and_feas(
     trbo_state: TRBOState, tr_idx: int, X: Tensor
 ) -> Tuple[Tensor, Tensor, Tensor, Tensor]:
-    """Compute model predictions and constraint violations."""
+    """Compute model predictions and constraint violations.
+
+    Parameters
+    ----------
+    trbo_state : TRBOState
+        MORBO state containing trust regions and models.
+    tr_idx : int
+        Trust region index.
+    X : Tensor
+        Candidate points for prediction.
+
+    Returns
+    -------
+    tuple[Tensor, Tensor, Tensor, Tensor]
+        Objective values, feasibility mask, total constraint violation, and distances returned by the model.
+    """
     tkwargs = {"device": trbo_state.bounds.device, "dtype": trbo_state.bounds.dtype}
     tr = trbo_state.trust_regions[tr_idx]
     objective = tr.objective
@@ -106,7 +122,23 @@ def preds_and_feas(
 
 
 def unit_rescale(x: Tensor) -> Tensor:
-    """Helper function for normalizing a 1D input to [0, 1]."""
+    """Helper function for normalizing a 1D input to [0, 1].
+
+    Parameters
+    ----------
+    x : Tensor
+        One dimensional tensor to normalize.
+
+    Returns
+    -------
+    Tensor
+        Rescaled tensor in `[0, 1]`.
+
+    Raises
+    ------
+    RuntimeError
+        If `x` is not one-dimensional.
+    """
     if not x.dim() == 1:
         raise RuntimeError(f"Expected a 1D input, got shape: {list(x.shape)}")
     if x.min() == x.max():
@@ -125,6 +157,16 @@ def TS_select_batch_MORBO(trbo_state: TRBOState) -> CandidateSelectionOutput:
     If there is no feasible candidate we choose the candidate that minimizes the total constraint
     violation. If hypervolume improvement is used but no candidate has non-zero hypervolume improvement
     then we pick the candidate according to a random scalarization.
+
+    Parameters
+    ----------
+    trbo_state : TRBOState
+        MORBO state containing trust regions, models, and historical data.
+
+    Returns
+    -------
+    CandidateSelectionOutput
+        Selected candidate batch and corresponding trust-region indices.
     """
     tkwargs = {"device": trbo_state.bounds.device, "dtype": trbo_state.bounds.dtype}
     dim = trbo_state.dim

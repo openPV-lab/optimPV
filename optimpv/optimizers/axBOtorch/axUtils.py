@@ -282,7 +282,7 @@ def get_VMLC_default_model_kwargs_list(num_free_params, use_CENTER=False, is_MOO
             
             model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY,ChoiceToNumericChoice],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model,) ])}]
         else:
-            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogNoisyExpectedImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model,) ])}]
+            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogNoisyExpectedImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY,ChoiceToNumericChoice],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model,) ])}]
     
     else:
         if is_MOO:
@@ -294,6 +294,5 @@ def get_VMLC_default_model_kwargs_list(num_free_params, use_CENTER=False, is_MOO
         #add {} at the beginning of the list
         model_kwargs_list = [{}] + model_kwargs_list
     return model_kwargs_list
-
 
 

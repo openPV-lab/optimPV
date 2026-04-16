@@ -4,14 +4,11 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-
-from __future__ import annotations
-
 import dataclasses
 import math
 import time
 from enum import Enum
-from typing import Callable, Dict, List, Optional, OrderedDict, Tuple, Union
+from typing import Dict, List, Optional, OrderedDict, Tuple, Union
 
 import torch
 from botorch.acquisition.multi_objective.objective import IdentityMCMultiOutputObjective
@@ -19,7 +16,6 @@ from botorch.acquisition.objective import IdentityMCObjective, MCAcquisitionObje
 from botorch.exceptions import BotorchError
 from botorch.models.model import Model
 from botorch.models.transforms.input import (
-    ChainedInputTransform,
     Normalize,
 )
 from botorch.models.transforms.outcome import Standardize
@@ -78,12 +74,16 @@ class TabuSet(Module):
     ) -> None:
         """Initialize.
 
-        Args:
-            dim: dimension of design space
-            tabu_tenure: number of BO iterations for which a point should be considered
-                "tabu" after bein added to the set.
-            dtype: dtype
-            device: device
+        Parameters
+        ----------
+        dim : int
+            Dimension of the design space.
+        tabu_tenure : int
+            Number of BO iterations for which a point should be considered"tabu" after bein added to the set.
+        dtype : torch.dtype
+            Dtype.
+        device : torch.device
+            Device.
         """
 
         super().__init__()
@@ -97,8 +97,10 @@ class TabuSet(Module):
     def add_tabu_point(self, x: Tensor) -> None:
         """Add new point to tabu set.
 
-        Args:
-            x: a `d` or `1 x d`-dim tensor with the new point
+        Parameters
+        ----------
+        x : Tensor
+            A `d` or `1 x d`-dim tensor with the new point.
         """
         self._tabu_points = torch.cat([self._tabu_points, x.view(1, -1)], dim=0)
         self._tabu_tenures = torch.cat(
@@ -107,7 +109,13 @@ class TabuSet(Module):
         )
 
     def get_tabu_points(self) -> Tensor:
-        """Retrieve current tabu points"""
+        """Retrieve current tabu points.
+
+        Returns
+        -------
+        Tensor
+            Current tabu points.
+        """
         return self._tabu_points
 
     def log_iteration(self) -> None:
@@ -124,8 +132,10 @@ class TabuSet(Module):
         only select centers that are pareto efficient, so we can prune the
         tabu set to only include pareto efficient points.
 
-        Args:
-            pareto_X: a `n_pareto x d`-dim tensor of pareto points
+        Parameters
+        ----------
+        pareto_X : Tensor
+            A `n_pareto x d`-dim tensor of pareto points.
         """
         # This could be quite memory intensive if pareto_X or the tabu set is
         # large. If we tracked both tabu points and pareto_X in hash maps
@@ -250,13 +260,19 @@ class TRBOState(Module):
         self.ref_point = None
 
     def state_dict(self, destination=None, prefix="", keep_vars=False) -> OrderedDict:
-        r"""Returns the state dict with the models removed."""
+        """Returns the state dict with the models removed.
+
+        Returns
+        -------
+        OrderedDict
+            State dictionary without stored model entries.
+        """
         state_dict = super().state_dict(destination, prefix, keep_vars)
         return OrderedDict([(k, v) for k, v in state_dict.items() if "model" not in k])
 
     @property
     def models(self) -> List[Model]:
-        r"""Returns a list of models of the trust regions."""
+        """Returns a list of models of the trust regions."""
         return [tr.model for tr in self.trust_regions]
 
     def _set_tabu_buffer_sizes(self, state_dict):
@@ -285,16 +301,21 @@ class TRBOState(Module):
         Y_history: Tensor,
         TR_index_history: Tensor,
     ) -> None:
-        r"""Reload the state from a state dict + historical data.
+        """Reload the state from a state dict + historical data.
 
         This function assumes that `X_history`, `Y_history`, `TR_index_history`
         are exactly the same as when the state_dict was created.
 
-        Args:
-           - state_dict: State dict that we are loading
-           - X_history: Historical inputs
-           - Y_history: Historical outputs
-           - TR_index_history: Trust region indices for the historical data
+        Parameters
+        ----------
+        state_dict : OrderedDict[str, Tensor]
+            State dict that we are loading.
+        X_history : Tensor
+            Historical inputs.
+        Y_history : Tensor
+            Historical outputs.
+        TR_index_history : Tensor
+            Trust region indices for the historical data.
         """
         state_dict = self._set_tabu_buffer_sizes(state_dict)
 
@@ -339,13 +360,17 @@ class TRBOState(Module):
         Y: Tensor,
         new_ind: Tensor,
     ) -> None:
-        r"""Update the TRBOState.
+        """Update the TRBOState.
 
-        Args:
-            X: A `q x d`-dim tensor of new designs.
-            Y: A `q x m`-dim tensor of corresponding observations.
-            new_ind: A `q`-dim tensor denoting the indices of trust regions
-                these observations belong to.
+        Parameters
+        ----------
+        X : Tensor
+            A `q x d`-dim tensor of new designs.
+        Y : Tensor
+            A `q x m`-dim tensor of corresponding observations.
+        new_ind : Tensor
+            A `q`-dim tensor denoting the indices of trust regions these
+            observations belong to.
         """
         X = X.to(self.X_history)
         Y = Y.to(self.Y_history)
@@ -475,13 +500,15 @@ class TRBOState(Module):
                 self._log_pareto_tr_center(tr_idx=i)
 
     def check_min_points(self) -> List[bool]:
-        r"""Check if each TR has enough points.
+        """Check if each TR has enough points.
 
         We always return true if we aren't using Sobol as the fill_strategy since we
         will just include the closest points in that case.
 
-        Returns:
-            A list of booleans indicating whether the trust region has enough points
+        Returns
+        -------
+        list[bool]
+            A list of booleans indicating whether the trust region has enough points.
         """
         if self.tr_hparams.fill_strategy == "sobol":
             min_tr_size = self.tr_hparams.min_tr_size
@@ -497,19 +524,26 @@ class TRBOState(Module):
         verbose: bool,
         update_streaks: bool = True,
     ) -> List[bool]:
-        r"""Update the trust regions and the logs.
+        """Update the trust regions and the logs.
 
-        Args:
-            X_cand: A `q x d`-dim tensor of new candidates.
-            Y_cant: A `q x m`-dim tensor of corresponding observations.
-            tr_indices: A `q`-dim tensor denoting the indices of trust regions
-                the candidates belong to.
-            batch_size: The size of q-batch.
-            verbose: A boolean denoting whether to log new best observations.
-            update_streaks: A boolean denoting whether to update the success and
-                failure counters.
+        Parameters
+        ----------
+        X_cand : Tensor
+            A `q x d`-dim tensor of new candidates.
+        Y_cand : Tensor
+            A `q x m`-dim tensor of corresponding observations.
+        tr_indices : Tensor
+            A `q`-dim tensor denoting the indices of trust regions the candidates belong to.
+        batch_size : int
+            The size of q-batch.
+        verbose : bool
+            A boolean denoting whether to log new best observations.
+        update_streaks : bool, optional
+            A boolean denoting whether to update the success and failure counters, by default True.
 
-        Returns:
+        Returns
+        -------
+        list[bool]
             A list of booleans indicating whether each TR should be restarted.
         """
         if self.X_history is None or self.Y_history is None:
@@ -574,9 +608,15 @@ class TRBOState(Module):
         This method pulls the relevant data from TRBOState and creates a set
         of "invalid centers"--points that are either the center of another trust region
         or are in the tabu set.
+        Parameters
+        ----------
+        tr_idx : int
+            The index of the trust region for which to get update kwargs.
 
-        Args:
-            tr_idx: the index of the trust region.
+        Returns
+        -------
+        Dict[str, Union[Tensor, float]]
+            A dictionary of kwargs for TrustRegion.update.
         """
         kwargs = {}
         if self.tr_hparams.hypervolume:
@@ -655,6 +695,20 @@ class TRBOState(Module):
         """This initializes a trust region using new data points if provided.
 
         If new data is not provided, all historical data is used.
+
+        Parameters
+        ----------
+        tr_idx : int
+            Trust-region index.
+        X_init : Tensor | None, optional
+            Initial inputs used to initialize the trust region, by default None.
+        Y_init : Tensor | None, optional
+            Initial observations used to initialize the trust region,
+            by default None.
+        restart : bool, optional
+            Whether the region is being restarted, by default False.
+        switch_strategy : bool, optional
+            Whether strategy switching is active, by default False.
         """
         if X_init is None:
             X_init = self.X_history
@@ -721,11 +775,26 @@ class TRBOState(Module):
         self.store_new_trust_region(tr_idx=tr_idx, tr=tr)
 
     def log_restart_points(self, X: Tensor, Y: Tensor) -> None:
-        """Log restart points"""
+        """Log restart points.
+
+        Parameters
+        ----------
+        X : Tensor
+            Restart inputs.
+        Y : Tensor
+            Restart observations.
+        """
         self.register_buffer("_restart_X", torch.cat([self._restart_X, X], dim=0))
         self.register_buffer("_restart_Y", torch.cat([self._restart_Y, Y], dim=0))
 
     def gen_new_restart_design(self):
+        """Generate a new restart design from restart history data.
+
+        Returns
+        -------
+        Tensor
+            New restart design in problem space.
+        """
         # fit model to restart data
         # Scale X from problem space bounds to [0, 1]
         intf = Normalize(d=self.dim, bounds=self.bounds)
@@ -813,12 +882,18 @@ class TRBOState(Module):
         return unnormalize(X_discrete[best_idx : best_idx + 1], self.bounds)
 
     def _compute_hv_scalarizations(self, Y: Tensor, hv_weights: Tensor) -> Tensor:
-        r"""Compute HV scalarizations.
+        """Compute HV scalarizations.
 
-        Args:
-            Y: A `sample_shape x batch_shape x n x m`-dim tensor of outcomes
+        Parameters
+        ----------
+        Y : Tensor
+            A `sample_shape x batch_shape x n x m`-dim tensor of outcomes.
+        hv_weights : Tensor
+            Weights used for hypervolume scalarization.
 
-        Returns:
+        Returns
+        -------
+        Tensor
             A `sample_shape x batch_shape x n_weights`-dim tensor of hv scalarizations.
 
         """

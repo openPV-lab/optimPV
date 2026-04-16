@@ -43,7 +43,7 @@ setuptools.setup(
         'emcee>=3.1',
         'pymoo>=0.6',
         'ax-platform>=1.2.4',
-        'arviz>=0.15.1',
+        'arviz>=0.15.1,<1.0.0',
         'pydantic'
     ],
     extras_require = {

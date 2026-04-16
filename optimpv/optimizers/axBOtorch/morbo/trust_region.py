@@ -8,8 +8,6 @@
 #!/usr/bin/env python3
 # (c) Meta Platforms, Inc. and affiliates. Confidential and proprietary.
 
-from __future__ import annotations
-
 import dataclasses
 from abc import abstractmethod, ABC
 from typing import Any, Callable, Dict, List, Optional, Union
@@ -55,77 +53,76 @@ round_floats_for_logging = partial(
 
 @dataclasses.dataclass
 class TurboHParams:
-    r"""Hyperparameters for TuRBO.
+    """Hyperparameters for TuRBO.
 
-    Args:
-        length_init: Initial edge length for the trust region
-        length_min: Minimum edge length
-        length_max: Maximum edge length
-        success_streak: Number of consecutive successes necessary to increase length
-        failure_streak: Number of consecutive failures necessary to decrease length
-        n_trust_regions: Total number of trust regions. This is used in failure
-            accounting.
-        batch_size: Batch size
-        eps: The minimum percent improvement in objective that qualifying as a
-            "success".
-        use_ard: Whether to use ARD when fitting GPs for this trust region.
-        trim_trace: A boolean indicating whether to use all data from the trust
-            region's trace for model fitting.
-        verbose: A boolean indicating whether to print verbose output
-        max_tr_size: The maximum number of points in a trust region. This can be
-            used to avoid memory issues.
-        min_tr_size: The minimum number of points allowed in the trust region. If there
-            are too few points in the TR, sobol samples will be used to refill the TR.
-        qmc: Whether to use qmc when possible or not
-        sample_subset_d: Whether to perturb subset of the dimensions for generating
-            discrete X
-        track_history: If true, uses the historically observed points and points
-            from other trs when the trust regions moves
-        fixed_scalarization: If set, a fixed scalarization weight would be used
-        max_cholesky_size: Maximum number of training points for which we will use a
-            Cholesky decomposition.
-        raw_samples: number of discrete points for Thompson Sampling
-        n_initial_points: Number of initial sobol points
-        n_restart_points: Number of sobol points to evaluate when we restart a TR if
-            `init_with_add_sobol=True`
-        max_reference_point: The maximum reference point (i.e. this is the closest that
-            the reference point can get to the pareto front)
-        hypervolume: Whether to use a hypervolume objective for MOO
-        winsor_pct: Percentage of worst outcome observations to winsorize
-        trun_normal_perturb: Whether to generate discrete points for Thompson sampling
-            by perturbing with samples from a zero-mean truncated Gaussian.
-        decay_restart_length_alpha: Factor controlling how much to decay (over time)
-            the initial TR length when restarting a trust region.
-        switch_strategy_freq: The frequency (in terms of function evaluations) at which
-            the strategy should be switched between using a hypervolume objective and
-            using random scalarizations.
-        tabu_tenure: Number of BO iterations for which a previous X_center is considered
-            tabu. A previous X_center is only considered tabu if it was the TR center
-            when the TR was terminated.
-        fill_strategy: (DEPRECATED) Set to "sobol" to fill trust regions with Sobol
-            points until there are at least min_tr_size in each trust region. Set to
-            "closest" to include the closest min_tr_size instead. Using "closest" is
-            strongly recommended as filling with Sobol points may be very
-            sample-inefficient.
-        use_noisy_trbo: A boolean denoting whether to expect noisy observations and
-            use model predictions for trust region computations.
-        use_simple_rff: If True, the GP predictions are replaced with predictions from a
-            1-RFF draw during candidate generation.
-        batch_limit: default maximum size of joint posterior for TS, lower is less memory intensive,
-            while higher is more memory intensive. default: [0,10] (for full posterior sizes) but
-            only drawing 10 samples at once.
-        use_approximate_hv_computations: Whether to use approximate hypervolume computations. This
-            may speed up candidate generation, especially when there are more than 2 objectives.
-        approximate_hv_alpha: The value of alpha passed to NondominatedPartitioning. The larger
-            the value of alpha is, the faster and less accurate hv computations will be used, see
-            NondominatedPartitioning for more details. This parameter only has an effect if
-            use_approximate_hv_computations is set to True.
-        pred_batch_limit: The maximum batch size to use for `_get_predictions`.
-        infer_reference_point: Set this to true if you want to explore the entire Pareto frontier.
-            `max_reference_point` will be ignored and we will rely on `infer_reference_point` to infer
-            the reference point before generating new candidates.
-        fit_gpytorch_options: Options for fitting GPs
-        restart_hv_scalarizations: Whether to sample restart points using random scalarizations
+    Parameters
+    ----------
+    length_init: Initial edge length for the trust region
+    length_min: Minimum edge length
+    length_max: Maximum edge length
+    success_streak: Number of consecutive successes necessary to increase length
+    failure_streak: Number of consecutive failures necessary to decrease length
+    n_trust_regions: Total number of trust regions. This is used in failure accounting.
+    batch_size: Batch size
+    eps: The minimum percent improvement in objective that qualifying as a "success".
+    use_ard: Whether to use ARD when fitting GPs for this trust region.
+    trim_trace: A boolean indicating whether to use all data from the trust
+        region's trace for model fitting.
+    verbose: A boolean indicating whether to print verbose output
+    max_tr_size: The maximum number of points in a trust region. This can be
+        used to avoid memory issues.
+    min_tr_size: The minimum number of points allowed in the trust region. If there
+        are too few points in the TR, sobol samples will be used to refill the TR.
+    qmc: Whether to use qmc when possible or not
+    sample_subset_d: Whether to perturb subset of the dimensions for generating
+        discrete X
+    track_history: If true, uses the historically observed points and points
+        from other trs when the trust regions moves
+    fixed_scalarization: If set, a fixed scalarization weight would be used
+    max_cholesky_size: Maximum number of training points for which we will use a
+        Cholesky decomposition.
+    raw_samples: number of discrete points for Thompson Sampling
+    n_initial_points: Number of initial sobol points
+    n_restart_points: Number of sobol points to evaluate when we restart a TR if
+        `init_with_add_sobol=True`
+    max_reference_point: The maximum reference point (i.e. this is the closest that
+        the reference point can get to the pareto front)
+    hypervolume: Whether to use a hypervolume objective for MOO
+    winsor_pct: Percentage of worst outcome observations to winsorize
+    trun_normal_perturb: Whether to generate discrete points for Thompson sampling
+        by perturbing with samples from a zero-mean truncated Gaussian.
+    decay_restart_length_alpha: Factor controlling how much to decay (over time)
+        the initial TR length when restarting a trust region.
+    switch_strategy_freq: The frequency (in terms of function evaluations) at which
+        the strategy should be switched between using a hypervolume objective and
+        using random scalarizations.
+    tabu_tenure: Number of BO iterations for which a previous X_center is considered
+        tabu. A previous X_center is only considered tabu if it was the TR center
+        when the TR was terminated.
+    fill_strategy: (DEPRECATED) Set to "sobol" to fill trust regions with Sobol
+        points until there are at least min_tr_size in each trust region. Set to
+        "closest" to include the closest min_tr_size instead. Using "closest" is
+        strongly recommended as filling with Sobol points may be very
+        sample-inefficient.
+    use_noisy_trbo: A boolean denoting whether to expect noisy observations and
+        use model predictions for trust region computations.
+    use_simple_rff: If True, the GP predictions are replaced with predictions from a
+        1-RFF draw during candidate generation.
+    batch_limit: default maximum size of joint posterior for TS, lower is less memory intensive,
+        while higher is more memory intensive. default: [0,10] (for full posterior sizes) but
+        only drawing 10 samples at once.
+    use_approximate_hv_computations: Whether to use approximate hypervolume computations. This
+        may speed up candidate generation, especially when there are more than 2 objectives.
+    approximate_hv_alpha: The value of alpha passed to NondominatedPartitioning. The larger
+        the value of alpha is, the faster and less accurate hv computations will be used, see
+        NondominatedPartitioning for more details. This parameter only has an effect if
+        use_approximate_hv_computations is set to True.
+    pred_batch_limit: The maximum batch size to use for `_get_predictions`.
+    infer_reference_point: Set this to true if you want to explore the entire Pareto frontier.
+        `max_reference_point` will be ignored and we will rely on `infer_reference_point` to infer
+        the reference point before generating new candidates.
+    fit_gpytorch_options: Options for fitting GPs
+    restart_hv_scalarizations: Whether to sample restart points using random scalarizations
     """
 
     length_init: float = 0.8
@@ -169,13 +166,20 @@ class TurboHParams:
 
     @classmethod
     def from_dict(cls, tr_hparams: Dict) -> None:
-        r"""Construct a TurboHParams object from a dict.
+        """Construct a TurboHParams object from a dict.
 
         This automatically filters unexpected keys in order to allow deleting
         keys that are no longer being used.
 
-        Args:
-            tr_hparams: Dict of hyperparameters
+        Parameters
+        ----------
+        tr_hparams : Dict
+            Dict of hyperparameters.
+
+        Returns
+        -------
+        TurboHParams
+            Constructed `TurboHParams` object.
         """
         expected_keys = {f.name for f in dataclasses.fields(cls)}
         received_keys = set(tr_hparams.keys())
@@ -188,7 +192,7 @@ class TurboHParams:
 
 
 class TrustRegion(ABC, Module):
-    r"""A trust region object.
+    """A trust region object.
 
     This is a variation of the TuRBO algorithm presented in:
 
@@ -200,15 +204,23 @@ class TrustRegion(ABC, Module):
     trust region to only include data within the hypercube with edge length
     (2 * length) around the trust region center.
 
-    Args:
-        X_init: a `n x d`-dim tensor of points
-        Y_init: a `n x m`-dim tensor of observations
-        bounds: a `2 x d`-dim tensor of bounds
-        tr_hparams: hyperparameters for turbo
-        objective: An objective function that selects the objectives
-            (a subset of all modeled outcomes).
-        constraints: List of potential outcome constraints
-        extra_buffers: Additional buffers that should be registered
+    Parameters
+    ----------
+    X_init : Tensor
+        A `n x d`-dim tensor of points.
+    Y_init : Tensor
+        A `n x m`-dim tensor of observations.
+    bounds : Tensor
+        A `2 x d`-dim tensor of bounds.
+    tr_hparams : TurboHParams
+        Hyperparameters for turbo.
+    objective : MCAcquisitionObjective
+        An objective function that selects the objectives (a subset of all
+        modeled outcomes).
+    constraints : list[Callable[[Tensor], Tensor]] | None, optional
+        List of potential outcome constraints, by default None.
+    extra_buffers : dict[str, None | Tensor] | None, optional
+        Additional buffers that should be registered, by default None.
     """
 
     def __init__(
@@ -263,7 +275,7 @@ class TrustRegion(ABC, Module):
                 self.register_buffer(k, v)
 
     def _check_for_updates_to_model_training_data(self) -> bool:
-        r"""Return True if the model training data was updated."""
+        """Return True if the model training data was updated."""
         if self.model is None or self.model_training_data[0] is None:
             return True
         if torch.equal(self.model_training_data[0], self.X) and torch.equal(
@@ -273,9 +285,11 @@ class TrustRegion(ABC, Module):
         return True
 
     def update_model(self) -> bool:
-        r"""Update the model using available data.
+        """Update the model using available data.
 
-        Returns:
+        Returns
+        -------
+        bool
             A boolean representing whether the model was updated.
         """
         # Only update the model if the training data has changed
@@ -321,16 +335,21 @@ class TrustRegion(ABC, Module):
         X: Tensor,
         sampler: Optional[MCSampler] = None,
     ) -> Tensor:
-        r"""Get the model predictions corresponding to the given inputs.
+        """Get the model predictions corresponding to the given inputs.
 
-        Args:
-            X: An `n x d`-dim tensor of inputs to get the predictions for.
-            sampler: If given, this sampler is used to get the predictions. If None, this will return the posterior mean.
+        Parameters
+        ----------
+        X : Tensor
+            An `n x d`-dim tensor of inputs to get the predictions for.
+        sampler : MCSampler | None, optional
+            If given, this sampler is used to get the predictions. If None,
+            this will return the posterior mean.
 
-        Returns:
+        Returns
+        -------
+        Tensor
             An `n x m`-dim tensor of predictions.
         """
-        base_samples = None
         with torch.no_grad():
             predictions = []
             for x_ in X.split(self.tr_hparams.pred_batch_limit):
@@ -363,23 +382,34 @@ class TrustRegion(ABC, Module):
         global_model: Optional[Any] = None,
         **kwargs,
     ) -> bool:
-        r"""Update trust region.
+        """Update trust region.
 
         Adjust the edge length, and update the data in the trust region for model
             fitting.
 
-        Args:
-            X_all: `n x d`-dim tensor of all points
-            Y_all: `n x m`-dim tensor of all observations
-            X_new: `q x d`-dim tensor of new points
-            Y_new: `q x m`-dim tensor new observations
-            invalid_centers: a `k x d`-dim tensor of points that cannot be used as
-                center. Currently only used in `HypervolumeTrustRegion`.
-            update_streaks: a boolean indicating whether the success/failure streaks
-                should be updated. This should be True unless we are filling in the
-                trust region with sobol points to ensure it contains enough points.
+        Parameters
+        ----------
+        X_all : Tensor
+            `n x d`-dim tensor of all points.
+        Y_all : Tensor
+            `n x m`-dim tensor of all observations.
+        X_new : Tensor | None, optional
+            `q x d`-dim tensor of new points, by default None.
+        Y_new : Tensor | None, optional
+            `q x m`-dim tensor new observations, by default None.
+        invalid_centers : Tensor | None, optional
+            A `k x d`-dim tensor of points that cannot be used as center.
+            Currently only used in `HypervolumeTrustRegion`.
+        update_streaks : bool, optional
+            A boolean indicating whether the success/failure streaks should be
+            updated. This should be True unless we are filling in the trust
+            region with sobol points to ensure it contains enough points.
+        global_model : Any | None, optional
+            Global model shared across trust regions, by default None.
 
-        Returns:
+        Returns
+        -------
+        bool
             A boolean indicating whether to restart the TR.
         """
         # Append new data
@@ -455,9 +485,11 @@ class TrustRegion(ABC, Module):
         return False
 
     def _set_Y_center(self, center_idx: int) -> None:
+        """Set the center observation from the current region data."""
         self.Y_center = self.Y_estimate[center_idx : center_idx + 1]
 
     def _set_center_and_best_points(self, center_idx: int) -> None:
+        """Set the current center point and best point state."""
         self.X_center = self.X[center_idx : center_idx + 1]
         self._set_Y_center(center_idx)
         self.best_X = self.X_center
@@ -522,6 +554,19 @@ class TrustRegion(ABC, Module):
         self.n_failures.zero_()
 
     def get_bounds(self, model_space: bool = False) -> None:
+        """Get normalized trust-region bounds.
+
+        Parameters
+        ----------
+        model_space : bool, optional
+            Whether to return the expanded model-fitting box instead of the
+            candidate-generation box, by default False.
+
+        Returns
+        -------
+        Tensor
+            Normalized lower and upper bounds of the requested region.
+        """
         normalized_X_center = normalize(self.X_center, bounds=self.bounds)
         # the model space is 2X the TR candidate space if we are trimming the trace,
         # otherwise the modeling space is [0, 1]^d
@@ -540,20 +585,28 @@ class TrustRegion(ABC, Module):
 
 
 class ScalarizedTrustRegion(TrustRegion):
-    r"""A scalarized trust region object.
+    """A scalarized trust region object.
 
     NOTE: If `self.tr_hparams.use_noisy_trbo is True`, this uses estimates of Y
     (`Y_estimate`) to determine the objective improvement and the TR center.
 
-    Args:
-        X_init: a `n x d`-dim tensor of points
-        Y_init: a `n x m`-dim tensor of observations
-        bounds: a `2 x d`-dim tensor of bounds
-        tr_hparams: hyperparameters for turbo
-        objective: An objective function that selects the objectives
-            (a subset of all modeled outcomes).
-        constraints: List of potential outcome constraints
-        weights: a `m`-dim tensor of weights for the scalarized objective
+    Parameters
+    ----------
+    X_init : Tensor
+        A `n x d`-dim tensor of points.
+    Y_init : Tensor
+        A `n x m`-dim tensor of observations.
+    bounds : Tensor
+        A `2 x d`-dim tensor of bounds.
+    tr_hparams : TurboHParams
+        Hyperparameters for turbo.
+    objective : Callable[[Tensor], Tensor]
+        An objective function that selects the objectives (a subset of all
+        modeled outcomes).
+    constraints : list[Callable[[Tensor], Tensor]] | None, optional
+        List of potential outcome constraints, by default None.
+    weights : Tensor | None, optional
+        A `m`-dim tensor of weights for the scalarized objective, by default None.
     """
 
     def __init__(
@@ -581,6 +634,7 @@ class ScalarizedTrustRegion(TrustRegion):
     def _gen_objective(self) -> None:
         """This creates a callable that applies _objective to select
         the relevant objectives and then scalarizes the objectives."""
+
         if self.scalarization_weights is not None:
 
             def objective(Y):
@@ -600,12 +654,17 @@ class ScalarizedTrustRegion(TrustRegion):
         return self._scalarization_objective
 
     def _get_max_previous_objective(self, n_new: int) -> Tensor:
-        r"""Get the maximum objective value from the previous observations.
+        """Get the maximum objective value from the previous observations.
 
-        Args:
-            n_new: Number of new points. These are excluded to get the old observations.
+        Parameters
+        ----------
+        n_new : int
+            Number of new points. These are excluded to get the old
+            observations.
 
-        Returns:
+        Returns
+        -------
+        Tensor
             A tensor denoting the maximum previous objective value.
         """
         if self.tr_hparams.use_noisy_trbo:
@@ -633,6 +692,16 @@ class ScalarizedTrustRegion(TrustRegion):
 
         For a scalarized trust region we define improvement through as:
             new_obj > old_obj + eps * |old_obj|
+
+        Parameters
+        ----------
+        n_new : int
+            Number of newly added observations.
+
+        Returns
+        -------
+        bool
+            Whether the scalarized objective improved.
         """
         k = self.Y_estimate.shape[0]
         Y_new = self.Y_estimate[-n_new:]
@@ -673,7 +742,7 @@ class ScalarizedTrustRegion(TrustRegion):
         self,
         invalid_centers: Optional[Tensor] = None,
     ) -> None:
-        """Update center and best points."""
+        """Update center and best points."""      
         Y_center_prev = None if self.Y_center is None else self.Y_center.clone()
         # NOTE: objective does not necessarily create a new tensor, so we
         # need to clone here.
@@ -707,21 +776,33 @@ class ScalarizedTrustRegion(TrustRegion):
 
 
 class HypervolumeTrustRegion(TrustRegion):
-    r"""A hypervolume trust region object.
+    """A hypervolume trust region object.
 
-    Args:
-        X_init: a `n x d`-dim tensor of points
-        Y_init: a `n x m`-dim tensor of observations
-        bounds: a `2 x d`-dim tensor of bounds
-        tr_hparams: hyperparameters for turbo
-        objective: An objective function that selects the objectives
-            (a subset of all modeled outcomes).
-        constraints: List of potential outcome constraints
-        pareto_X_better_than_ref: a `k x d`-dim tensor of points on the Pareto frontier
-        pareto_Y_better_than_ref: a `k x m`-dim tensor of obs. on the Pareto frontier
-        ref_point: a `m`-dim tensor of the reference point
-        current_hypervolume: Current hypervolume of the pareto frontier.
-        invalid_centers: Points that can't be used as the center.
+    Parameters
+    ----------
+    X_init : Tensor
+        A `n x d`-dim tensor of points.
+    Y_init : Tensor
+        A `n x m`-dim tensor of observations.
+    bounds : Tensor
+        A `2 x d`-dim tensor of bounds.
+    tr_hparams : TurboHParams
+        Hyperparameters for turbo.
+    objective : MCAcquisitionObjective
+        An objective function that selects the objectives (a subset of all
+        modeled outcomes).
+    constraints : list[Callable[[Tensor], Tensor]] | None, optional
+        List of potential outcome constraints, by default None.
+    pareto_X_better_than_ref : Tensor | None, optional
+        A `k x d`-dim tensor of points on the Pareto frontier, by default None.
+    pareto_Y_better_than_ref : Tensor | None, optional
+        A `k x m`-dim tensor of obs. on the Pareto frontier, by default None.
+    ref_point : Tensor | None, optional
+        A `m`-dim tensor of the reference point, by default None.
+    current_hypervolume : float | None, optional
+        Current hypervolume of the pareto frontier, by default None.
+    invalid_centers : Tensor | None, optional
+        Points that can't be used as the center, by default None.
     """
 
     def __init__(
@@ -771,6 +852,28 @@ class HypervolumeTrustRegion(TrustRegion):
         invalid_centers: Optional[Tensor] = None,
         X_center: Optional[Tensor] = None,
     ) -> None:
+        """Update the hypervolume trust-region center and best-point buffers.
+
+        Parameters
+        ----------
+        pareto_X_better_than_ref : Tensor | None, optional
+            Pareto optimal inputs better than the reference point,
+            by default None.
+        pareto_Y_better_than_ref : Tensor | None, optional
+            Pareto optimal observations better than the reference point,
+            by default None.
+        ref_point : Tensor | None, optional
+            Hypervolume reference point, by default None.
+        current_hypervolume : float | None, optional
+            Current Pareto hypervolume, by default None.
+        hv_contributions : Tensor | None, optional
+            Hypervolume contributions of candidate Pareto centers,
+            by default None.
+        invalid_centers : Tensor | None, optional
+            Points that cannot be selected as centers, by default None.
+        X_center : Tensor | None, optional
+            Explicit center point to use, by default None.
+        """
         Y_center_prev = None if self.Y_center is None else self.Y_center.clone()
         # note these are all pareto points (inside/outside TR)
         self.best_X = pareto_X_better_than_ref
@@ -843,6 +946,16 @@ class HypervolumeTrustRegion(TrustRegion):
 
         For a hypervolume trust region we define improvement through as:
             new_hv > (1 + eps) * old_hv
+
+        Parameters
+        ----------
+        n_new : int
+            Number of newly added observations.
+
+        Returns
+        -------
+        bool
+            Whether the hypervolume objective improved.
         """
         Y_new = self.Y[-n_new:]
         if self.constraints is not None:

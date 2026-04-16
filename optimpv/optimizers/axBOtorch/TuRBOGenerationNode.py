@@ -22,18 +22,18 @@
 import math
 from typing import Any, Literal, Self, override
 
-import torch, gpytorch
+import torch
+import gpytorch
 from ax.core.data import Data
 from ax.api.client import Client
 from ax.core.experiment import Experiment
 from ax.core.parameter import RangeParameter
 from ax.core.trial_status import TrialStatus
 from ax.core.types import TParameterization
-from ax.exceptions.core import OptimizationShouldStop
 from ax.generation_strategy.external_generation_node import ExternalGenerationNode
 from ax.global_stopping.strategies.base import BaseGlobalStoppingStrategy
 from botorch.acquisition import qLogExpectedImprovement
-from botorch.acquisition.objective import GenericMCObjective, ScalarizedPosteriorTransform
+from botorch.acquisition.objective import ScalarizedPosteriorTransform
 from botorch.fit import fit_gpytorch_mll  
 from botorch.generation import MaxPosteriorSampling
 from botorch.models import SingleTaskGP
@@ -57,17 +57,27 @@ def fit_gp(
     standardize_outputs: bool = True,
     max_cholesky_size: float = float("inf"),  # pyright: ignore[reportCallInDefaultInitializer]
 ) -> SingleTaskGP:
-    """Build and fit a GP model using BoTorch defaults.
+    """Build and fit a single-task Gaussian process model.
 
-    Args:
-        X: Training inputs of shape (n, d).
-        Y: Training targets of shape (n, 1).
-        normalize_inputs: Whether to normalize inputs to [0, 1]^d.
-        standardize_outputs: Whether to standardize outputs to zero mean, unit variance.
-        max_cholesky_size: Max size for Cholesky decomposition.
+    Parameters
+    ----------
+    X : torch.Tensor
+        Training inputs of shape ``(n, d)``.
+    Y : torch.Tensor
+        Training targets of shape ``(n, 1)``.
+    normalize_inputs : bool, optional
+        Whether to normalize the inputs to [0, 1]^d,
+        by default True.
+    standardize_outputs : bool, optional
+        Whether to standardize the outputs zero mean, unit variance, by default True.
+    max_cholesky_size : float, optional
+        Maximum size for Cholesky decomposition,
+        by default ``float("inf")``.
 
-    Returns:
-        Fitted GP model.
+    Returns
+    -------
+    SingleTaskGP
+        Fitted BoTorch single-task GP model.
     """
 
     d = X.shape[-1]
@@ -94,14 +104,36 @@ def fit_gp(
 
     return model
 
-class TurboConvergedError(OptimizationShouldStop):
-    """Raised when TuRBO has converged (trust region below minimum)."""
-
-    pass
-
-
 class TurboState(BaseModel):
-    """State of the TuRBO algorithm."""
+    """State of the TuRBO algorithm.
+
+    Attributes
+    ----------
+    dim : int
+        Number of search-space dimensions.
+    batch_size : int
+        Number of candidates generated per TuRBO iteration.
+    length : float
+        Current trust-region side length in normalized space.
+    length_min : float
+        Minimum trust-region length before a restart is triggered.
+    length_max : float
+        Maximum allowable trust-region length.
+    failure_counter : int
+        Number of consecutive non-improving updates.
+    success_counter : int
+        Number of consecutive improving updates.
+    success_tolerance : int
+        Number of improving updates required to expand the trust region.
+    failure_tolerance : float | None
+        Number of non-improving updates required to shrink the trust region.
+    best_value : float | None
+        Best objective value seen so far.
+    restart_triggered : bool
+        Whether the trust region has shrunk below the minimum threshold.
+    maximize : bool
+        Whether the objective is being maximized or minimized.
+    """
 
     dim: int
     batch_size: int
@@ -117,7 +149,13 @@ class TurboState(BaseModel):
     maximize: bool = True  # Whether we are maximizing or minimizing the objective
 
     def model_post_init(self, __context: Any) -> None:  # noqa: PYI063
-        """Initialize optional fields based on the required fields."""
+        """Initialize optional fields based on the required fields.
+
+        Parameters
+        ----------
+        __context : Any
+            Optional Pydantic initialization context.
+        """
         if self.best_value is None:
             self.best_value = -float("inf") if self.maximize else float("inf")
 
@@ -131,6 +169,21 @@ class TurboState(BaseModel):
         failure counter. The size of the trust region is updated based on the
         running values of the success and failure counters. If the trust region
         becomes too small then we trigger a restart.
+
+        Parameters
+        ----------
+        Y_next : torch.Tensor
+            Objective values from the latest batch of evaluated candidates.
+
+        Returns
+        -------
+        Self
+            Updated TuRBO state.
+
+        Raises
+        ------
+        RuntimeError
+            If ``best_value`` has not been initialized.
         """
         if self.best_value is None:
             raise RuntimeError("Best value not initialized. This is a bug.")
@@ -174,7 +227,34 @@ class TurboState(BaseModel):
         weights: torch.Tensor | None = None,
         maximize: bool | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-        """Get the trust region bounds for the TuRBO algorithm."""
+        """Get the trust region bounds for the TuRBO algorithm.
+
+        Parameters
+        ----------
+        X : torch.Tensor
+            Evaluated points in normalized space.
+        Y : torch.Tensor
+            Objective values corresponding to ``X``.
+        buffer : float, optional
+            By default 0.0.
+        weights : torch.Tensor | None, optional
+            Per-dimension scaling weights, typically derived from GP
+            lengthscales, by default None.
+        maximize : bool | None, optional
+            Unused argument, by default None.
+
+        Returns
+        -------
+        tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+            Lower bound, upper bound, and trust-region center in normalized
+            coordinates.
+
+        Raises
+        ------
+        ValueError
+            If provided ``weights`` do not have the same shape as the center
+            point.
+        """
         x_center = X[Y.argmax() if self.maximize else Y.argmin(), :].clone()
         if weights is None:
             weights = torch.ones_like(x_center)  # Initial weights before model fitting
@@ -198,7 +278,27 @@ class TurboState(BaseModel):
         buffer: float = 0.0,
         weights: torch.Tensor | None = None,
     ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor | None]:
-        """Get the trust region data for the TuRBO algorithm."""
+        """Get the trust region data for the TuRBO algorithm.
+
+        Parameters
+        ----------
+        X : torch.Tensor
+            Evaluated points in normalized space.
+        Y : torch.Tensor
+            Objective values corresponding to ``X``.
+        X_pending : torch.Tensor | None, optional
+            Pending points in normalized space, by default None.
+        buffer : float, optional
+            by default 0.0.
+        weights : torch.Tensor | None, optional
+            Per-dimension scaling weights for the trust region, by default None.
+
+        Returns
+        -------
+        tuple[torch.Tensor, torch.Tensor, torch.Tensor | None]
+            Points, objective values, and pending points from the
+            trust region.
+        """
         # Get best point and create trust region
         tr_lb, tr_ub, _ = self.get_trust_region_bounds(X, Y, buffer=buffer, weights=weights)  # pyright: ignore[reportArgumentType]
 
@@ -225,7 +325,45 @@ class TurboState(BaseModel):
         inequality_constraints: list[tuple[torch.Tensor, torch.Tensor, float]] | None = None,
         bounds: torch.Tensor | None = None,
     ) -> torch.Tensor:
-        """Generate a batch of candidates within the current trust region."""
+        """Generate a batch of candidates within the current trust region.
+
+        Parameters
+        ----------
+        model : SingleTaskGP
+            Fitted Gaussian process model.
+        X : torch.Tensor
+            Evaluated points in normalized space.
+        Y : torch.Tensor
+            Objective values corresponding to ``X``.
+        batch_size : int
+            Number of candidates to generate.
+        X_pending : torch.Tensor | None, optional
+            Pending points in normalized space, by default None.
+        acqf : Literal["ei", "ts"], optional
+            Acquisition function used to generate candidates, by default ``"ts"``.
+        acqf_kwargs : dict[str, Any] | None, optional
+            Additional keyword arguments for the acquisition function,
+            by default None.
+        inequality_constraints : list[tuple[torch.Tensor, torch.Tensor, float]] | None, optional
+            BoTorch-style inequality constraints, by default None.
+        bounds : torch.Tensor | None, optional
+            Parameter bounds in physical space, required when applying
+            ``inequality_constraints``, by default None.
+
+        Returns
+        -------
+        torch.Tensor
+            Batch of generated candidate points in normalized space.
+
+        Raises
+        ------
+        ValueError
+            If inequality constraints are provided without physical-space
+            bounds.
+        RuntimeError
+            If all Thompson sampling candidates are filtered out by
+            constraints.
+        """
         if acqf_kwargs is None:
             acqf_kwargs = {}
 
@@ -341,6 +479,26 @@ class TurboState(BaseModel):
 class TuRBOGenerationNode(ExternalGenerationNode):
     """A generation node that uses the TuRBO algorithm to generate a set of
     candidate designs.
+
+    Parameters
+    ----------
+    model_options : dict[str, Any]
+        Configuration options passed to TuRBO.
+    batch_size : int
+        Number of candidates generated per TuRBO iteration.
+    device : torch.device | None, optional
+        Torch device used for tensors and GP fitting, by default None.
+    dtype : torch.dtype | None, optional
+        Torch dtype used for tensors and GP fitting, by default None.
+    acqf : Literal["ts", "ei"], optional
+        Acquisition function used for the optimization, by default ``"ts"``.
+    acqf_kwargs : dict[str, Any] | None, optional
+        Additional acquisition-function keyword arguments, by default None.
+    name : str, optional
+        Node name used in the Ax generation strategy, by default
+        ``"TuRBOGenerationNode"``.
+    maximize : bool, optional
+        Whether the objective is maximized or minimized, by default True.
     """
 
     def __init__(
@@ -355,19 +513,7 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         name: str = "TuRBOGenerationNode",
         maximize: bool = True,
     ) -> None:
-        """Initialize the generation node.
-
-        Args:
-            model_options: Options to pass to the GP model.
-            batch_size: The batch size for generating new candidates.
-            device: The device to use for the generation node.
-            dtype: The dtype to use for the generation node.
-            acqf: Acquisition function to use ("ts" for Thompson sampling,
-                "ei" for Expected Improvement).
-            acqf_kwargs: Keyword arguments for the acquisition function.
-            name: The name of the generation node.
-            maximize: Whether the generation node is maximizing or minimizing the objective
-        """
+    
         if acqf_kwargs is None:
             acqf_kwargs = {}
 
@@ -401,7 +547,27 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         parameter_names: list[str],
         parameter_constraints: list[Any] | None,
     ) -> list[tuple[torch.Tensor, torch.Tensor, float]] | None:
-        """Convert Ax constraint objects to BoTorch tuples (indices, coeffs, rhs)."""
+        """Convert Ax parameter constraints to BoTorch inequality tuples.
+
+        Parameters
+        ----------
+        parameter_names : list[str]
+            Ordered parameter names used in the search space.
+        parameter_constraints : list[Any] | None
+            Ax constraint objects from the search space.
+
+        Returns
+        -------
+        list[tuple[torch.Tensor, torch.Tensor, float]] | None
+            BoTorch inequality constraints of the form
+            ``(indices, coeffs, rhs)`` or ``None`` if no constraints are
+            available.
+
+        Raises
+        ------
+        ValueError
+            If a constraint references an unknown parameter name.
+        """
         if not parameter_constraints:
             return None
 
@@ -433,11 +599,22 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         return inequality_constraints or None
 
     def update_generator_state(self, experiment: Experiment, data: Data) -> None:
-        """Update the state of the generator with the experiment and data.
+        """Update the TuRBO state from completed Ax trials.
 
-        Args:
-            experiment: The experiment object.
-            data: The data object.
+        Parameters
+        ----------
+        experiment : Experiment
+            Ax experiment object containing the search space and trial objects.
+        data : Data
+            Ax data object containing completed trial results.
+
+        Raises
+        ------
+        NotImplementedError
+            If the search space contains parameters other than
+            ``RangeParameter`` instances.
+        ValueError
+            If more than one objective metric is present.
         """
         search_space = experiment.search_space
 
@@ -523,7 +700,24 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         self.Y_turbo = Y_new
 
     def to_unit_cube(self, X: torch.Tensor) -> torch.Tensor:
-        """Convert a tensor of parameters to the unit cube."""
+        """Convert a tensor of parameters to the unit cube
+
+        Parameters
+        ----------
+        X : torch.Tensor
+            Parameter tensor in physical search-space coordinates.
+
+        Returns
+        -------
+        torch.Tensor
+            Normalized tensor with values in the unit cube.
+
+        Raises
+        ------
+        RuntimeError
+            If the generator has not yet been initialized from the experiment
+            search space.
+        """
         if self.parameters is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")
 
@@ -541,7 +735,24 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         return (X - lower_bounds) / (upper_bounds - lower_bounds)
 
     def from_unit_cube(self, X: torch.Tensor) -> torch.Tensor:
-        """Convert a tensor of parameters from the unit cube to the original space."""
+        """Convert a tensor of parameters from the unit cube to the original space.
+
+        Parameters
+        ----------
+        X : torch.Tensor
+            Parameter tensor in normalized unit cube coordinates.
+
+        Returns
+        -------
+        torch.Tensor
+            Tensor mapped back to the original parameter bounds.
+
+        Raises
+        ------
+        RuntimeError
+            If the generator has not yet been initialized from the experiment
+            search space.
+        """
         if self.parameters is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")
 
@@ -558,7 +769,24 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         return X * (upper_bounds - lower_bounds) + lower_bounds
 
     def _key(self, params: dict[str, Any]) -> tuple[Any, ...]:
-        """Create a stable key for duplicate checks against pending Ax trials."""
+        """Create a stable key for duplicate checks against pending Ax trials, used in queue.
+
+        Parameters
+        ----------
+        params : dict[str, Any]
+            Candidate parameterization in physical coordinates.
+
+        Returns
+        -------
+        tuple[Any, ...]
+            Tuple representation used for duplicate detection.
+
+        Raises
+        ------
+        RuntimeError
+            If the generator has not yet been initialized from the experiment
+            search space.
+        """
         if self.parameters is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")
 
@@ -572,7 +800,19 @@ class TuRBOGenerationNode(ExternalGenerationNode):
         return tuple(key_vals)
 
     def _enqueue_batch_from_turbo(self, X_pending: torch.Tensor | None) -> None:
-        """Generate a TuRBO batch once and queue points for Ax ingestion."""
+        """Generate one TuRBO batch and enqueue candidates for Ax consumption.
+
+        Parameters
+        ----------
+        X_pending : torch.Tensor | None
+            Pending points in normalized space, or ``None`` if no trials are
+            currently pending.
+
+        Raises
+        ------
+        RuntimeError
+            If the internal TuRBO state has not yet been initialized.
+        """
         if self.X_turbo is None or self.Y_turbo is None or self.state is None or self.parameters is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")
 
@@ -613,23 +853,24 @@ class TuRBOGenerationNode(ExternalGenerationNode):
     def get_next_candidate(self, pending_parameters: list[TParameterization]) -> TParameterization:
         """Get the parameters for the next candidate configuration to evaluate.
 
-        Args:
-            pending_parameters: A list of parameters of the candidates pending
-                evaluation.
+        Parameters
+        ----------
+        pending_parameters : list[TParameterization]
+            Parameters of candidates that have been suggested but not yet
+            evaluated.
 
-        Returns:
-            A dictionary mapping parameter names to parameter values for the next
-            candidate suggested by the method.
+        Returns
+        -------
+        TParameterization
+            Parameterization for the next candidate to evaluate.
+
+        Raises
+        ------
+        RuntimeError
+            If the internal TuRBO state has not yet been initialized.
         """
         if self.X_turbo is None or self.Y_turbo is None or self.state is None or self.parameters is None:
             raise RuntimeError("Generator state not initialized. Call update_generator_state first.")
-
-        # use global stopping strategy to check if TuRBO has converged (trust region below minimum) and raise an error to stop the optimization if so, this will be caught in the optimizer and handled gracefully by stopping the optimization and logging a message to the user
-        # if self.state.restart_triggered:
-        #     raise TurboConvergedError(
-        #         "TuRBO has converged (trust region below minimum). "
-        #         "To continue optimization, create a new TurboGenerationNode instance with fresh initial points."
-        #     )
 
         if len(pending_parameters) > 0:
             X_pending = torch.zeros(len(pending_parameters), len(self.parameters), dtype=self.dtype, device=self.device)
@@ -670,6 +911,20 @@ class TuRBOGlobalStoppingStrategy(BaseGlobalStoppingStrategy):
     """Global stopping strategy for TuRBO that checks if the trust region has converged."""
 
     def __init__(self, generation_node_name: str = "TuRBO", min_trials: int = 0, inactive_when_pending_trials: bool = True) -> None:
+        """Initialize the TuRBO global stopping strategy.
+
+        Parameters
+        ----------
+        generation_node_name : str, optional
+            Name of the TuRBO generation node to monitor, by default
+            ``"TuRBO"``.
+        min_trials : int, optional
+            Minimum number of completed trials before stopping is considered,
+            by default 0.
+        inactive_when_pending_trials : bool, optional
+            Whether stopping checks are disabled while trials are pending,
+            by default True.
+        """
         self.generation_node_name = generation_node_name
         super().__init__(
             min_trials=min_trials,
@@ -677,21 +932,21 @@ class TuRBOGlobalStoppingStrategy(BaseGlobalStoppingStrategy):
         )
 
     def _should_stop_optimization(self, experiment: Experiment, client: Client) -> tuple[bool, str]:
-        """ Check if the TuRBO generation node has triggered a restart due to convergence (trust region below minimum).
+        """Check if the TuRBO generation node has triggered a restart due to convergence (trust region below minimum).
 
         Parameters
         ----------
         experiment : Experiment
-            experiment object containing the state of the optimization.
+            Experiment object containing the state of the optimization.
         client : Client
-            client object used to interact with the optimization.
+            Client object used to interact with the optimization.
 
         Returns
         -------
         tuple[bool, str]
             tuple containing a boolean indicating whether to stop the optimization and a message explaining the reason.
 
-        """        
+        """
        
         # get the current generation node
         current_node = client._generation_strategy._curr  

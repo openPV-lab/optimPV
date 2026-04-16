@@ -4,7 +4,6 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
-
 from math import ceil, log
 from typing import Any, Callable, Dict, List, Optional
 
@@ -16,7 +15,6 @@ from botorch.models.model import Model
 from botorch.models.model_list_gp_regression import ModelListGP
 from botorch.models.transforms.input import InputTransform
 from botorch.models.transforms.outcome import OutcomeTransform
-# from botorch.optim.fit import fit_gpytorch_torch // not used 
 from botorch.utils.sampling import draw_sobol_samples
 from gpytorch import settings as gpytorch_settings
 from gpytorch.constraints import GreaterThan, Interval
@@ -31,21 +29,28 @@ from torch.distributions import Normal
 def sample_tr_discrete_points(
     X_center: Tensor, length: float, n_discrete_points: int, qmc: bool = False
 ) -> Tensor:
-    r"""Sample points around `X_center` for use in discrete Thompson sampling.
+    """Sample points around `X_center` for use in discrete Thompson sampling.
 
     Sample perturbed points around `X_center` such that the added perturbations
         are sampled from N(0, (length/4)^2) and truncated to be within
         [-length/2, -length/2].
 
-    Args:
-        X_center: a `1 x d`-dim tensor containing the center of trust region. `X_center`
-            must be normalized to be within `[0, 1]^d`.
-        length: edge length of the trust region's hypercube.
-        n_discrete_points: number of points to sample for use in discrete TS.
-        qmc: boolean indicating whether to use qmc
+    Parameters
+    ----------
+    X_center : Tensor
+        A `1 x d`-dim tensor containing the center of trust region. `X_center`
+        must be normalized to be within `[0, 1]^d`.
+    length : float
+        Edge length of the trust region's hypercube.
+    n_discrete_points : int
+        Number of points to sample for use in discrete TS.
+    qmc : bool, optional
+        Boolean indicating whether to use qmc, by default False.
 
-    Returns:
-        Tensor: a `n_discrete_points x d`-dim tensor containing the sampled points.
+    Returns
+    -------
+    Tensor
+        A `n_discrete_points x d`-dim tensor containing the sampled points.
     """
     d = X_center.shape[1]
     # sample points from N(X_center, (length/4)^2), truncated to be within
@@ -87,11 +92,35 @@ def sample_tr_discrete_points_subset_d(
     trunc_normal_perturb: bool = False,
     prob_perturb: float = None,
 ) -> Tensor:
-    r"""Sample discrete for TS by perturbing ~20 dims of `best_X`.
+    """Sample discrete for TS by perturbing ~20 dims of `best_X`.
 
     If `trunc_normal_perturb=True`, the perturbed samples are truncated normal
     around `best_X`. Otherwise, these are uniformly distributed in
     `normalize_tr_bounds`.
+
+    Parameters
+    ----------
+    best_X : Tensor
+        Candidate center points or Pareto points used as perturbation anchors.
+    normalized_tr_bounds : Tensor
+        Normalized trust region bounds.
+    n_discrete_points : int
+        Number of discrete candidates to sample.
+    length : float
+        Edge length of the trust region hypercube.
+    qmc : bool, optional
+        Whether to use qmc sampling, by default False.
+    trunc_normal_perturb : bool, optional
+        Whether to perturb with truncated normal samples around `best_X`,
+        by default False.
+    prob_perturb : float, optional
+        Probability of perturbing each dimension. If None, a default based on
+        dimensionality is used.
+
+    Returns
+    -------
+    Tensor
+        Sampled candidate points for discrete Thompson sampling.
     """
     assert normalized_tr_bounds.ndim == 2
     d = normalized_tr_bounds.shape[-1]
@@ -155,15 +184,21 @@ def sample_tr_discrete_points_subset_d(
 
 
 def get_tr_center(X: Tensor, f_obj: Tensor) -> Tensor:
-    r"""Find the best point in the trust region.
+    """Find the best point in the trust region.
 
-    Args:
-        X: a `n x d`-dim tensor of points
-        f_obj: a `n`-dim tensor of scalarized objective values. In the noiseless,
-            setting these can be (scalarized) observed values. In the noisy setting,
-            these can be (scalarized) posterior means.
-    Returns:
-        Tensor: a `1 x d`-dim tensor containing the trust region center point.
+    Parameters
+    ----------
+    X : Tensor
+        A `n x d`-dim tensor of points.
+    f_obj : Tensor
+        A `n`-dim tensor of scalarized objective values. In the noiseless,
+        setting these can be (scalarized) observed values. In the noisy
+        setting, these can be (scalarized) posterior means.
+
+    Returns
+    -------
+    Tensor
+        A `1 x d`-dim tensor containing the trust region center point.
     """
     if f_obj.ndim != 1:
         raise BotorchTensorDimensionError(
@@ -175,16 +210,25 @@ def get_tr_center(X: Tensor, f_obj: Tensor) -> Tensor:
 def get_indices_in_hypercube(
     X_center: Tensor, X: Tensor, length: float, eps: float = 1e-10
 ) -> Tensor:
-    r"""Get indices of observed points inside of trust region.
+    """Get indices of observed points inside of trust region.
 
-    Args:
-        X_center: a `1 x d`-dim tensor containing the trust region center point.
-            `X_center` must be normalized to be within `[0, 1]^d`.
-        X: `n x d`-dim tensor containing all data points collected by this trust region.
-        length: the edge length of the trust region's hypercube.
-        eps: absolute tolerance for evaluating equality (necessary on CUDA).
+    Parameters
+    ----------
+    X_center : Tensor
+        A `1 x d`-dim tensor containing the trust region center point.
+        `X_center` must be normalized to be within `[0, 1]^d`.
+    X : Tensor
+        `n x d`-dim tensor containing all data points collected by this trust
+        region.
+    length : float
+        The edge length of the trust region's hypercube.
+    eps : float, optional
+        Absolute tolerance for evaluating equality (necessary on CUDA),
+        by default 1e-10.
 
-    Returns:
+    Returns
+    -------
+    Tensor
         A `n'`-dim tensor containing the points inside the hypercube.
     """
     return ((X - X_center).abs() - length / 2 <= eps).all(dim=1).nonzero().view(-1)
@@ -200,6 +244,32 @@ def get_fitted_model(
     outcome_transform: Optional[OutcomeTransform] = None,
     fit_gpytorch_options: Optional[Dict[str, Any]] = None,
 ) -> Model:
+    """Fit a GP model or model list to the provided training data.
+
+    Parameters
+    ----------
+    X : Tensor
+        Training inputs.
+    Y : Tensor
+        Training targets.
+    use_ard : bool
+        Whether to use ARD lengthscales.
+    max_cholesky_size : int
+        Maximum matrix size for using Cholesky decomposition.
+    state_dict : dict[str, Tensor] | None, optional
+        Optional model state dict to load before fitting, by default None.
+    input_transform : InputTransform | None, optional
+        Input transform applied by the model, by default None.
+    outcome_transform : OutcomeTransform | None, optional
+        Outcome transform applied by the model, by default None.
+    fit_gpytorch_options : dict[str, Any] | None, optional
+        Options passed to `fit_gpytorch_mll`, by default None.
+
+    Returns
+    -------
+    Model
+        Fitted GP model or model list.
+    """
 
     use_fast_mvms = True if X.shape[0] > max_cholesky_size else False
     with gpytorch_settings.fast_computations(
@@ -253,15 +323,20 @@ def get_fitted_model(
 
 
 def coalesce(x1: Optional[Tensor], x2: Optional[Tensor]) -> Optional[Tensor]:
-    r"""Helper function the performs a coalesce operation.
+    """Helper function the performs a coalesce operation.
 
     If x1 is not None, it is returned. Otherwise x2 is returned.
 
-    Args:
-        x1: a tensor
-        x2 a tensor
+    Parameters
+    ----------
+    x1 : Tensor | None
+        A tensor.
+    x2 : Tensor | None
+        A tensor.
 
-    Returns:
+    Returns
+    -------
+    Tensor | None
         A tensor if either of x1 or x2 is not None, otherwise None.
     """
     if x1 is None:
@@ -270,7 +345,7 @@ def coalesce(x1: Optional[Tensor], x2: Optional[Tensor]) -> Optional[Tensor]:
 
 
 def decay_function(n: int, n0: int, n_max: int, alpha: float = 1.0) -> float:
-    r"""Decay function governed by the used and remaining optimization budget.
+    """Decay function governed by the used and remaining optimization budget.
 
     Decay function from:
         Regis R.G., Shoemaker C.A. Combining radial basis function
@@ -278,13 +353,20 @@ def decay_function(n: int, n0: int, n_max: int, alpha: float = 1.0) -> float:
         expensive black-box optimization. Engineering Optimization, 45
         (5) (2013), pp. 529-555
 
-    Args:
-        n: number of completed function evaluations
-        n0: number of initial function evaluations
-        n_max: maximum number of function evaluations (budget)
-        alpha: hyperparameter controlling decay
+    Parameters
+    ----------
+    n : int
+        Number of completed function evaluations.
+    n0 : int
+        Number of initial function evaluations.
+    n_max : int
+        Maximum number of function evaluations (budget).
+    alpha : float, optional
+        Hyperparameter controlling decay, by default 1.0.
 
-    Returns:
+    Returns
+    -------
+    float
         The probabilty of perturbing a dimension.
     """
     return 1 - alpha * log(n - n0 + 1) / log(n_max - n0 + 1)
@@ -293,16 +375,21 @@ def decay_function(n: int, n0: int, n_max: int, alpha: float = 1.0) -> float:
 def get_constraint_slack_and_feasibility(
     Y: Tensor, constraints: List[Callable[[Tensor], Tensor]]
 ) -> Tensor:
-    r"""Compute feasibility.
+    """Compute feasibility.
 
-    Args:
-        Y: A `batch_shape x n x m`-dim tensor of outcomes
-        constraints: A list of constraint callables mapping outcomes to the
-            constraint slack.
+    Parameters
+    ----------
+    Y : Tensor
+        A `batch_shape x n x m`-dim tensor of outcomes.
+    constraints : list[Callable[[Tensor], Tensor]]
+        A list of constraint callables mapping outcomes to the constraint
+        slack.
 
-    Returns:
-        A `batch_shape x n`-dim boolean tensor indicating whether each example in Y
-            is feasible.
+    Returns
+    -------
+    Tensor
+        Constraint slack values and a feasibility tensor indicating whether
+        each example in `Y` is feasible.
     """
     constraint_slack = torch.stack([c(Y) for c in constraints], dim=-1)
     return constraint_slack, (constraint_slack <= 0).all(dim=-1)
