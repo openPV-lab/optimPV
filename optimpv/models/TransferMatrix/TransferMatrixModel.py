@@ -312,27 +312,27 @@ def TMM(parameters, layers, thicknesses, lambda_min, lambda_max, lambda_step, x_
         # good up to here
         # calculate all other transfer matrices
         for material in np.arange(1,len(t)):
-                xi = 2*np.pi*n[material,ind]/lambdas[ind]
-                dj = t[material]
-                x_indices	= np.nonzero(x_mat == material)
-                x			= x_pos[x_indices]-t_cumsum[material-1]
-                # Calculate S_Prime
-                S_prime		= I_mat(n[0,ind],n[1,ind])
-                for matind in np.arange(2,material+1):
-                    mL = L_mat( n[matind-1,ind],t[matind-1],lambdas[ind] )
-                    mI = I_mat( n[matind-1,ind],n[matind,ind] )
-                    S_prime  = np.asarray( np.asmatrix(S_prime)*np.asmatrix(mL)*np.asmatrix(mI) )
-                # Calculate S_dprime (double prime)
-                S_dprime	= np.eye(2)
-                for matind in np.arange(material,len(t)-1):
-                    mI	= I_mat(n[matind,ind],n[matind+1,ind])
-                    mL	= L_mat(n[matind+1,ind],t[matind+1],lambdas[ind])
-                    S_dprime = np.asarray( np.asmatrix(S_dprime) * np.asmatrix(mI) * np.asmatrix(mL) )
-                # Normalized Electric Field Profile
-                num = T2[ind] * (S_dprime[0,0] * np.exp( complex(0,-1.0)*xi*(dj-x) ) + S_dprime[1,0]*np.exp(complex(0,1)*xi*(dj-x)))
-                den = S_prime[0,0]*S_dprime[0,0]*np.exp(complex(0,-1.0)*xi*dj) + S_prime[0,1]*S_dprime[1,0]*np.exp(complex(0,1)*xi*dj)
-                
-                E[x_indices,ind] = num / den
+            xi = 2*np.pi*n[material,ind]/lambdas[ind]
+            dj = t[material]
+            x_indices	= np.nonzero(x_mat == material)
+            x			= x_pos[x_indices]-t_cumsum[material-1]
+            # Calculate S_Prime
+            S_prime		= I_mat(n[0,ind],n[1,ind])
+            for matind in np.arange(2,material+1):
+                mL = L_mat( n[matind-1,ind],t[matind-1],lambdas[ind] )
+                mI = I_mat( n[matind-1,ind],n[matind,ind] )
+                S_prime  = np.asarray( np.asmatrix(S_prime)*np.asmatrix(mL)*np.asmatrix(mI) )
+            # Calculate S_dprime (double prime)
+            S_dprime	= np.eye(2)
+            for matind in np.arange(material,len(t)-1):
+                mI	= I_mat(n[matind,ind],n[matind+1,ind])
+                mL	= L_mat(n[matind+1,ind],t[matind+1],lambdas[ind])
+                S_dprime = np.asarray( np.asmatrix(S_dprime) * np.asmatrix(mI) * np.asmatrix(mL) )
+            # Normalized Electric Field Profile
+            num = T2[ind] * (S_dprime[0,0] * np.exp( complex(0,-1.0)*xi*(dj-x) ) + S_dprime[1,0]*np.exp(complex(0,1)*xi*(dj-x)))
+            den = S_prime[0,0]*S_dprime[0,0]*np.exp(complex(0,-1.0)*xi*dj) + S_prime[0,1]*S_dprime[1,0]*np.exp(complex(0,1)*xi*dj)
+            
+            E[x_indices,ind] = num / den
     # overall Reflection from device with incoherent reflections at first interface
     Reflectance = R_glass+T_glass**2*R/(1-R_glass*R)
     
