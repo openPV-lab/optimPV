@@ -139,9 +139,11 @@ class SIMsalabimAgent(BaseAgent):
             SIMsalabim_params[layer[1]] = ReadParameterFile(os.path.join(session_path,layer[2]))
 
         self.SIMsalabim_params = SIMsalabim_params
-        pnames = list(SIMsalabim_params[list(SIMsalabim_params.keys())[0]].keys())
-        pnames = pnames + list(SIMsalabim_params[list(SIMsalabim_params.keys())[1]].keys())
-        self.pnames = pnames   
+        pnames_ = list(SIMsalabim_params[list(SIMsalabim_params.keys())[0]].keys())
+        pnames_ = pnames_ + list(SIMsalabim_params[list(SIMsalabim_params.keys())[1]].keys())
+        self.pnames_SIMsalabim = pnames_   
+
+        self.pnames = [p.name for p in self.params]
 
         # Process tracking metrics and losses
         if self.tracking_metric is not None:

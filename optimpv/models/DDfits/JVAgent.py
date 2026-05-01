@@ -199,6 +199,7 @@ class JVAgent(SIMsalabimAgent):
         # get Gfracs from X
         # check if X is 1D or 2D
         if len(self.X[0].shape) == 1:
+            print('No Gfrac values provided in X, running simulation without Gfrac transformations')
             Gfracs = None
             Gfracs_eff = None
         else:
@@ -221,16 +222,20 @@ class JVAgent(SIMsalabimAgent):
             if parameters.get('G_eff', None) is not None:
                 G_eff = parameters['G_eff']
                 Gfracs_eff = Gfracs * G_eff  
+            elif 'G_eff' in self.pnames:
+                idx_G_eff = self.pnames.index('G_eff')
+                G_eff = self.params[idx_G_eff].value
+                Gfracs_eff = Gfracs * G_eff
             else:
                 G_eff = 1.0
-                Gfracs_eff = Gfracs              
+                Gfracs_eff = Gfracs  
         
         # prepare the cmd_pars for the simulation
         clean_pars = self.get_SIMsalabim_clean_cmd_pars(parameters)
 
         # Run the JV simulation
         UUID = self.kwargs.get('UUID',str(uuid.uuid4()))
-        
+
         ret, mess = run_SS_JV(self.simulation_setup, self.session_path, JV_file_name = 'JV.dat', G_fracs = Gfracs_eff, UUID=UUID, cmd_pars=clean_pars, parallel = parallel, max_jobs = max_jobs)
         
         if type(ret) == int:

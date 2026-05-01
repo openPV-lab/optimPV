@@ -248,9 +248,14 @@ class JVSweepAgent(SIMsalabimAgent):
             if parameters.get('G_eff', None) is not None:
                 G_eff = parameters['G_eff']
                 Gfracs_eff = Gfracs * G_eff  
+            elif 'G_eff' in self.pnames:
+                idx_G_eff = self.pnames.index('G_eff')
+                G_eff = self.params[idx_G_eff].value
+                Gfracs_eff = Gfracs * G_eff
             else:
                 G_eff = 1.0
-                Gfracs_eff = Gfracs              
+                Gfracs_eff = Gfracs  
+                     
         
         # prepare the cmd_pars for the simulation
         clean_pars = self.get_SIMsalabim_clean_cmd_pars(parameters)
