@@ -3,7 +3,7 @@
 
 import numpy as np
 import pandas as pd
-import os, uuid, sys, copy
+import os, uuid, sys, copy,warnings
 from scipy import interpolate
 
 from optimpv import *
@@ -197,7 +197,19 @@ class HysteresisAgent(SIMsalabimAgent):
         if 'cmd_pars' in dummy_kwargs:
             dummy_kwargs.pop('cmd_pars')
 
-        ret, mess, rms = Hysteresis_JV(self.simulation_setup, self.session_path, 0, scan_speed=self.scan_speed, direction=self.direction, G_frac=self.G_frac, Vmin=self.Vmin, Vmax=self.Vmax, steps=self.steps, UUID=UUID, cmd_pars=clean_pars, tj_name= 'tj.dat', **dummy_kwargs)
+
+        if parameters.get('G_eff', None) is not None:
+            G_eff = parameters['G_eff']
+            Gfracs_eff = self.G_frac * G_eff  
+        elif 'G_eff' in self.pnames:
+            idx_G_eff = self.pnames.index('G_eff')
+            G_eff = self.params[idx_G_eff].value
+            Gfracs_eff = self.G_frac * G_eff
+        else:
+            G_eff = 1.0
+            Gfracs_eff = self.G_frac
+
+        ret, mess, rms = Hysteresis_JV(self.simulation_setup, self.session_path, 0, scan_speed=self.scan_speed, direction=self.direction, G_frac=Gfracs_eff, Vmin=self.Vmin, Vmax=self.Vmax, steps=self.steps, UUID=UUID, cmd_pars=clean_pars, tj_name= 'tj.dat', **dummy_kwargs)
         if type(ret) == int:
             if not (ret == 0  or ret == 95):
                 # print('Error in running SIMsalabim: '+mess)
@@ -284,21 +296,53 @@ class HysteresisAgent(SIMsalabimAgent):
                 # calcuate time for each voltage step
                 t_sim = df['t'].values
                 Vext = df['Vext'].values
-
-                t_exp = np.zeros(len(X))
-                t_exp[0] = 0
-                for i in range(1,len(X)):
-                    t_exp[i] = t_exp[i-1] + abs(X[i]-X[i-1])/self.scan_speed
-
+                
+                t_exp = np.zeros_like(X)
+                t_exp[0] = np.abs(X[0] - Vext[0])/self.scan_speed
+                for i in range(1, len(X)):
+                    t_exp[i] = t_exp[i-1] + np.abs(X[i] - X[i-1])/self.scan_speed
                 # Do interpolation in case SIMsalabim did not return the same number of points as the experimental data
                 # we do this with the time axis and not the voltage axis since the time axis is strictly increasing, this avoids problems with the spline interpolation and avoid spliting the data in two parts
+                
+                # Split the data into forward and backward scans
+                if self.direction == 1: # Forward-backward
+                    split_idx_X = np.argmax(X) + 1
+                    split_idx_sim = np.argmax(Vext) + 1
+                else: # Backward-forward
+                    split_idx_X = np.argmin(X) + 1
+                    split_idx_sim = np.argmin(Vext) + 1
+
+                X_fwd, X_bwd = np.split(X, [split_idx_X])
+                
+                V_sim_fwd, V_sim_bwd = np.split(Vext, [split_idx_sim])
+                J_sim_fwd, J_sim_bwd = np.split(df['Jext'].values, [split_idx_sim])
+
+                yfit_fwd, yfit_bwd = np.array([]), np.array([])
+
+                # Interpolate forward scan
                 try:
-                    tck = interpolate.splrep(t_sim, df['Jext'].values, s=0)
-                    yfit = interpolate.splev(t_exp, tck, der=0)
-                except:
-                    warnings.warn('Spline interpolation failed, using linear interpolation', UserWarning)
-                    f = interpolate.interp1d(t_sim, df['Jext'].values, kind='linear', fill_value='extrapolate')
-                    yfit = f(t_exp)
+                    # Ensure V_sim_fwd is monotonic before spline interpolation
+                    sort_indices = np.argsort(V_sim_fwd)
+                    tck_fwd = interpolate.splrep(V_sim_fwd[sort_indices], J_sim_fwd[sort_indices], s=0)
+                    yfit_fwd = interpolate.splev(X_fwd, tck_fwd, der=0)
+                except Exception:
+                    warnings.warn('Spline interpolation failed for forward scan, using linear interpolation', UserWarning)
+                    f_fwd = interpolate.interp1d(V_sim_fwd, J_sim_fwd, kind='linear', fill_value='extrapolate', bounds_error=False)
+                    yfit_fwd = f_fwd(X_fwd)
+
+                # Interpolate backward scan
+                try:
+                    # Ensure V_sim_bwd is monotonic before spline interpolation
+                    sort_indices = np.argsort(V_sim_bwd)
+                    tck_bwd = interpolate.splrep(V_sim_bwd[sort_indices], J_sim_bwd[sort_indices], s=0)
+                    yfit_bwd = interpolate.splev(X_bwd, tck_bwd, der=0)
+                except Exception:
+                    warnings.warn('Spline interpolation failed for backward scan, using linear interpolation', UserWarning)
+                    f_bwd = interpolate.interp1d(V_sim_bwd, J_sim_bwd, kind='linear', fill_value='extrapolate', bounds_error=False)
+                    yfit_bwd = f_bwd(X_bwd)
+                
+                yfit = np.concatenate((yfit_fwd, yfit_bwd))
+                Xfit = X
             else:
                 Xfit = X
                 yfit = np.asarray(df['Jext'].values)

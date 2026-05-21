@@ -7,6 +7,7 @@ v1.05 - 2026-03-11 - VMLC-PV, FFil
 - axBOtorchOptimizer: skipping center and sobol as "models" when creating the ax client instance, this is to make sure that the client has a trainable model. Fixed small error in best Sobol value print. Also made sure that the SuggestOnly agent can work with SOBOL.
 - SIMsalabimAgent: Remove the check that enforces left-to-right or right-to-left arrangement of the energy level offsets (differences in designated energy levels). This is not necessary, as a later check ensures that each parameter is specified only once. Fix some small bugs.   
 - JVAgent: Added new exp_format ‘^QFLSL-?\d+$’ i.e. QFLSL plus an integer. This is to simulate QFLS vs Vext curves. Added a G_eff parameter that get multiplied to the G_frac this helps when using the transfer matrix model ('calc' option in SIMsalabim) and the n,k data are not perfect. Small fix for the Voc calculation in the Kirchartz QFLS version.
+- HysteresisAgent: Fixed a bug in the data interpolation which caused the JV to be wrong.
 - RateEqModel: Removed a factor 2 in the p1s expression. Added N0 as a potential fit parameter.  
 - scipyOptimizer: Added optimize_least_squares method to perform optimization using the least squares method from scipy. This is useful for fitting problems and can provide better results than the standard scipy.optimize.minimize method for certain problems.
 - UltraNestOptimizer: Added new Optimizer to do Bayesian inference using the [UltraNest](https://github.com/JohannesBuchner/UltraNest/) library.
