@@ -3,6 +3,7 @@
 
 from sklearn.metrics import max_error, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error, mean_squared_log_error, root_mean_squared_error, root_mean_squared_log_error, median_absolute_error
 import numpy as np
+from scipy import interpolate
 from scipy.spatial import distance
 
 ######### Function Definitions ####################################################################
@@ -430,6 +431,7 @@ def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=
     ValueError
         If the transformation type is not implemented
     """
+
     if do_G_frac_transform is None:
         do_G_frac_transform = False 
     # Make deep copies
@@ -447,12 +449,14 @@ def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=
 
     # --- Extract G-fracs if needed ---
     Gfracs = None
-    if do_G_frac_transform and X is not None and X.shape[1] >= 2:
-        Gfracs, index = np.unique(X[:, 1], return_index=True)
-        if len(Gfracs) == 1:
-            Gfracs = None
-        else:
-            Gfracs = Gfracs[np.argsort(index)]
+    # check first that X.shape[1] can work
+    if X.ndim >= 2:
+        if do_G_frac_transform and X is not None and X.shape[1] >= 2:
+            Gfracs, index = np.unique(X[:, 1], return_index=True)
+            if len(Gfracs) == 1:
+                Gfracs = None
+            else:
+                Gfracs = Gfracs[np.argsort(index)]
 
     # --- Helper transforms ---
 
@@ -506,6 +510,34 @@ def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=
             a[mask] = np.abs(a[mask])
             b[mask] = np.abs(b[mask])
             return a, b
+    
+    def t_abs_normalized(a, b, mask=None):
+        #normalize by the maximum absolute value
+        if mask is None:
+            max_a = np.max(np.abs(a))
+            max_b = np.max(np.abs(b))
+            if max_a > 0:
+                a = a/max_a
+            else:
+                a = np.nan * np.ones_like(a)
+            if max_b > 0:
+                b = b/max_b
+            else:
+                b = np.nan * np.ones_like(b)
+            return a, b
+        else:
+            max_a = np.max(np.abs(a[mask]))
+            max_b = np.max(np.abs(b[mask]))
+            if max_a > 0:
+                a[mask] = a[mask]/max_a
+            else:
+                a[mask] = np.nan * np.ones_like(a[mask])
+            if max_b > 0:
+                b[mask] = b[mask]/max_b
+            else:
+                b[mask] = np.nan * np.ones_like(b[mask])
+            
+            return a, b
 
     # Mapping: normalized_log is intentionally removed
     TRANSFORMS = {
@@ -513,6 +545,7 @@ def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=
         'log': t_log,
         'sqrt': t_sqrt,
         'normalize': t_normalized,
+        'abs_normalize': t_abs_normalized,
         'abs': t_abs
     }
 
@@ -532,3 +565,334 @@ def transform_data(y, y_pred, X=None, X_pred=None, transforms='linear', epsilon=
 
     return y_t, ypred_t
 
+# def interpolation_safe(x,y,xnew):
+#     """Interpolate y values at new x values, while safely handling out-of-bounds and NaN values.
+
+#     Parameters
+#     ----------
+#     x : array-like
+#         Original x values corresponding to y
+#     y : array-like
+#         Original y values to interpolate
+#     xnew : array-like
+#         New x values at which to interpolate y
+
+#     Returns
+#     -------
+#     array-like
+#         Interpolated y values at xnew, with NaNs for out-of-bounds or invalid inputs
+#     """
+    
+#     # now redo interpolation with the new t_con and spv_con values
+#     do_interp = True
+#     if len(x) == len(xnew):
+#         if np.allclose(x, xnew):
+#             do_interp = False
+
+#     if not do_interp:
+#         return y
+    
+#     try:
+#         tck = interpolate.splrep(x, y, s=0)
+#         ynew = interpolate.splev(xnew, tck, der=0, ext=0)
+#     except:
+
+#         f = interpolate.interp1d(x, y, fill_value='extrapolate', kind='linear')
+#         ynew = f(xnew)
+#     return ynew
+
+def interpolation_safe(x, y, xnew, mode="linear", log_base=10):
+    """Interpolate y at xnew.
+
+    Invalid source values are dropped before interpolation.
+    Invalid query values are returned as NaN.
+    For log modes, interpolation is performed in log space but the output
+    is returned on the original y scale.
+    """
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    xnew = np.asarray(xnew, dtype=float)
+
+    if len(x) == len(xnew) and np.allclose(x, xnew, equal_nan=True):
+        return y
+
+    source_mask = np.isfinite(x) & np.isfinite(y)
+    query_mask = np.isfinite(xnew)
+
+    if mode == "linear":
+        xin = x[source_mask]
+        yin = y[source_mask]
+        xnew_in = xnew[query_mask]
+        invert_y = False
+
+    elif mode == "loglin":
+        source_mask &= x > 0
+        query_mask &= xnew > 0
+
+        xin = np.log10(x[source_mask]) if log_base == 10 else np.log(x[source_mask])
+        yin = y[source_mask]
+        xnew_in = np.log10(xnew[query_mask]) if log_base == 10 else np.log(xnew[query_mask])
+        invert_y = False
+
+    elif mode == "loglog":
+        source_mask &= (x > 0) & (y > 0)
+        query_mask &= xnew > 0
+
+        xin = np.log10(x[source_mask]) if log_base == 10 else np.log(x[source_mask])
+        yin = np.log10(y[source_mask]) if log_base == 10 else np.log(y[source_mask])
+        xnew_in = np.log10(xnew[query_mask]) if log_base == 10 else np.log(xnew[query_mask])
+        invert_y = True
+
+    else:
+        xin = x[source_mask]
+        yin = y[source_mask]
+        xnew_in = xnew[query_mask]
+        invert_y = False
+
+    ynew = np.full(xnew.shape, np.nan, dtype=float)
+
+    if xin.size == 0 or yin.size == 0:
+        return ynew
+
+    if xin.size == 1:
+        yinterp = np.full(xnew_in.shape, yin[0], dtype=float)
+    else:
+        order = np.argsort(xin)
+        xin = xin[order]
+        yin = yin[order]
+
+        unique_x, unique_idx = np.unique(xin, return_index=True)
+        xin = unique_x
+        yin = yin[unique_idx]
+
+        if xin.size == 1:
+            yinterp = np.full(xnew_in.shape, yin[0], dtype=float)
+        else:
+            try:
+                tck = interpolate.splrep(xin, yin, s=0)
+                yinterp = interpolate.splev(xnew_in, tck, der=0, ext=0)
+            except Exception:
+                f = interpolate.interp1d(xin, yin, fill_value="extrapolate", kind="linear")
+                yinterp = f(xnew_in)
+
+    if invert_y:
+        yinterp = 10**yinterp if log_base == 10 else np.exp(yinterp)
+
+    ynew[query_mask] = yinterp
+    return ynew
+
+
+import numpy as np
+from scipy import interpolate
+
+
+def interpolation_safe2(
+    x,
+    y,
+    xnew,
+    mode="linear",
+    method="auto",
+    log_base=10,
+    slope_ratio_threshold=50,
+):
+    """
+    Robust interpolation supporting linear, loglin and loglog modes.
+
+    Parameters
+    ----------
+    x, y : array-like
+        Input data.
+    xnew : array-like
+        Query points.
+    mode : {"linear", "loglin", "loglog"}
+    method : {"auto", "pchip", "spline", "linear"}
+    log_base : {10, np.e}
+    slope_ratio_threshold : float
+        Threshold used by auto mode to detect sharp transitions.
+
+    Returns
+    -------
+    ynew : ndarray
+    """
+
+    x = np.asarray(x, dtype=float)
+    y = np.asarray(y, dtype=float)
+    xnew = np.asarray(xnew, dtype=float)
+
+    if len(x) == len(xnew) and np.allclose(x, xnew, equal_nan=True):
+        return y.copy()
+
+    source_mask = np.isfinite(x) & np.isfinite(y)
+    query_mask = np.isfinite(xnew)
+
+    invert_y = False
+
+    if mode == "linear":
+
+        xin = x[source_mask]
+        yin = y[source_mask]
+        xnew_in = xnew[query_mask]
+
+    elif mode == "loglin":
+
+        source_mask &= x > 0
+        query_mask &= xnew > 0
+
+        logfun = np.log10 if log_base == 10 else np.log
+
+        xin = logfun(x[source_mask])
+        yin = y[source_mask]
+        xnew_in = logfun(xnew[query_mask])
+
+    elif mode == "loglog":
+
+        source_mask &= (x > 0) & (y > 0)
+        query_mask &= xnew > 0
+
+        logfun = np.log10 if log_base == 10 else np.log
+
+        xin = logfun(x[source_mask])
+        yin = logfun(y[source_mask])
+        xnew_in = logfun(xnew[query_mask])
+
+        invert_y = True
+
+    else:
+        raise ValueError(
+            "mode must be 'linear', 'loglin', or 'loglog'"
+        )
+
+    ynew = np.full_like(xnew, np.nan, dtype=float)
+
+    if len(xin) == 0:
+        return ynew
+
+    # Sort and remove duplicate x values
+    order = np.argsort(xin)
+    xin = xin[order]
+    yin = yin[order]
+
+    xin, idx = np.unique(xin, return_index=True)
+    yin = yin[idx]
+
+    if len(xin) == 1:
+        ynew[query_mask] = yin[0]
+        return ynew
+
+    # ---------------------------------------------------------
+    # Automatic method selection
+    # ---------------------------------------------------------
+
+    chosen_method = method
+
+    if method == "auto":
+
+        chosen_method = "spline"
+
+        if len(xin) < 5:
+            chosen_method = "pchip"
+
+        dy = np.diff(yin)
+        dx = np.diff(xin)
+
+        valid = np.abs(dx) > np.finfo(float).eps
+
+        if np.any(valid):
+
+            slopes = np.abs(dy[valid] / dx[valid])
+
+            finite = np.isfinite(slopes)
+
+            if np.any(finite):
+
+                slopes = slopes[finite]
+
+                max_slope = np.max(slopes)
+                med_slope = np.median(slopes)
+
+                if med_slope <= 0:
+                    med_slope = np.mean(slopes)
+
+                if med_slope > 0:
+
+                    slope_ratio = max_slope / med_slope
+
+                    if slope_ratio > slope_ratio_threshold:
+                        chosen_method = "pchip"
+
+        # Monotonic data -> PCHIP is almost always safer
+        if np.all(np.diff(yin) >= 0) or np.all(np.diff(yin) <= 0):
+            chosen_method = "pchip"
+    print(f"Chosen interpolation method: {chosen_method}")
+    # ---------------------------------------------------------
+    # Interpolate
+    # ---------------------------------------------------------
+
+    try:
+
+        if chosen_method == "pchip":
+
+            interp_fun = interpolate.PchipInterpolator(
+                xin,
+                yin,
+                extrapolate=True,
+            )
+
+            yinterp = interp_fun(xnew_in)
+
+        elif chosen_method == "spline":
+
+            tck = interpolate.splrep(
+                xin,
+                yin,
+                s=0,
+            )
+
+            yinterp = interpolate.splev(
+                xnew_in,
+                tck,
+                der=0,
+                ext=0,
+            )
+
+        elif chosen_method == "linear":
+
+            interp_fun = interpolate.interp1d(
+                xin,
+                yin,
+                kind="linear",
+                fill_value="extrapolate",
+                assume_sorted=True,
+            )
+
+            yinterp = interp_fun(xnew_in)
+
+        else:
+
+            raise ValueError(
+                "method must be 'auto', 'pchip', "
+                "'spline', or 'linear'"
+            )
+
+    except Exception:
+
+        interp_fun = interpolate.interp1d(
+            xin,
+            yin,
+            kind="linear",
+            fill_value="extrapolate",
+            assume_sorted=True,
+        )
+
+        yinterp = interp_fun(xnew_in)
+
+    if invert_y:
+
+        if log_base == 10:
+            yinterp = 10.0**yinterp
+        else:
+            yinterp = np.exp(yinterp)
+
+    ynew[query_mask] = yinterp
+
+    return ynew

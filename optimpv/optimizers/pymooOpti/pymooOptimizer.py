@@ -22,7 +22,10 @@ from pymoo.algorithms.soo.nonconvex.cmaes import CMAES
 from pymoo.optimize import minimize
 from pymoo.core.callback import Callback
 from multiprocessing.pool import ThreadPool
-from pymoo.core.problem import StarmapParallelization
+try:
+    from pymoo.core.problem import StarmapParallelization
+except ImportError:
+    from pymoo.parallelization.starmap import StarmapParallelization
 from pymoo.core.population import Population
 from pymoo.core.individual import Individual
 from pymoo.util.ref_dirs import get_reference_directions
@@ -52,7 +55,7 @@ class PymooProblem(ElementwiseProblem):
         self.parameter_constraints = kwargs.get('parameter_constraints', None)
         n_constr = 0
         self.constraint_data = []
-        if self.parameter_constraints:
+        if self.parameter_constraints is not None:
             self.constraint_data = self.parse_constraints(self.parameter_constraints)
             n_constr = len(self.constraint_data)
         
@@ -245,16 +248,21 @@ class PymooProblem(ElementwiseProblem):
                 if metric_name in merged_results:
                     value = merged_results[metric_name]
                     # Apply sign for minimization/maximization
+                    if np.isnan(value):
+                        # Handle NaN values with large penalty
+                        value = 1e6
                     sign = 1 if agent.minimize[i] else -1
                     objectives.append(sign * value)
                 else:
                     # Handle missing metrics with large penalty
-                    objectives.append(1e6)
+                    sign = 1 if agent.minimize[i] else -1
+                    objectives.append(sign * 1e6)
         
         # Check for NaN values and handle failed evaluations
-        if any(np.isnan(obj) for obj in objectives):
-            # Return a large penalty value for failed evaluations
-            objectives = [1e6] * len(self.all_metrics)
+        # if any(np.isnan(obj) for obj in objectives):
+        #     # Return a large penalty value for failed evaluations
+
+        #     objectives = [1e6] * len(self.all_metrics)
         
         out["F"] = np.array(objectives)
         
@@ -532,9 +540,18 @@ class PymooOptimizer(BaseAgent):
                 if self.optimizer.verbose_logging:
                     logging_level = 20
                     logger.setLevel(logging_level)
+                    f_values = algorithm.pop.get('F')
+                    best_per_objective = f_values.min(axis=0)
+                    objective_log = {
+                        metric: float(best_per_objective[i])
+                        for i, metric in enumerate(self.optimizer.all_metrics)
+                    }
                     logger.info(
-                        f"Generation {algorithm.n_gen}: Best objective = {algorithm.pop.get('F').min():.6f}"
-                    )
+                        f"Generation {algorithm.n_gen}: Best objectives = {objective_log}"
+)
+                    # logger.info(
+                    #     f"Generation {algorithm.n_gen}: Best objective = {algorithm.pop.get('F').min():.6f}"
+                    # )
         
         return OptimizationCallback(self)
     

@@ -50,6 +50,7 @@ class SIMsalabimAgent(BaseAgent):
         self.tracking_transforms = tracking_transforms
         self.name = name
         self.kwargs = kwargs
+        self.verbose = self.kwargs.get('verbose', False)
         
         # Do some checks and set some default values
         if simulation_setup is None:
@@ -679,7 +680,7 @@ class SIMsalabimAgent(BaseAgent):
                     cmd_pars.append({'par': layer+'.mu_anion', 'val': str(value)})
                     cmd_pars.append({'par': layer+'.mu_cation', 'val': str(value)})
             elif par == 'mu_np':
-                if param.value_type == 'float' and no_transform:
+                if param.value_type == 'float' and not no_transform:
                     if param.force_log:
                         cmd_pars.append({'par': layer+'.mu_n', 'val': str(10**value)})
                         cmd_pars.append({'par': layer+'.mu_p', 'val': str(10**value)})
@@ -690,7 +691,7 @@ class SIMsalabimAgent(BaseAgent):
                     cmd_pars.append({'par': layer+'.mu_n', 'val': str(value)})
                     cmd_pars.append({'par': layer+'.mu_p', 'val': str(value)})
             elif par == 'C_np_bulk':
-                if param.value_type == 'float' and no_transform:
+                if param.value_type == 'float' and not no_transform:
                     if param.force_log:
                         cmd_pars.append({'par': layer+'.C_n_bulk', 'val': str(10**value)})
                         cmd_pars.append({'par': layer+'.C_p_bulk', 'val': str(10**value)})
@@ -700,8 +701,8 @@ class SIMsalabimAgent(BaseAgent):
                 else:
                     cmd_pars.append({'par': layer+'.C_n_bulk', 'val': str(value)})
                     cmd_pars.append({'par': layer+'.C_p_bulk', 'val': str(value)})
-            elif par == 'C_np_int' and no_transform:
-                if param.value_type == 'float':
+            elif par == 'C_np_int' :
+                if param.value_type == 'float' and not no_transform:
                     if param.force_log:
                         cmd_pars.append({'par': layer+'.C_n_int', 'val': str(10**value)})
                         cmd_pars.append({'par': layer+'.C_p_int', 'val': str(10**value)})
@@ -711,7 +712,17 @@ class SIMsalabimAgent(BaseAgent):
                 else:
                     cmd_pars.append({'par': layer+'.C_n_int', 'val': str(value)})
                     cmd_pars.append({'par': layer+'.C_p_int', 'val': str(value)})
-        
+            elif par == 'nu_int_np':
+                if param.value_type == 'float' and not no_transform:
+                    if param.force_log:
+                        cmd_pars.append({'par': layer+'.nu_int_n', 'val': str(10**value)})
+                        cmd_pars.append({'par': layer+'.nu_int_p', 'val': str(10**value)})
+                    else:
+                        cmd_pars.append({'par': layer+'.nu_int_n', 'val': str(value*param.fscale)})
+                        cmd_pars.append({'par': layer+'.nu_int_p', 'val': str(value*param.fscale)})
+                else:
+                    cmd_pars.append({'par': layer+'.nu_int_n', 'val': str(value)})
+                    cmd_pars.append({'par': layer+'.nu_int_p', 'val': str(value)})
         return cmd_pars
 
     def energy_level_offsets(self, custom_pars, clean_pars):
@@ -725,6 +736,8 @@ class SIMsalabimAgent(BaseAgent):
         offset_W_L.E_v is the offset from the left electrode work function to the valence band of layer 1 => W_L = E_v_layer1 - offset
         offset_W_R.E_c is the offset from the right electrode work function to the conduction band of the last layer => W_R = E_c_layerN - offset
         offset_W_R.E_v is the offset from the right electrode work function to the valence band of the last layer => W_R = E_v_layerN - offset
+        offset_WLR is the offset between the left and right electrode work functions => W_L = W_R - offset or W_R = W_L + offset
+        offset_WRL is the offset between the right and left electrode work functions => W_R = W_L - offset or W_L = W_R + offset
 
         Parameters
         ----------
@@ -767,7 +780,7 @@ class SIMsalabimAgent(BaseAgent):
                 tmp_SIMsalabim_params[layer][par] = cmd['val']
  
         Ec_cmd_nrj, Ev_cmd_nrj, Ec_idx_in_stack, Ec_idx_in_cmd_pars, Ev_idx_in_stack, Ev_idx_in_cmd_pars = [],[],[],[],[],[]
-        Egap_cmd_nrj, W_L_offset, W_R_offset = [],[],[]
+        Egap_cmd_nrj, W_L_offset, W_R_offset, WLR_offset, WRL_offset = [],[],[],[],[]
         for idx, cmd in enumerate(custom_pars):
             if '.' in cmd['par'] and 'offset' in cmd['par'] and not 'W_L' in cmd['par'] and not 'W_R' in cmd['par']:
                 layer, par = cmd['par'].split('.')
@@ -788,6 +801,18 @@ class SIMsalabimAgent(BaseAgent):
 
             if '.' in cmd['par'] and 'offset' in cmd['par'] and 'W_R' in cmd['par']:
                 W_R_offset.append(cmd)
+            
+            if 'offset' in cmd['par'] and 'WLR' in cmd['par']:
+                WLR_offset.append(cmd)
+            
+            if 'offset' in cmd['par'] and 'WRL' in cmd['par']:
+                WRL_offset.append(cmd)
+
+            if cmd['par'] == 'WLR':
+                clean_pars.append({'par': 'W_L', 'val': cmd['val']})
+                clean_pars.append({'par': 'W_R', 'val': cmd['val']})
+                tmp_SIMsalabim_params['setup']['W_L'] = cmd['val']
+                tmp_SIMsalabim_params['setup']['W_R'] = cmd['val']
 
         # reoder the Ec and Ev in cmd_pars to match the order in the stack
         dum_array = np.asarray([Ec_idx_in_stack, Ec_idx_in_cmd_pars])
@@ -860,13 +885,25 @@ class SIMsalabimAgent(BaseAgent):
                     raise ValueError('The offset of the work function of the right electrode with respect to the conduction band must be negative')
                 W_R = float(tmp_SIMsalabim_params[last_layer]['E_c']) - float(cmd['val'])
                 clean_pars.append({'par': 'W_R', 'val': str(W_R)})
-                tmp_SIMsalabim_params['l1']['W_R'] = str(W_R)
+                tmp_SIMsalabim_params['setup']['W_R'] = str(W_R)
             if par == 'E_v':
                 if float(cmd['val']) < 0:
                     raise ValueError('The offset of the work function of the right electrode with respect to the valence band must be positive')
                 W_R = float(tmp_SIMsalabim_params[last_layer ]['E_v']) - float(cmd['val'])
                 clean_pars.append({'par': 'W_R', 'val': str(W_R)})
                 tmp_SIMsalabim_params['setup']['W_R'] = str(W_R)
+
+        for idx, cmd in enumerate(WRL_offset):
+            W_L = float(tmp_SIMsalabim_params['setup']['W_L'])
+            W_R = W_L - float(cmd['val'])
+            clean_pars.append({'par': 'W_R', 'val': str(W_R)})
+            tmp_SIMsalabim_params['setup']['W_R'] = str(W_R)
+
+        for idx, cmd in enumerate(WLR_offset):
+            W_R = float(tmp_SIMsalabim_params['setup']['W_R'])
+            W_L = W_R - float(cmd['val'])
+            clean_pars.append({'par': 'W_L', 'val': str(W_L)})
+            tmp_SIMsalabim_params['setup']['W_L'] = str(W_L)
 
         return clean_pars
 
@@ -972,14 +1009,17 @@ class SIMsalabimAgent(BaseAgent):
                     tmp_SIMsalabim_params[layer]['E_t_bulk'] = str(E_trap)
             if 'E_t_int_depth' in cmd['par']:
                 layer, par, ref = cmd['par'].split('.')
+                layer2 = 'l'+str(int(layer[1:])+1)
                 if ref == 'E_c':
                     E_c = float(tmp_SIMsalabim_params[layer]['E_c'])
-                    E_trap = E_c + float(cmd['val'])
+                    E_c2 = float(tmp_SIMsalabim_params[layer2]['E_c'])
+                    E_trap = max(E_c, E_c2) + float(cmd['val']) # here we need to take the max of the two conduction band energies to make sure the trap is actually not in between the conduction band of both layers
                     clean_pars.append({'par': layer+'.E_t_int', 'val': str(E_trap)})
                     tmp_SIMsalabim_params[layer]['E_t_int'] = str(E_trap)
                 if ref == 'E_v':
                     E_v = float(tmp_SIMsalabim_params[layer]['E_v'])
-                    E_trap = E_v - float(cmd['val'])
+                    E_v2 = float(tmp_SIMsalabim_params[layer2]['E_v'])
+                    E_trap = min(E_v, E_v2) - float(cmd['val']) # here we need to take the min of the two valence band energies to make sure the trap is actually not in between the valence band of both layers
                     clean_pars.append({'par': layer+'.E_t_int', 'val': str(E_trap)})
                     tmp_SIMsalabim_params[layer]['E_t_int'] = str(E_trap)
         return clean_pars
@@ -1033,14 +1073,13 @@ class SIMsalabimAgent(BaseAgent):
         ValueError
             If the parameter name is in both the parameters and cmd_pars
         """        
-
         for param in self.params:
             if param.name in parameters.keys():
                 if param.name not in VarNames:
                     VarNames.append(param.name)
-                    if '.' in param.name and 'offset' not in param.name and 'Egap' not in param.name and not 'depth' in param.name:
+                    if '.' in param.name and 'offset' not in param.name and 'Egap' not in param.name and not 'depth' in param.name and not param.name == 'WLR':
                         layer, par = param.name.split('.')
-                        if par not in ['N_ions', 'mu_ions', 'mu_np', 'C_np_bulk', 'C_np_int','C_anion','C_cation']:
+                        if par not in ['N_ions', 'mu_ions', 'mu_np', 'C_np_bulk', 'C_np_int','C_anion','C_cation','nu_int_np']:
                             if par in self.SIMsalabim_params[layer].keys():
                                 if param.value_type == 'float':
                                     if param.force_log:
@@ -1077,7 +1116,7 @@ class SIMsalabimAgent(BaseAgent):
                                 clean_pars.append({'par': param.name, 'val': str(parameters[param.name])})
                         else:
                             # put in custom_pars
-                            if 'offset' in param.name or 'Egap' in param.name or 'depth' in param.name:
+                            if 'offset' in param.name or 'Egap' in param.name or 'depth' in param.name or param.name == 'WLR':
                                 if param.value_type == 'float':
                                     if param.force_log:
                                         custom_pars.append({'par': param.name, 'val': str(10**parameters[param.name])})
@@ -1088,7 +1127,8 @@ class SIMsalabimAgent(BaseAgent):
                                 else:
                                     custom_pars.append({'par': param.name, 'val': str(parameters[param.name])})
                             else:
-                                warnings.warn('Parameter '+param.name+' is not defined in the SIMsalabim parameter files. Please check the parameter names. The optimization will proceed but '+param.name+' will not be used by SIMsalabim.', UserWarning)
+                                if self.verbose:
+                                    warnings.warn('Parameter '+param.name+' is not defined in the SIMsalabim parameter files. Please check the parameter names. The optimization will proceed but '+param.name+' will not be used by SIMsalabim.', UserWarning)
                             # raise ValueError('Parameter '+param.name+' is not defined in the SIMsalabim parameter files. Please check the parameter names.')
                         
                 else:
@@ -1097,9 +1137,9 @@ class SIMsalabimAgent(BaseAgent):
                 # if param is not in parameters we use the param.value
                 if param.name not in VarNames:
                     VarNames.append(param.name)
-                    if '.' in param.name and 'offset' not in param.name and 'Egap' not in param.name and not 'depth' in param.name:
+                    if '.' in param.name and 'offset' not in param.name and 'Egap' not in param.name and not 'depth' in param.name and not param.name == 'WLR':
                         layer, par = param.name.split('.')
-                        if par not in ['N_ions', 'mu_ions', 'mu_np', 'C_np_bulk', 'C_np_int','C_anion','C_cation']:
+                        if par not in ['N_ions', 'mu_ions', 'mu_np', 'C_np_bulk', 'C_np_int','C_anion','C_cation','nu_int_np']:
                             if par in self.SIMsalabim_params[layer].keys():
                                 clean_pars.append({'par': param.name, 'val': str(param.value)})
                             else:
@@ -1110,10 +1150,11 @@ class SIMsalabimAgent(BaseAgent):
                         if param.name in self.SIMsalabim_params['setup'].keys():
                             clean_pars.append({'par': param.name, 'val': str(param.value)})
                         else:
-                            if 'offset' in param.name or 'Egap' in param.name or 'depth' in param.name:
+                            if 'offset' in param.name or 'Egap' in param.name or 'depth' in param.name or param.name == 'WLR':
                                 custom_pars.append({'par': param.name, 'val': str(param.value)})
                             else:
-                                warnings.warn('Parameter '+param.name+' is not defined in the SIMsalabim parameter files. Please check the parameter names. The optimization will proceed but '+param.name+' will not be used by SIMsalabim.', UserWarning)
+                                if self.verbose:
+                                    warnings.warn('Parameter '+param.name+' is not defined in the SIMsalabim parameter files. Please check the parameter names. The optimization will proceed but '+param.name+' will not be used by SIMsalabim.', UserWarning)
                 else:
                     raise ValueError('Parameter '+param.name+' is defined in both the parameters and cmd_pars. Please remove one of them.')
                 # raise ValueError('There is no parameter named '+param.name+' in the self.params list. Please check the parameter names.')

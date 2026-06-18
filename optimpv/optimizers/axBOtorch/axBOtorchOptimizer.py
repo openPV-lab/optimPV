@@ -447,6 +447,7 @@ class axBOtorchOptimizer(BaseAgent):
         # rescale the existing data to match what is expected by the Ax client
         copy_data = self.descale_dataframe(copy.deepcopy(self.existing_data), self.params)
         
+        counter=0
         for index, row in copy_data.iterrows():
             # Create a parameterization dictionary
             # parameterization = {p.name: copy_data[p.name].iloc[index] for p in self.params if p.type != 'fixed'}
@@ -454,20 +455,20 @@ class axBOtorchOptimizer(BaseAgent):
             for p in self.params:
                 if p.type != 'fixed':
                     if p.value_type == 'float':
-                        parameterization[p.name] = copy_data[p.name].iloc[index]
+                        parameterization[p.name] = copy_data[p.name].iloc[counter]
                     elif p.value_type == 'int':
-                        parameterization[p.name] = int(copy_data[p.name].iloc[index])
+                        parameterization[p.name] = int(copy_data[p.name].iloc[counter])
                     elif p.value_type == 'str':
-                        parameterization[p.name] = str(copy_data[p.name].iloc[index])
+                        parameterization[p.name] = str(copy_data[p.name].iloc[counter])
                     elif p.value_type == 'cat' or p.value_type == 'sub':
-                        parameterization[p.name] = str(copy_data[p.name].iloc[index])
+                        parameterization[p.name] = str(copy_data[p.name].iloc[counter])
 
             # If the parameterization is empty, skip this row
             if not parameterization:
                 continue
 
             # Create a raw data dictionary and keep the correct types
-            raw_data = {metric: copy_data[metric].iloc[index] for metric in self.all_metrics + self.all_tracking_metrics if metric in row}
+            raw_data = {metric: copy_data[metric].iloc[counter] for metric in self.all_metrics + self.all_tracking_metrics if metric in row}
 
             # If the raw data is empty, skip this row
             if not raw_data:
@@ -484,6 +485,8 @@ class axBOtorchOptimizer(BaseAgent):
                 logging_level = 20
                 logger.setLevel(logging_level)
                 logger.info(f"Attached trial {trial_index} with parameters {parameterization} and raw data {raw_data}")
+            
+            counter+=1
 
     def get_initial_data_from_existing_data_turbo(self):
 
@@ -1600,7 +1603,8 @@ def _parse_inequality_constraints(constraints, param_names, device=None, dtype=N
 
         # very simple parser for linear constraints
         # handles "p1", "-p1", "c * p1", "p1 + p2", "p1 - c * p2", etc.
-        pattern = r"([+\-]?)\s*([\d\.]*)\s*\*?\s*(\w+)"
+        # pattern = r"([+\-]?)\s*([\d\.]*)\s*\*?\s*(\w+)"
+        pattern = r"([+\-]?)\s*([\d\.]*)\s*\*?\s*([\w\.]+)"
         terms = re.findall(pattern, lhs)
         
         indices = []
