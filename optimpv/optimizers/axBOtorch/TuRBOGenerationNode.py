@@ -622,7 +622,8 @@ class TuRBOGenerationNode(ExternalGenerationNode):
             raise NotImplementedError("This method only supports RangeParameters in the search space.")
 
         parameter_names = list(search_space.parameters.keys())
-        metric_names = list(experiment.optimization_config.metrics.keys())  # pyright: ignore[reportOptionalMemberAccess]
+        # metric_names = list(experiment.optimization_config.metrics.keys())  # pyright: ignore[reportOptionalMemberAccess]
+        metric_names = experiment.optimization_config._objective.metric_names
 
         if self.parameters is None:
             self.parameters = list(search_space.parameters.values())  # pyright: ignore[reportAttributeAccessIssue]

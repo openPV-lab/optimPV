@@ -19,11 +19,13 @@ from ax.adapter.transforms.remove_fixed import RemoveFixed
 from ax.adapter.transforms.log import Log
 from ax.adapter.transforms.choice_encode import ChoiceToNumericChoice
 from ax.generators.torch.botorch_modular.utils import ModelConfig
+from ax.generators.torch.botorch_modular.kernels import ScaleMaternKernel
 from ax.generators.torch.botorch_modular.surrogate import SurrogateSpec
 from gpytorch.kernels import MaternKernel
 from gpytorch.kernels import ScaleKernel
 from botorch.models import SingleTaskGP
 from botorch.models.gp_regression_mixed import MixedSingleTaskGP
+
 
 ######### Function Definitions ####################################################################
 
@@ -275,24 +277,34 @@ def get_VMLC_default_model_kwargs_list(num_free_params, use_CENTER=False, is_MOO
     """    
 
     if has_categorical:
-        kernel = ScaleKernel(MaternKernel(nu=2.5, ard_num_dims=num_free_params))
+        kernel = ScaleMaternKernel
         Model = MixedSingleTaskGP
-        Model.cont_kernel_factory = kernel
+        # Model = ScaleMaternKernel
+        # ScaleKernel(MaternKernel(nu=2.5, ard_num_dims=num_free_params))
+        # Model = MixedSingleTaskGP
+        # Model.cont_kernel_factory = kernel
         if is_MOO:
             
-            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY,ChoiceToNumericChoice],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model,) ])}]
+            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY,ChoiceToNumericChoice],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model, covar_module_options={'base_kernel':kernel}) ])}]
         else:
-            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogNoisyExpectedImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY,ChoiceToNumericChoice],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model,) ])}]
+            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogNoisyExpectedImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY,ChoiceToNumericChoice],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model, covar_module_options={'base_kernel':kernel}) ])}]
     
     else:
+        kernel = ScaleMaternKernel
+        Model = SingleTaskGP
         if is_MOO:
-            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=SingleTaskGP,covar_module_class=ScaleKernel, covar_module_options={'base_kernel':MaternKernel(nu=2.5, ard_num_dims=num_free_params)})])}]
+            
+            # Model.cont_kernel_factory = kernel
+            # model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log, UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=SingleTaskGP,covar_module_class=ScaleKernel, covar_module_options={'base_kernel':MaternKernel(nu=2.5, ard_num_dims=num_free_params, active_dims=num_free_params)})])}]
+            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log, UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model, covar_module_options={'base_kernel':kernel}) ])}]
         else:
-            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogNoisyExpectedImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=SingleTaskGP,covar_module_class=ScaleKernel, covar_module_options={'base_kernel':MaternKernel(nu=2.5, ard_num_dims=num_free_params)})])}]
+            model_kwargs_list = [{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogNoisyExpectedImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=Model, covar_module_options={'base_kernel':kernel})])}]
 
     if use_CENTER:
         #add {} at the beginning of the list
         model_kwargs_list = [{}] + model_kwargs_list
+    
+    # print(model_kwargs_list)
     return model_kwargs_list
 
 

@@ -349,9 +349,12 @@ class axBOtorchOptimizer(BaseAgent):
             # Create the generator spec
             generator_spec = GeneratorSpec(
                                             generator_enum=model,
-                                            model_kwargs=self.model_kwargs_list[i],
+                                            # model_kwargs=self.model_kwargs_list[i],
+                                            generator_kwargs=self.model_kwargs_list[i],
                                             # We can specify various options for the optimizer here.
-                                            model_gen_kwargs = self.model_gen_kwargs_list[i], 
+                                            # model_gen_kwargs = self.model_gen_kwargs_list[i], 
+                                            generator_gen_kwargs = self.model_gen_kwargs_list[i],
+
             )
 
             # Create the generation node

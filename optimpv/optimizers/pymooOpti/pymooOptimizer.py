@@ -566,7 +566,8 @@ class PymooOptimizer(BaseAgent):
         pnames = [p.name for p in self.params if p.type != 'fixed']
         # make numpy array from the pnames in the existing data
         existing_params = self.existing_data[pnames].values
-        objectives = self.existing_data[self.all_metrics].values 
+        # objectives = self.existing_data[self.all_metrics].values 
+        objectives = self.existing_data[self.all_metrics].to_numpy(copy=True)
         for i in range(len(self.all_minimize)):
             if not self.all_minimize[i]:
                 # If the metric is to be maximized, we need to invert the values

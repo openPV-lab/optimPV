@@ -323,8 +323,7 @@ def test_MOO_trPLtrMC():
 
         model_gen_kwargs_list = None
         parameter_constraints = None
-
-        model_kwargs_list = [{},{},{"torch_device":torch.device("cuda" if torch.cuda.is_available() else "cpu"),'botorch_acqf_class':qLogExpectedHypervolumeImprovement,'transforms':[RemoveFixed, Log,UnitX, StandardizeY],'surrogate_spec':SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=SingleTaskGP,covar_module_class=ScaleKernel, covar_module_options={'base_kernel':MaternKernel(nu=2.5, ard_num_dims=len(params))})])}]
+        model_kwargs_list = None
 
         optimizer = axBOtorchOptimizer(params = params, agents = [RateEq], models = ['CENTER','SOBOL','BOTORCH_MODULAR'],n_batches = [1,1,10], batch_size = [1,10,2], ax_client = None,  max_parallelism = -1, model_kwargs_list = model_kwargs_list, model_gen_kwargs_list = None, name = 'ax_opti')
 

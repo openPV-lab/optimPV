@@ -138,7 +138,8 @@ class MorboGenerationNode(ExternalGenerationNode):
         if experiment.optimization_config is None:
             raise ValueError("Experiment has no optimization_config configured.")
 
-        metric_names = list(experiment.optimization_config.metrics.keys())
+        # metric_names = list(experiment.optimization_config.metrics.keys())
+        metric_names = experiment.optimization_config._objective.metric_names
         if len(metric_names) == 0:
             raise ValueError("No optimization metrics found in experiment configuration.")
 
@@ -169,8 +170,8 @@ class MorboGenerationNode(ExternalGenerationNode):
             if name in minimize_by_name:
                 minimize_flags.append(minimize_by_name[name])
             else:
-                metric_obj = experiment.optimization_config.metrics[name]
-                minimize_flags.append(bool(getattr(metric_obj, "lower_is_better", False)))
+                # metric_obj = experiment.optimization_config.metrics[name]
+                minimize_flags.append(bool(getattr(name, "lower_is_better", False)))
 
         return metric_names, minimize_flags
 

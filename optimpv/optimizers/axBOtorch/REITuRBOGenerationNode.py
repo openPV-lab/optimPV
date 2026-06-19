@@ -1119,7 +1119,8 @@ class REITuRBOGenerationNode(ExternalGenerationNode):
 
         if experiment.optimization_config is None:
             raise ValueError("Experiment has no optimization_config configured.")
-        metric_names = list(experiment.optimization_config.metrics.keys())
+        # metric_names = list(experiment.optimization_config.metrics.keys())
+        metric_names = experiment.optimization_config._objective.metric_names
         if len(metric_names) != 1:
             raise ValueError("REITuRBOGenerationNode only supports a single metric.")
 
