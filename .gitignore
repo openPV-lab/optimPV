@@ -63,4 +63,4 @@ temp/
 !/Data/FAPI_trPL/*
 !/Data/pero_JV_QFLS/*
 !/optimpv/tests/HPA/hpa/airfoil_info/*.xlsx
-
+/scripts/logs/
