@@ -1,6 +1,8 @@
-import numpy as np
+# This script is designed to run Bayesian inference using the UltraNest library for parameter estimation  in parallel using the MPI 
+# see https://johannesbuchner.github.io/UltraNest/performance.html
+# use the following command to run the script in parallel:
+# mpiexec -np 10 python3 Ultranest_JV.py --num_live_points=400 
 
-from ultranest import ReactiveNestedSampler
 # Import necessary libraries
 import warnings, os, sys, shutil
 # remove warnings from the output
@@ -11,32 +13,26 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from numpy.random import default_rng
-import torch, copy, uuid
+import copy, uuid
 import pySIMsalabim as sim
 from pySIMsalabim.experiments.JV_steady_state import *
-import ax, logging
-# from ax.utils.notebook.plotting import init_notebook_plotting, render
-# init_notebook_plotting() # for Jupyter notebooks
+from ultranest import ReactiveNestedSampler
+import argparse
 
 try:
     from optimpv import *
-    from optimpv.optimizers.axBOtorch.axUtils import *
 except Exception as e:
     sys.path.append('../..') # add the path to the optimpv module
     from optimpv import *
-    from optimpv.optimizers.axBOtorch.axUtils import *
 
 
-import argparse
-import numpy as np
-from numpy import log
 
 # define command line arguments:
 parser = argparse.ArgumentParser()
 
 
 parser.add_argument("--num_live_points", type=int, default=400)
-parser.add_argument('--log_dir', type=str, default='logs/loggauss')
+parser.add_argument('--log_dir', type=str, default='logs/log_JV')
 parser.add_argument('--max_ncalls', type=int, default=int(1e5))
 
 args = parser.parse_args()
@@ -54,17 +50,20 @@ params = [] # list of parameters to be optimized
 mun = FitParam(name = 'l2.mu_n', value = 7e-8, bounds = [1e-9,1e-6], log_scale = True, value_type = 'float', fscale = None, rescale = False, display_name=r'$\mu_n$', unit='m$^2$ V$^{-1}$s$^{-1}$', axis_type = 'log', force_log = True)
 params.append(mun)
 
-mup = FitParam(name = 'l2.mu_p', value = 5e-8, bounds = [1e-9,1e-6], log_scale = True, value_type = 'float', fscale = None, rescale = False, display_name=r'$\mu_p$', unit=r'm$^2$ V$^{-1}$s$^{-1}$', axis_type = 'log', force_log = True)
+mup = FitParam(name = 'l2.mu_p', value = 1e-8, bounds = [1e-9,1e-6], log_scale = True, value_type = 'float', fscale = None, rescale = False, display_name=r'$\mu_p$', unit=r'm$^2$ V$^{-1}$s$^{-1}$', axis_type = 'log', force_log = True)
 params.append(mup)
 
-bulk_tr = FitParam(name = 'l2.N_t_bulk', value = 1e20, bounds = [1e19,1e22], log_scale = True, value_type = 'float', fscale = None, rescale = False,  display_name=r'$N_{T}$', unit=r'm$^{-3}$', axis_type = 'log', force_log = True)
-params.append(bulk_tr)
+# bulk_tr = FitParam(name = 'l2.N_t_bulk', value = 1e20, bounds = [1e19,1e22], log_scale = True, value_type = 'float', fscale = None, rescale = False,  display_name=r'$N_{T}$', unit=r'm$^{-3}$', axis_type = 'log', force_log = True)
+# params.append(bulk_tr)
 
-preLangevin = FitParam(name = 'l2.preLangevin', value = 1e-2, bounds = [0.005,1], log_scale = True, value_type = 'float', fscale = None, rescale = False, display_name=r'$\gamma_{pre}$', unit=r'', axis_type = 'log', force_log = True)
+preLangevin = FitParam(name = 'l2.preLangevin', value = 1e-1, bounds = [0.005,1], log_scale = True, value_type = 'float', fscale = None, rescale = False, display_name=r'$\gamma_{pre}$', unit=r'', axis_type = 'log', force_log = True)
 params.append(preLangevin)
 
 R_series = FitParam(name = 'R_series', value = 1e-4, bounds = [1e-5,1e-3], log_scale = True, value_type = 'float', fscale = None, rescale = False,  display_name=r'$R_{series}$', unit=r'$\Omega$ m$^2$', axis_type = 'log', force_log = True)
 params.append(R_series)
+
+N_c = FitParam(name = 'l2.N_c', value = 1e27, bounds = [5e26,5e27], log_scale = True, value_type = 'float', fscale = None, rescale = False,  display_name=r'$N_{c}$', unit=r'm$^{-3}$', axis_type = 'log', force_log = True)
+params.append(N_c)
 
 # save the original parameters for later
 params_orig = copy.deepcopy(params)
