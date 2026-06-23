@@ -1,0 +1,683 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.optimizers.axBOtorch package &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="optimpv.optimizers.pymooOpti package" href="optimpv.optimizers.pymooOpti.html" />
+    <link rel="prev" title="optimpv.optimizers.BayesInfEmcee package" href="optimpv.optimizers.BayesInfEmcee.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimpv</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimpv.html">optimpv package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimpv.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimpv.general.html">optimpv.general package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.models.html">optimpv.models package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.posterior.html">optimpv.posterior package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.tests.html">optimpv.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimpv.html#module-optimpv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">optimpv</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.html">optimpv package</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+      <li class="breadcrumb-item active">optimpv.optimizers.axBOtorch package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/optimpv.optimizers.axBOtorch.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimpv-optimizers-axbotorch-package">
+<h1>optimpv.optimizers.axBOtorch package<a class="headerlink" href="#optimpv-optimizers-axbotorch-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.optimizers.axBOtorch.EGBO">
+<span id="optimpv-optimizers-axbotorch-egbo-module"></span><h2>optimpv.optimizers.axBOtorch.EGBO module<a class="headerlink" href="#module-optimpv.optimizers.axBOtorch.EGBO" title="Link to this heading"></a></h2>
+<p>Evolution-Guided Bayesian Optimization (EGBO) Acquisition Function for Ax-Botorch Modular Framework.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.EGBO.EGBOAcquisition">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.EGBO.</span></span><span class="sig-name descname"><span class="pre">EGBOAcquisition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surrogate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Surrogate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_space_digest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SearchSpaceDigest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">torch_opt_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">TorchOptConfig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">botorch_acqf_class</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">AcquisitionFunction</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">botorch_acqf_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">botorch_acqf_classes_with_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">type</span><span class="p"><span class="pre">[</span></span><span class="pre">AcquisitionFunction</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">256</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">EA_algo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'UNSGA3'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/EGBO.html#EGBOAcquisition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.EGBO.EGBOAcquisition" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Acquisition</span></code></p>
+<p>Implement the acquisition function of Evolution-Guided Bayesian Optimization (EGBO).</p>
+<p>Based on the following paper:
+Low, A.K.Y., Mekki-Berrada, F., Gupta, A. et al. Evolution-guided Bayesian optimization for constrained multi-objective optimization in self-driving labs. npj Comput Mater 10, 104 (2024). <a class="reference external" href="https://doi.org/10.1038/s41524-024-01274-x">https://doi.org/10.1038/s41524-024-01274-x</a></p>
+<p>Code inspired the repository:
+<a class="reference external" href="https://github.com/andrelowky/CMOO-Algorithm-Development/">https://github.com/andrelowky/CMOO-Algorithm-Development/</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.EGBO.EGBOAcquisition.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">search_space_digest</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">SearchSpaceDigest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inequality_constraints</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fixed_features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rounding_func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer_options</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/EGBO.html#EGBOAcquisition.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.EGBO.EGBOAcquisition.optimize" title="Link to this definition"></a></dt>
+<dd><p>Generate a set of candidates via multi-start optimization. Obtains
+candidates and their associated acquisition function values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – The number of candidates to generate.</p></li>
+<li><p><strong>search_space_digest</strong> – A <code class="docutils literal notranslate"><span class="pre">SearchSpaceDigest</span></code> object containing search space
+properties, e.g. <code class="docutils literal notranslate"><span class="pre">bounds</span></code> for optimization.</p></li>
+<li><p><strong>inequality_constraints</strong> – A list of tuples (indices, coefficients, rhs),
+with each tuple encoding an inequality constraint of the form
+<code class="docutils literal notranslate"><span class="pre">sum_i</span> <span class="pre">(X[indices[i]]</span> <span class="pre">*</span> <span class="pre">coefficients[i])</span> <span class="pre">&gt;=</span> <span class="pre">rhs</span></code>.</p></li>
+<li><p><strong>fixed_features</strong> – A map <cite>{feature_index: value}</cite> for features that
+should be fixed to a particular value during generation.</p></li>
+<li><p><strong>rounding_func</strong> – A function that post-processes an optimization
+result appropriately (i.e., according to <cite>round-trip</cite>
+transformations).</p></li>
+<li><p><strong>optimizer_options</strong> – Options for the optimizer function, e.g. <code class="docutils literal notranslate"><span class="pre">sequential</span></code>
+or <code class="docutils literal notranslate"><span class="pre">raw_samples</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A three-element tuple containing an <cite>n x d</cite>-dim tensor of generated
+candidates, a tensor with the associated acquisition values, and a tensor
+with the weight for each candidate.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.optimizers.axBOtorch.axBOtorchOptimizer">
+<span id="optimpv-optimizers-axbotorch-axbotorchoptimizer-module"></span><h2>optimpv.optimizers.axBOtorch.axBOtorchOptimizer module<a class="headerlink" href="#module-optimpv.optimizers.axBOtorch.axBOtorchOptimizer" title="Link to this heading"></a></h2>
+<p>axBOtorchOptimizer module. This module contains the axBOtorchOptimizer class. The class is used to run the bayesian optimization process using the Ax library.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axBOtorchOptimizer.</span></span><span class="sig-name descname"><span class="pre">TurboState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">best_value</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#TurboState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.acceleration">
+<span class="sig-name descname"><span class="pre">acceleration</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.6</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.acceleration" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.batch_size">
+<span class="sig-name descname"><span class="pre">batch_size</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.batch_size" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.best_value">
+<span class="sig-name descname"><span class="pre">best_value</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-inf</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.best_value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.dim">
+<span class="sig-name descname"><span class="pre">dim</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.dim" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.failure_counter">
+<span class="sig-name descname"><span class="pre">failure_counter</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.failure_counter" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.failure_tolerance">
+<span class="sig-name descname"><span class="pre">failure_tolerance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">nan</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.failure_tolerance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.length">
+<span class="sig-name descname"><span class="pre">length</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.8</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.length" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.length_max">
+<span class="sig-name descname"><span class="pre">length_max</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1.6</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.length_max" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.length_min">
+<span class="sig-name descname"><span class="pre">length_min</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0078125</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.length_min" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.restart_triggered">
+<span class="sig-name descname"><span class="pre">restart_triggered</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.restart_triggered" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.success_counter">
+<span class="sig-name descname"><span class="pre">success_counter</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.success_counter" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.success_tolerance">
+<span class="sig-name descname"><span class="pre">success_tolerance</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></span><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState.success_tolerance" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axBOtorchOptimizer.</span></span><span class="sig-name descname"><span class="pre">axBOtorchOptimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['SOBOL',</span> <span class="pre">'BOTORCH_MODULAR']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_batches</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[1,</span> <span class="pre">10]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[10,</span> <span class="pre">2]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_parallelism</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_kwargs_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_gen_kwargs_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suggest_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ax_opti'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimpv.general.html#optimpv.general.BaseAgent.BaseAgent" title="optimpv.general.BaseAgent.BaseAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAgent</span></code></a></p>
+<p>Initialize the axBOtorchOptimizer class. The class is used to run the optimization process using the Ax library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em><em>, </em><em>optional</em>) – List of Fitparam() objects, by default None</p></li>
+<li><p><strong>agents</strong> (<em>list</em><em> of </em><em>Agent</em><em>(</em><em>) </em><em>objects</em><em>, </em><em>optional</em>) – List of Agent() objects see optimpv/general/BaseAgent.py for a base class definition, by default None</p></li>
+<li><p><strong>models</strong> (<em>list</em><em>, </em><em>optional</em>) – list of models to use for the optimization process, by default [‘SOBOL’,’BOTORCH_MODULAR’]</p></li>
+<li><p><strong>n_batches</strong> (<em>list</em><em>, </em><em>optional</em>) – list of the number of batches for each model, by default [1,10]</p></li>
+<li><p><strong>batch_size</strong> (<em>list</em><em>, </em><em>optional</em>) – list of the batch sizes for each model, by default [10,2]</p></li>
+<li><p><strong>ax_client</strong> (<em>AxClient</em><em>, </em><em>optional</em>) – AxClient object, by default None</p></li>
+<li><p><strong>max_parallelism</strong> (<em>int</em><em>, </em><em>optional</em>) – maximum number of parallel processes to run, by default 10</p></li>
+<li><p><strong>model_kwargs_list</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of model kwargs for each model, by default None</p></li>
+<li><p><strong>model_gen_kwargs_list</strong> (<em>dict</em><em>, </em><em>optional</em>) – dictionary of model generation kwargs for each model, by default None</p></li>
+<li><p><strong>existing_data</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – existing data to use for the optimization process, by default None</p></li>
+<li><p><strong>suggest_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, the optimization process will only suggest new points without running the agents, by default False</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – name of the optimization process, by default ‘ax_opti’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if the number of batches and the number of models are not the same</p></li>
+<li><p><strong>ValueError</strong> – raised if the model is not a string or a Models enum</p></li>
+<li><p><strong>ValueError</strong> – raised if the model_kwargs_list and models do not have the same length</p></li>
+<li><p><strong>ValueError</strong> – raised if the model_gen_kwargs_list and models do not have the same length</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.attach_existing_data">
+<span class="sig-name descname"><span class="pre">attach_existing_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.attach_existing_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.attach_existing_data" title="Link to this definition"></a></dt>
+<dd><p>Attach existing data to the Ax client</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.create_generation_strategy">
+<span class="sig-name descname"><span class="pre">create_generation_strategy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">skip_center</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_sobol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.create_generation_strategy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.create_generation_strategy" title="Link to this definition"></a></dt>
+<dd><p>Create a generation strategy for the optimization process using the models and the number of batches and batch sizes. See ax documentation for more details: <a class="reference external" href="https://ax.dev/tutorials/generation_strategy.html">https://ax.dev/tutorials/generation_strategy.html</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>GenerationStrategy</em> – The generation strategy for the optimization process</p></li>
+<li><p><strong>skip_center</strong> (<em>bool, optional</em>) – If True, the Center model will be skipped, by default False</p></li>
+<li><p><strong>skip_sobol</strong> (<em>bool, optional</em>) – If True, the Sobol model will be skipped, by default False</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the model is not a string or a Models enum</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.create_objectives">
+<span class="sig-name descname"><span class="pre">create_objectives</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.create_objectives"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.create_objectives" title="Link to this definition"></a></dt>
+<dd><p>Create the objectives for the optimization process. The objectives are the metrics of the agents. The objectives are created using the metric, minimize and threshold attributes of the agents. If the agent has an exp_format attribute, it is used to create the objectives.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary of the objectives for the optimization process</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Evaluate the agent on a parameter point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>args</strong> (<em>tuple</em>) – Tuple containing the index of the agent, the agent, the index of the parameter point and the parameter point</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple containing the index of the parameter point and the results of the agent on the parameter point</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.get_initial_data_from_existing_data_turbo">
+<span class="sig-name descname"><span class="pre">get_initial_data_from_existing_data_turbo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.get_initial_data_from_existing_data_turbo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.get_initial_data_from_existing_data_turbo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.get_tracking_metrics">
+<span class="sig-name descname"><span class="pre">get_tracking_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.get_tracking_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.get_tracking_metrics" title="Link to this definition"></a></dt>
+<dd><p>Extract tracking metrics from agents</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agents</strong> (<em>list</em>) – List of Agent objects</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of tracking metric names formatted with agent name prefix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.optimize" title="Link to this definition"></a></dt>
+<dd><p>Run the optimization process using the agents and the parameters. The optimization process uses the Ax library. The optimization process runs the agents in parallel if the parallel attribute is True. The optimization process runs using the parameters, agents, models, n_batches, batch_size, max_parallelism, model_kwargs_list, model_gen_kwargs_list, name and kwargs attributes of the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the number of batches and the number of models are not the same</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.optimize_sequential">
+<span class="sig-name descname"><span class="pre">optimize_sequential</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.optimize_sequential"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.optimize_sequential" title="Link to this definition"></a></dt>
+<dd><p>Run the optimization process using the agents and the parameters. The optimization process uses the Ax library. The optimization process runs the agents in parallel if the parallel attribute is True. The optimization process runs using the parameters, agents, models, n_batches, batch_size, max_parallelism, model_kwargs_list, model_gen_kwargs_list, name and kwargs attributes of the class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If the number of batches and the number of models are not the same</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.optimize_turbo">
+<span class="sig-name descname"><span class="pre">optimize_turbo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">acq_turbo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_continue</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs_turbo_state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kwargs_turbo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.optimize_turbo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.optimize_turbo" title="Link to this definition"></a></dt>
+<dd><p>Run the optimzation using Turbo. This is based on the Botorch implementation of Turbo. See <a class="reference external" href="https://botorch.org/docs/tutorials/turbo_1/">https://botorch.org/docs/tutorials/turbo_1/</a> for more details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>acq_turbo</strong> (<em>str</em><em>, </em><em>optional</em>) – The acquisition function to use can be ‘ts’ or ‘ei’, by default ‘ts’</p></li>
+<li><p><strong>force_continue</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, the optimization will continue even if a restart is triggered, by default False</p></li>
+<li><p><strong>kwargs_turbo_state</strong> (<em>dict</em><em>, </em><em>optional</em>) – The kwargs to use for the TurboState, by default {}
+can be:
+- length: float, by default 0.8
+- length_min: float, by default 0.5**7
+- length_max: float, by default 1.6
+- success_tolerance: int, by default 10</p></li>
+<li><p><strong>kwargs_turbo</strong> (<em>dict</em><em>, </em><em>optional</em>) – The kwargs to use for the Turbo, by default {}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Turbo does not support outcome constraints</p></li>
+<li><p><strong>ValueError</strong> – Turbo only supports single objective optimization</p></li>
+<li><p><strong>ValueError</strong> – Turbo only supports 2 models</p></li>
+<li><p><strong>ValueError</strong> – Turbo only supports Sobol as the first model</p></li>
+<li><p><strong>ValueError</strong> – Turbo only supports BoTorch as the second model</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.update_params_with_best_balance">
+<span class="sig-name descname"><span class="pre">update_params_with_best_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_best_balance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#axBOtorchOptimizer.update_params_with_best_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.axBOtorchOptimizer.update_params_with_best_balance" title="Link to this definition"></a></dt>
+<dd><p>Update the parameters with the best balance of all metrics.
+The best balance is defined by ranking the results for each metric and taking the parameters that has the lowest sum of ranks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – We need at least one metric to update the parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.generate_batch">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axBOtorchOptimizer.</span></span><span class="sig-name descname"><span class="pre">generate_batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_restarts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">512</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">acqf</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ts'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inequality_constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#generate_batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.generate_batch" title="Link to this definition"></a></dt>
+<dd><p>Generate a batch of points using the TURBO algorithm.
+The batch is generated using either Thompson sampling or Expected Improvement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState" title="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState"><em>TurboState</em></a>) – Current state of the optimization process</p></li>
+<li><p><strong>model</strong> (<em>GPyTorchModel</em>) – GPyTorch model for the function</p></li>
+<li><p><strong>X</strong> (<em>torch.Tensor</em>) – Evaluated points on the domain [0, 1]^d</p></li>
+<li><p><strong>Y</strong> (<em>torch.Tensor</em>) – Function values</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Number of points to generate</p></li>
+<li><p><strong>n_candidates</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of candidates for Thompson sampling, by default None</p></li>
+<li><p><strong>num_restarts</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of restarts for the optimization, by default 10</p></li>
+<li><p><strong>raw_samples</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of raw samples for the optimization, by default 512</p></li>
+<li><p><strong>acqf</strong> (<em>str</em><em>, </em><em>optional</em>) – Acquisition function to use can be “ts” or “ei”, by default “ts”</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – Device to use for the generated points, by default None</p></li>
+<li><p><strong>dtype</strong> (<em>torch.dtype</em><em>, </em><em>optional</em>) – Data type of the generated points, by default None</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to minimize or maximize the function, by default False</p></li>
+<li><p><strong>inequality_constraints</strong> (<em>list</em><em> of </em><em>tuples</em><em>, </em><em>optional</em>) – A list of tuples (indices, coefficients, rhs) specifying inequality constraints, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated points in the range [0, 1]^d</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>AssertionError</strong> – If the acquisition function is not “ts” or “ei”</p></li>
+<li><p><strong>ValueError</strong> – If the acquisition function is not “ts” or “ei”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.get_initial_points">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axBOtorchOptimizer.</span></span><span class="sig-name descname"><span class="pre">get_initial_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inequality_constraints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#get_initial_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.get_initial_points" title="Link to this definition"></a></dt>
+<dd><p>Generate initial points using Sobol sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dim</strong> (<em>int</em>) – Number of dimensions</p></li>
+<li><p><strong>n_pts</strong> (<em>int</em>) – Number of points to generate</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed, by default None</p></li>
+<li><p><strong>device</strong> (<em>torch.device</em><em>, </em><em>optional</em>) – Device to use for the generated points, by default None</p></li>
+<li><p><strong>dtype</strong> (<em>torch.dtype</em><em>, </em><em>optional</em>) – Data type of the generated points, by default None</p></li>
+<li><p><strong>inequality_constraints</strong> (<em>list</em><em> of </em><em>tuples</em><em>, </em><em>optional</em>) – A list of tuples (indices, coefficients, rhs) specifying inequality constraints, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated points in the range [0, 1]^d</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.update_state">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axBOtorchOptimizer.</span></span><span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y_next</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axBOtorchOptimizer.html#update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.update_state" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Update the state of the optimization process based on the new observations.</dt><dd><p>For TURBO optimization only.
+The state is updated based on the success or failure of the new observations.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>state</strong> (<a class="reference internal" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState" title="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState"><em>TurboState</em></a>) – Current state of the optimization process</p></li>
+<li><p><strong>Y_next</strong> (<em>torch.Tensor</em>) – New observations</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated state of the optimization process</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState" title="optimpv.optimizers.axBOtorch.axBOtorchOptimizer.TurboState">TurboState</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.optimizers.axBOtorch.axUtils">
+<span id="optimpv-optimizers-axbotorch-axutils-module"></span><h2>optimpv.optimizers.axBOtorch.axUtils module<a class="headerlink" href="#module-optimpv.optimizers.axBOtorch.axUtils" title="Link to this heading"></a></h2>
+<p>Utility functions for the Ax/Botorch library</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axUtils.ConvertParamsAx">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axUtils.</span></span><span class="sig-name descname"><span class="pre">ConvertParamsAx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axUtils.html#ConvertParamsAx"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axUtils.ConvertParamsAx" title="Link to this definition"></a></dt>
+<dd><p>Convert the params to the format required by the Ax/Botorch library</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><p>list of dictionaries with the following keys:</p>
+<blockquote>
+<div><p>’name’: string: the name of the parameter
+‘type’: string: ‘range’ or ‘fixed’
+‘bounds’: list of float: the lower and upper bounds of the parameter</p>
+</div></blockquote>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axUtils.CreateObjectiveFromAgent">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axUtils.</span></span><span class="sig-name descname"><span class="pre">CreateObjectiveFromAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axUtils.html#CreateObjectiveFromAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axUtils.CreateObjectiveFromAgent" title="Link to this definition"></a></dt>
+<dd><p>Create the objective function from the agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>agent</strong> (<em>Agent</em><em>(</em><em>) </em><em>object</em>) – the agent object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the objective function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axUtils.get_VMLC_default_model_kwargs_list">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axUtils.</span></span><span class="sig-name descname"><span class="pre">get_VMLC_default_model_kwargs_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_free_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_CENTER</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_MOO</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">has_categorical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axUtils.html#get_VMLC_default_model_kwargs_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axUtils.get_VMLC_default_model_kwargs_list" title="Link to this definition"></a></dt>
+<dd><p>Get the default model kwargs list that VMLC-PV likes to use. This includes the use of log transforms, standardization of the outputs, and an ARD 5/2 Matern kernel.
+We also use the qLogNoisyExpectedImprovement acquisition function for single objective optimization and the qLogExpectedHypervolumeImprovement for multi-objective optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_free_params</strong> (<em>int</em>) – Number of free parameters in the model.</p></li>
+<li><p><strong>use_CENTER</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use the CENTER model configuration, by default False</p></li>
+<li><p><strong>is_MOO</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether the model is for multi-objective optimization, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of model kwargs dictionaries for the Ax/Botorch library.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axUtils.get_df_ax_client_metrics">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axUtils.</span></span><span class="sig-name descname"><span class="pre">get_df_ax_client_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax_client</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_metrics</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axUtils.html#get_df_ax_client_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axUtils.get_df_ax_client_metrics" title="Link to this definition"></a></dt>
+<dd><p>Get the dataframe from the ax client and rescale the parameters to their true scale.
+The dataframe contains the parameters and the objective values.
+The parameters are rescaled to their true scale.
+The objective values are the mean of the objective values.
+The dataframe is returned as a pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><a class="reference internal" href="optimpv.general.html#optimpv.general.FitParams.FitParam" title="optimpv.general.FitParams.FitParam"><em>FitParam</em></a><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>ax_client</strong> (<em>object</em>) – Ax client object.</p></li>
+<li><p><strong>all_metrics</strong> (<em>list</em><em> of </em><em>str</em>) – List of objective names.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataframe containing the parameters and the objective values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – trying to rescale a parameter that is not int or float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.optimizers.axBOtorch.axUtils.get_df_from_ax">
+<span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.axBOtorch.axUtils.</span></span><span class="sig-name descname"><span class="pre">get_df_from_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/axBOtorch/axUtils.html#get_df_from_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.axBOtorch.axUtils.get_df_from_ax" title="Link to this definition"></a></dt>
+<dd><p>Get the dataframe from the ax client and rescale the parameters to their true scale.
+The dataframe contains the parameters and the objective values.
+The parameters are rescaled to their true scale.
+The objective values are the mean of the objective values.
+The dataframe is returned as a pandas dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><a class="reference internal" href="optimpv.general.html#optimpv.general.FitParams.FitParam" title="optimpv.general.FitParams.FitParam"><em>FitParam</em></a><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>optimizer</strong> (<em>object</em>) – Optimizer object from optimpv.axBOtorch.axBOtorch
+The optimizer object contains the ax client and the experiment.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataframe containing the parameters and the objective values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – trying to rescale a parameter that is not int or float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.optimizers.axBOtorch">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optimpv.optimizers.axBOtorch" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimpv.optimizers.BayesInfEmcee.html" class="btn btn-neutral float-left" title="optimpv.optimizers.BayesInfEmcee package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimpv.optimizers.pymooOpti.html" class="btn btn-neutral float-right" title="optimpv.optimizers.pymooOpti package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

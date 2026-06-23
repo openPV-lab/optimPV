@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.optimizers.axBOtorch.axUtils &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optimpv.optimizers.axBOtorch.axUtils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optimpv.optimizers.axBOtorch.axUtils</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utility functions for the Ax/Botorch library&quot;&quot;&quot;</span>
+<span class="c1"># Note: This class is inspired by the https://github.com/i-MEET/boar/ package</span>
+<span class="c1">######### Package Imports #########################################################################</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">ax</span><span class="o">,</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.api.configs</span><span class="w"> </span><span class="kn">import</span> <span class="n">RangeParameterConfig</span><span class="p">,</span> <span class="n">ChoiceParameterConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.core.batch_trial</span><span class="w"> </span><span class="kn">import</span> <span class="n">BatchTrial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.service.ax_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">ObjectiveProperties</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.core.base_trial</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrialStatus</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">botorch.acquisition.logei</span><span class="w"> </span><span class="kn">import</span> <span class="n">qLogNoisyExpectedImprovement</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">botorch.acquisition.multi_objective.logei</span><span class="w"> </span><span class="kn">import</span> <span class="n">qLogExpectedHypervolumeImprovement</span>  
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.adapter.transforms.standardize_y</span><span class="w"> </span><span class="kn">import</span> <span class="n">StandardizeY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.adapter.transforms.unit_x</span><span class="w"> </span><span class="kn">import</span> <span class="n">UnitX</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.adapter.transforms.remove_fixed</span><span class="w"> </span><span class="kn">import</span> <span class="n">RemoveFixed</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.adapter.transforms.log</span><span class="w"> </span><span class="kn">import</span> <span class="n">Log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.adapter.transforms.choice_encode</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChoiceToNumericChoice</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.generators.torch.botorch_modular.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelConfig</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.generators.torch.botorch_modular.kernels</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScaleMaternKernel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ax.generators.torch.botorch_modular.surrogate</span><span class="w"> </span><span class="kn">import</span> <span class="n">SurrogateSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gpytorch.kernels</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaternKernel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">gpytorch.kernels</span><span class="w"> </span><span class="kn">import</span> <span class="n">ScaleKernel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">botorch.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">SingleTaskGP</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">botorch.models.gp_regression_mixed</span><span class="w"> </span><span class="kn">import</span> <span class="n">MixedSingleTaskGP</span>
+
+
+<span class="c1">######### Function Definitions ####################################################################</span>
+
+<div class="viewcode-block" id="ConvertParamsAx">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.axBOtorch.html#optimpv.optimizers.axBOtorch.axUtils.ConvertParamsAx">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ConvertParamsAx</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the params to the format required by the Ax/Botorch library</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : list of Fitparam() objects</span>
+<span class="sd">            list of Fitparam() objects</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            list of dictionaries with the following keys:</span>
+
+<span class="sd">                &#39;name&#39;: string: the name of the parameter</span>
+<span class="sd">                &#39;type&#39;: string: &#39;range&#39; or &#39;fixed&#39;</span>
+<span class="sd">                &#39;bounds&#39;: list of float: the lower and upper bounds of the parameter</span>
+<span class="sd">                </span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+    <span class="k">if</span> <span class="n">params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;The params argument is None&#39;</span><span class="p">)</span>
+    
+    <span class="n">ax_params</span><span class="p">,</span><span class="n">fixed_params</span> <span class="o">=</span> <span class="p">[],{}</span>
+    <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="n">fixed_params</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">force_log</span><span class="p">:</span>
+                    <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RangeParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">])],</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">log_scale</span><span class="p">:</span>
+                        <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RangeParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">],</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">stepsize</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RangeParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">],</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">stepsize</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">))</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RangeParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">param</span><span class="o">.</span><span class="n">fscale</span><span class="p">],</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="n">fixed_params</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">RangeParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span> <span class="n">scaling</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">stepsize</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;cat&#39;</span> <span class="ow">or</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;sub&#39;</span> <span class="ow">or</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span> 
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="n">fixed_params</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ChoiceParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span> <span class="n">is_ordered</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">is_ordered</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="n">fixed_params</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ax_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ChoiceParameterConfig</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span> <span class="n">parameter_type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Failed to convert parameter name: </span><span class="si">{}</span><span class="s1"> to Ax format&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+ 
+    <span class="k">return</span> <span class="n">ax_params</span><span class="p">,</span><span class="n">fixed_params</span></div>
+
+
+<div class="viewcode-block" id="CreateObjectiveFromAgent">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.axBOtorch.html#optimpv.optimizers.axBOtorch.axUtils.CreateObjectiveFromAgent">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">CreateObjectiveFromAgent</span><span class="p">(</span><span class="n">agent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the objective function from the agent</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        agent : Agent() object</span>
+<span class="sd">            the agent object</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        function</span>
+<span class="sd">            the objective function</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+
+    <span class="n">objectives</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">metric</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span><span class="s1">&#39;exp_format&#39;</span><span class="p">):</span>
+            <span class="n">objectives</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">agent</span><span class="o">.</span><span class="n">exp_format</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">agent</span><span class="o">.</span><span class="n">metric</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ObjectiveProperties</span><span class="p">(</span><span class="n">minimize</span><span class="o">=</span><span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="n">agent</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">objectives</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">agent</span><span class="o">.</span><span class="n">metric</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ObjectiveProperties</span><span class="p">(</span><span class="n">minimize</span><span class="o">=</span><span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">threshold</span><span class="o">=</span><span class="n">agent</span><span class="o">.</span><span class="n">threshold</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+
+    <span class="k">return</span> <span class="n">objectives</span></div>
+
+
+<span class="c1"># def search_spaceAx(search_space):</span>
+<span class="c1">#     parameters = []</span>
+<span class="c1">#     for param in search_space:</span>
+<span class="c1">#         if param[&#39;type&#39;] == &#39;range&#39;:</span>
+<span class="c1">#             if param[&#39;value_type&#39;] == &#39;int&#39;:</span>
+<span class="c1">#                 parameters.append(RangeParameter(name=param[&#39;name&#39;], parameter_type=ParameterType.INT, lower=param[&#39;bounds&#39;][0], upper=param[&#39;bounds&#39;][1]))</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 parameters.append(RangeParameter(name=param[&#39;name&#39;], parameter_type=ParameterType.FLOAT, lower=param[&#39;bounds&#39;][0], upper=param[&#39;bounds&#39;][1]))</span>
+<span class="c1">#         elif param[&#39;type&#39;] == &#39;fixed&#39;:</span>
+<span class="c1">#             if param[&#39;value_type&#39;] == &#39;int&#39;:</span>
+<span class="c1">#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.INT, value=param.value))</span>
+<span class="c1">#             elif param[&#39;value_type&#39;] == &#39;str&#39;:</span>
+<span class="c1">#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.STRING, value=param.value))</span>
+<span class="c1">#             elif param[&#39;value_type&#39;] == &#39;bool&#39;:</span>
+<span class="c1">#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.BOOL, value=param.value))</span>
+<span class="c1">#             else:</span>
+<span class="c1">#                 parameters.append(FixedParameter(name=param.name, parameter_type=ParameterType.FLOAT, value=param.value))</span>
+<span class="c1">#         elif param[&#39;type&#39;] == &#39;choice&#39;:</span>
+<span class="c1">#             parameters.append(ChoiceParameter(name=param.name, values=param.values, is_ordered=param.is_ordered, is_sorted=param.is_sorted))</span>
+<span class="c1">#         else:</span>
+<span class="c1">#             raise ValueError(&#39;The parameter type is not recognized&#39;)</span>
+<span class="c1">#     return SearchSpace(parameters=parameters)</span>
+
+<div class="viewcode-block" id="get_df_from_ax">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.axBOtorch.html#optimpv.optimizers.axBOtorch.axUtils.get_df_from_ax">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_df_from_ax</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the dataframe from the ax client and rescale the parameters to their true scale.</span>
+<span class="sd">    The dataframe contains the parameters and the objective values.</span>
+<span class="sd">    The parameters are rescaled to their true scale.</span>
+<span class="sd">    The objective values are the mean of the objective values.</span>
+<span class="sd">    The dataframe is returned as a pandas dataframe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params : list of FitParam() objects</span>
+<span class="sd">        List of Fitparam() objects.</span>
+<span class="sd">    optimizer : object</span>
+<span class="sd">        Optimizer object from optimpv.axBOtorch.axBOtorch</span>
+<span class="sd">        The optimizer object contains the ax client and the experiment.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        Dataframe containing the parameters and the objective values.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        trying to rescale a parameter that is not int or float</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">ax_client</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">ax_client</span>
+    <span class="n">objective_names</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">all_metrics</span>
+    
+    <span class="n">df</span> <span class="o">=</span> <span class="n">get_df_ax_client_metrics</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">ax_client</span><span class="p">,</span> <span class="n">objective_names</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="get_df_ax_client_metrics">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.axBOtorch.html#optimpv.optimizers.axBOtorch.axUtils.get_df_ax_client_metrics">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_df_ax_client_metrics</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">ax_client</span><span class="p">,</span> <span class="n">all_metrics</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the dataframe from the ax client and rescale the parameters to their true scale.</span>
+<span class="sd">    The dataframe contains the parameters and the objective values.</span>
+<span class="sd">    The parameters are rescaled to their true scale.</span>
+<span class="sd">    The objective values are the mean of the objective values.</span>
+<span class="sd">    The dataframe is returned as a pandas dataframe.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params : list of FitParam() objects</span>
+<span class="sd">        List of Fitparam() objects.</span>
+<span class="sd">    ax_client : object</span>
+<span class="sd">        Ax client object.</span>
+<span class="sd">    all_metrics : list of str</span>
+<span class="sd">        List of objective names.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        Dataframe containing the parameters and the objective values.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        trying to rescale a parameter that is not int or float</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">ax_client</span><span class="o">.</span><span class="n">summarize</span><span class="p">()</span>
+    <span class="n">objective_names</span> <span class="o">=</span> <span class="n">all_metrics</span>
+    <span class="c1"># dumdic = {}</span>
+    <span class="c1"># # create a dic with the keys of the parameters</span>
+    <span class="c1"># if isinstance(ax_client.experiment.trials[0], BatchTrial):# check if trial is a BatchTrial</span>
+    <span class="c1">#     for key in ax_client.experiment.trials[0].arms[0].parameters.keys():</span>
+    <span class="c1">#         dumdic[key] = []</span>
+        
+    <span class="c1">#     # fill the dic with the values of the parameters</span>
+    <span class="c1">#     for i in range(len(ax_client.experiment.trials)):</span>
+
+    <span class="c1">#         if ax_client.experiment.trials[i].status == TrialStatus.COMPLETED:</span>
+    <span class="c1">#             for arm in ax_client.experiment.trials[i].arms:</span>
+    <span class="c1">#                 if arm.name in data[&#39;arm_name&#39;].values: # only add the arm if it is in the data i.e. if it was completed</span>
+    <span class="c1">#                     for key in arm.parameters.keys():</span>
+    <span class="c1">#                         dumdic[key].append(arm.parameters[key])       </span>
+    <span class="c1"># else:</span>
+    <span class="c1">#     for key in ax_client.experiment.trials[0].arm.parameters.keys():</span>
+    <span class="c1">#         dumdic[key] = []</span>
+
+    <span class="c1">#     # fill the dic with the values of the parameters</span>
+    <span class="c1">#     for i in range(len(ax_client.experiment.trials)):</span>
+    <span class="c1">#         if ax_client.experiment.trials[i].status == TrialStatus.COMPLETED:</span>
+    <span class="c1">#             for key in ax_client.experiment.trials[i].arm.parameters.keys():</span>
+    <span class="c1">#                 dumdic[key].append(ax_client.experiment.trials[i].arm.parameters[key])</span>
+
+    
+    <span class="c1"># for objective_name in objective_names:</span>
+    <span class="c1">#     dumdic[objective_name] = list(data[data[&#39;metric_name&#39;] == objective_name][&#39;mean&#39;])</span>
+
+    <span class="c1"># dumdic[&#39;iteration&#39;] = list(data[data[&#39;metric_name&#39;] == objective_name][&#39;trial_index&#39;])</span>
+
+    <span class="c1"># df = pd.DataFrame(dumdic)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">data</span>
+
+    <span class="c1"># add iteration column with </span>
+    <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+                    <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="c1">#* par.stepsize</span>
+                <span class="k">elif</span> <span class="n">par</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">force_log</span><span class="p">:</span>
+                        <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">*</span> <span class="n">par</span><span class="o">.</span><span class="n">fscale</span>
+                <span class="k">elif</span> <span class="n">par</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;cat&#39;</span> <span class="ow">or</span> <span class="n">par</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;sub&#39;</span> <span class="ow">or</span> <span class="n">par</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;str&#39;</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">elif</span> <span class="n">par</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;bool&#39;</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Trying to rescale a parameter that is not int or float&#39;</span><span class="p">)</span>
+            <span class="c1"># if par.rescale or par.force_log:</span>
+            <span class="c1">#     if par.value_type == &#39;int&#39;:</span>
+            <span class="c1">#         df[par.name] = df[par.name] * par.stepsize</span>
+            <span class="c1">#     elif par.value_type == &#39;float&#39;:</span>
+            <span class="c1">#         if par.force_log:</span>
+            <span class="c1">#             df[par.name] = 10 ** df[par.name]</span>
+            <span class="c1">#         else:</span>
+            <span class="c1">#             df[par.name] = df[par.name] * par.fscale</span>
+            <span class="c1">#     else: </span>
+            <span class="c1">#         raise ValueError(&#39;Trying to rescale a parameter that is not int or float&#39;)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="get_VMLC_default_model_kwargs_list">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.axBOtorch.html#optimpv.optimizers.axBOtorch.axUtils.get_VMLC_default_model_kwargs_list">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_VMLC_default_model_kwargs_list</span><span class="p">(</span><span class="n">num_free_params</span><span class="p">,</span> <span class="n">use_CENTER</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">is_MOO</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">has_categorical</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the default model kwargs list that VMLC-PV likes to use. This includes the use of log transforms, standardization of the outputs, and an ARD 5/2 Matern kernel.</span>
+<span class="sd">    We also use the qLogNoisyExpectedImprovement acquisition function for single objective optimization and the qLogExpectedHypervolumeImprovement for multi-objective optimization.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    num_free_params : int</span>
+<span class="sd">        Number of free parameters in the model.</span>
+<span class="sd">    use_CENTER : bool, optional</span>
+<span class="sd">        Whether to use the CENTER model configuration, by default False</span>
+<span class="sd">    is_MOO : bool, optional</span>
+<span class="sd">        Whether the model is for multi-objective optimization, by default False</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    list of dict</span>
+<span class="sd">        List of model kwargs dictionaries for the Ax/Botorch library.</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+
+    <span class="k">if</span> <span class="n">has_categorical</span><span class="p">:</span>
+        <span class="n">kernel</span> <span class="o">=</span> <span class="n">ScaleMaternKernel</span>
+        <span class="n">Model</span> <span class="o">=</span> <span class="n">MixedSingleTaskGP</span>
+        <span class="c1"># Model = ScaleMaternKernel</span>
+        <span class="c1"># ScaleKernel(MaternKernel(nu=2.5, ard_num_dims=num_free_params))</span>
+        <span class="c1"># Model = MixedSingleTaskGP</span>
+        <span class="c1"># Model.cont_kernel_factory = kernel</span>
+        <span class="k">if</span> <span class="n">is_MOO</span><span class="p">:</span>
+            
+            <span class="n">model_kwargs_list</span> <span class="o">=</span> <span class="p">[{},{</span><span class="s2">&quot;torch_device&quot;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">),</span><span class="s1">&#39;botorch_acqf_class&#39;</span><span class="p">:</span><span class="n">qLogExpectedHypervolumeImprovement</span><span class="p">,</span><span class="s1">&#39;transforms&#39;</span><span class="p">:[</span><span class="n">RemoveFixed</span><span class="p">,</span> <span class="n">Log</span><span class="p">,</span><span class="n">UnitX</span><span class="p">,</span> <span class="n">StandardizeY</span><span class="p">,</span><span class="n">ChoiceToNumericChoice</span><span class="p">],</span><span class="s1">&#39;surrogate_spec&#39;</span><span class="p">:</span><span class="n">SurrogateSpec</span><span class="p">(</span><span class="n">model_configs</span><span class="o">=</span><span class="p">[</span><span class="n">ModelConfig</span><span class="p">(</span><span class="n">botorch_model_class</span><span class="o">=</span><span class="n">Model</span><span class="p">,</span> <span class="n">covar_module_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;base_kernel&#39;</span><span class="p">:</span><span class="n">kernel</span><span class="p">})</span> <span class="p">])}]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_kwargs_list</span> <span class="o">=</span> <span class="p">[{},{</span><span class="s2">&quot;torch_device&quot;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">),</span><span class="s1">&#39;botorch_acqf_class&#39;</span><span class="p">:</span><span class="n">qLogNoisyExpectedImprovement</span><span class="p">,</span><span class="s1">&#39;transforms&#39;</span><span class="p">:[</span><span class="n">RemoveFixed</span><span class="p">,</span> <span class="n">Log</span><span class="p">,</span><span class="n">UnitX</span><span class="p">,</span> <span class="n">StandardizeY</span><span class="p">,</span><span class="n">ChoiceToNumericChoice</span><span class="p">],</span><span class="s1">&#39;surrogate_spec&#39;</span><span class="p">:</span><span class="n">SurrogateSpec</span><span class="p">(</span><span class="n">model_configs</span><span class="o">=</span><span class="p">[</span><span class="n">ModelConfig</span><span class="p">(</span><span class="n">botorch_model_class</span><span class="o">=</span><span class="n">Model</span><span class="p">,</span> <span class="n">covar_module_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;base_kernel&#39;</span><span class="p">:</span><span class="n">kernel</span><span class="p">})</span> <span class="p">])}]</span>
+    
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">kernel</span> <span class="o">=</span> <span class="n">ScaleMaternKernel</span>
+        <span class="n">Model</span> <span class="o">=</span> <span class="n">SingleTaskGP</span>
+        <span class="k">if</span> <span class="n">is_MOO</span><span class="p">:</span>
+            
+            <span class="c1"># Model.cont_kernel_factory = kernel</span>
+            <span class="c1"># model_kwargs_list = [{},{&quot;torch_device&quot;:torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;),&#39;botorch_acqf_class&#39;:qLogExpectedHypervolumeImprovement,&#39;transforms&#39;:[RemoveFixed, Log, UnitX, StandardizeY],&#39;surrogate_spec&#39;:SurrogateSpec(model_configs=[ModelConfig(botorch_model_class=SingleTaskGP,covar_module_class=ScaleKernel, covar_module_options={&#39;base_kernel&#39;:MaternKernel(nu=2.5, ard_num_dims=num_free_params, active_dims=num_free_params)})])}]</span>
+            <span class="n">model_kwargs_list</span> <span class="o">=</span> <span class="p">[{},{</span><span class="s2">&quot;torch_device&quot;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">),</span><span class="s1">&#39;botorch_acqf_class&#39;</span><span class="p">:</span><span class="n">qLogExpectedHypervolumeImprovement</span><span class="p">,</span><span class="s1">&#39;transforms&#39;</span><span class="p">:[</span><span class="n">RemoveFixed</span><span class="p">,</span> <span class="n">Log</span><span class="p">,</span> <span class="n">UnitX</span><span class="p">,</span> <span class="n">StandardizeY</span><span class="p">],</span><span class="s1">&#39;surrogate_spec&#39;</span><span class="p">:</span><span class="n">SurrogateSpec</span><span class="p">(</span><span class="n">model_configs</span><span class="o">=</span><span class="p">[</span><span class="n">ModelConfig</span><span class="p">(</span><span class="n">botorch_model_class</span><span class="o">=</span><span class="n">Model</span><span class="p">,</span> <span class="n">covar_module_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;base_kernel&#39;</span><span class="p">:</span><span class="n">kernel</span><span class="p">})</span> <span class="p">])}]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_kwargs_list</span> <span class="o">=</span> <span class="p">[{},{</span><span class="s2">&quot;torch_device&quot;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">),</span><span class="s1">&#39;botorch_acqf_class&#39;</span><span class="p">:</span><span class="n">qLogNoisyExpectedImprovement</span><span class="p">,</span><span class="s1">&#39;transforms&#39;</span><span class="p">:[</span><span class="n">RemoveFixed</span><span class="p">,</span> <span class="n">Log</span><span class="p">,</span><span class="n">UnitX</span><span class="p">,</span> <span class="n">StandardizeY</span><span class="p">],</span><span class="s1">&#39;surrogate_spec&#39;</span><span class="p">:</span><span class="n">SurrogateSpec</span><span class="p">(</span><span class="n">model_configs</span><span class="o">=</span><span class="p">[</span><span class="n">ModelConfig</span><span class="p">(</span><span class="n">botorch_model_class</span><span class="o">=</span><span class="n">Model</span><span class="p">,</span> <span class="n">covar_module_options</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;base_kernel&#39;</span><span class="p">:</span><span class="n">kernel</span><span class="p">})])}]</span>
+
+    <span class="k">if</span> <span class="n">use_CENTER</span><span class="p">:</span>
+        <span class="c1">#add {} at the beginning of the list</span>
+        <span class="n">model_kwargs_list</span> <span class="o">=</span> <span class="p">[{}]</span> <span class="o">+</span> <span class="n">model_kwargs_list</span>
+    
+    <span class="c1"># print(model_kwargs_list)</span>
+    <span class="k">return</span> <span class="n">model_kwargs_list</span></div>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

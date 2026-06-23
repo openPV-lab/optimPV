@@ -1,0 +1,549 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.models.TransferMatrix.TransferMatrixModel &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optimpv.models.TransferMatrix.TransferMatrixModel</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optimpv.models.TransferMatrix.TransferMatrixModel</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Transfer Matrix Model&quot;&quot;&quot;</span>
+<span class="c1"># Note: This class is inspired by the https://github.com/erichoke/Stanford repository and the paper:</span>
+<span class="c1"># Burkhard, G.F., Hoke, E.T. and McGehee, M.D. (2010), Accounting for Interference, Scattering, and Electrode Absorption to Make Accurate Internal Quantum Efficiency Measurements in Organic and Other Thin Solar Cells. Adv. Mater., 22: 3293-3297. https://doi.org/10.1002/adma.201000883</span>
+<span class="c1">######### Package Imports #########################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">uuid</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">ceil</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">copy</span><span class="w"> </span><span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">constants</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.interpolate</span><span class="w"> </span><span class="kn">import</span> <span class="n">interp1d</span>
+
+<span class="c1"># physical constants</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;elementary charge&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;speed of light in vacuum&#39;</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Planck constant&#39;</span><span class="p">)</span>
+
+<span class="c1">######### Function Definitions ####################################################################</span>
+<div class="viewcode-block" id="openFile">
+<a class="viewcode-back" href="../../../../optimpv.models.TransferMatrix.html#optimpv.models.TransferMatrix.TransferMatrixModel.openFile">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">openFile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; opens files and returns a list split at each new line</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname : string</span>
+<span class="sd">        path to the file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fd : list</span>
+<span class="sd">        list of lines in the file</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Target is not a readable file</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="n">fd</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">fdtmp</span> <span class="o">=</span> <span class="n">fn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">fdtmp</span> <span class="o">=</span> <span class="n">fdtmp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="c1"># clean up line endings</span>
+        <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fdtmp</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="c1"># make so doesn&#39;t return empty line at the end</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">fd</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2"> Target is not a readable file&quot;</span> <span class="o">%</span> <span class="n">fname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fd</span></div>
+
+
+<div class="viewcode-block" id="get_ntotal">
+<a class="viewcode-back" href="../../../../optimpv.models.TransferMatrix.html#optimpv.models.TransferMatrix.TransferMatrixModel.get_ntotal">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ntotal</span><span class="p">(</span><span class="n">matName</span><span class="p">,</span><span class="n">lambdas</span><span class="p">,</span><span class="n">mat_dir</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; get the complex refractive index of a material from a file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    matName : string</span>
+<span class="sd">        name of the material in the matdata folder</span>
+<span class="sd">    lambdas : list</span>
+<span class="sd">        list of wavelengths in nm</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ntotal : list</span>
+<span class="sd">        list of complex refractive index values</span>
+<span class="sd">    &quot;&quot;&quot;</span>      
+    <span class="n">matPrefix</span>		<span class="o">=</span> <span class="s1">&#39;nk_&#39;</span>		    <span class="c1"># materials data prefix  </span>
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mat_dir</span><span class="p">,</span><span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">.txt&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">matPrefix</span><span class="p">,</span><span class="n">matName</span><span class="p">))</span>
+    <span class="n">matHeader</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># check number of lines with strings in the header</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">openFile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+        <span class="c1"># check if line starts with a number</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
+            <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">matHeader</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="n">fdata</span> <span class="o">=</span> <span class="n">openFile</span><span class="p">(</span><span class="n">fname</span><span class="p">)[</span><span class="n">matHeader</span><span class="p">:]</span>
+    <span class="n">fdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s1">&#39;infer&#39;</span><span class="p">)</span>
+    <span class="n">lambList</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">])</span>
+    <span class="n">nList</span>		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">])</span>
+    <span class="n">kList</span>		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">])</span>
+    <span class="c1"># # get data from the file</span>
+    <span class="c1"># lambList	= []</span>
+    <span class="c1"># nList		= []</span>
+    <span class="c1"># kList		= []</span>
+
+    <span class="c1"># for idx,l in enumerate(fdata):</span>
+    <span class="c1">#     # remove any whitespace at the beginning of the line end in the end</span>
+    <span class="c1">#     l = l.strip()</span>
+    <span class="c1">#     wl , n , k = l.split(&#39; &#39;)</span>
+    <span class="c1">#     wl , n , k = float(wl) , float(n) , float(k)</span>
+    <span class="c1">#     lambList.append(wl)</span>
+    <span class="c1">#     nList.append(n)</span>
+    <span class="c1">#     kList.append(k)</span>
+    <span class="c1"># make interpolation functions</span>
+    <span class="n">int_n</span>	<span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">lambList</span><span class="p">,</span><span class="n">nList</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+    <span class="n">int_k</span>	<span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">lambList</span><span class="p">,</span><span class="n">kList</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+    <span class="c1"># interpolate data</span>
+    <span class="c1"># check if the wavelengths are within the range of the data with precision of float</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">eps</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lambList</span><span class="p">)</span> <span class="o">-</span> <span class="n">epsilon</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lambList</span><span class="p">)</span> <span class="o">+</span> <span class="n">epsilon</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lambdas</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">lambList</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lambdas</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">lambList</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Wavelengths out of range for the </span><span class="si">%s</span><span class="s1"> layer. Please either change the wavelength range or provide and nk file with the proper range.&#39;</span> <span class="o">%</span> <span class="n">matName</span><span class="p">)</span>
+    <span class="n">kintList</span>	<span class="o">=</span> <span class="n">int_k</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span>
+    <span class="n">nintList</span>	<span class="o">=</span> <span class="n">int_n</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span>
+    <span class="c1"># make ntotal</span>
+    <span class="n">ntotal</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">n</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nintList</span><span class="p">):</span>
+        <span class="n">nt</span> <span class="o">=</span> <span class="nb">complex</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">kintList</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">ntotal</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ntotal</span></div>
+
+
+<div class="viewcode-block" id="I_mat">
+<a class="viewcode-back" href="../../../../optimpv.models.TransferMatrix.html#optimpv.models.TransferMatrix.TransferMatrixModel.I_mat">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">I_mat</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span><span class="n">n2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; calculate the interface matrix</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n1 : float</span>
+<span class="sd">        refractive index of the first material</span>
+<span class="sd">    n2 : float</span>
+<span class="sd">        refractive index of the second material</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ret : array</span>
+<span class="sd">        interface matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>        
+    <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">n1</span><span class="o">-</span><span class="n">n2</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n1</span><span class="o">+</span><span class="n">n2</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">n1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">n1</span><span class="o">+</span><span class="n">n2</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="n">r</span><span class="p">],[</span><span class="n">r</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">/</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="L_mat">
+<a class="viewcode-back" href="../../../../optimpv.models.TransferMatrix.html#optimpv.models.TransferMatrix.TransferMatrixModel.L_mat">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">L_mat</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; calculate the propagation matrix</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n : array</span>
+<span class="sd">        complex refractive index of the material</span>
+<span class="sd">    d : float</span>
+<span class="sd">        thickness of the material</span>
+<span class="sd">    l : float</span>
+<span class="sd">        wavelength</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    L : array</span>
+<span class="sd">        propagation matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>        
+
+    <span class="n">xi</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">d</span><span class="o">*</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="n">l</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span> <span class="p">[</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="n">xi</span><span class="p">)),</span><span class="mi">0</span><span class="p">]</span> <span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">xi</span><span class="p">))]</span> <span class="p">]</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span></div>
+
+
+
+<div class="viewcode-block" id="TMM">
+<a class="viewcode-back" href="../../../../optimpv.models.TransferMatrix.html#optimpv.models.TransferMatrix.TransferMatrixModel.TMM">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">TMM</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">thicknesses</span><span class="p">,</span> <span class="n">lambda_min</span><span class="p">,</span> <span class="n">lambda_max</span><span class="p">,</span> <span class="n">lambda_step</span><span class="p">,</span> <span class="n">x_step</span><span class="p">,</span> <span class="n">activeLayer</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">,</span> <span class="n">mat_dir</span><span class="p">,</span><span class="n">photopic_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span> 
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Calculate the Jsc, AVT or LUE for a multilayer stack</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    parameters : dict</span>
+<span class="sd">        dictionary of parameters note that all parameters must be in the form of &#39;d_i&#39; or &#39;nk_i&#39; where i is the index of the layer and the everything must be in SI units.</span>
+<span class="sd">    layers : list</span>
+<span class="sd">        list of material names in the stack. Note that this names will be used to find the refractive index files in the mat_dir. The filenames must be in the form of &#39;nk_materialname.txt&#39;</span>
+<span class="sd">    thicknesses : list</span>
+<span class="sd">        list of thicknesses of the layers in the stack in meters</span>
+<span class="sd">    lambda_min : float</span>
+<span class="sd">        start wavelength in m</span>
+<span class="sd">    lambda_max : float</span>
+<span class="sd">        stop wavelength in m</span>
+<span class="sd">    lambda_step : float</span>
+<span class="sd">        wavelength step in m</span>
+<span class="sd">    x_step : float</span>
+<span class="sd">        step size for the x position in the stack in m</span>
+<span class="sd">    activeLayer : int</span>
+<span class="sd">        index of the active layer in the stack, i.e. the layer where the generation profile will be calculated. Counting starts at 0.</span>
+<span class="sd">    spectrum : string</span>
+<span class="sd">        name of file that contains the spectrum.</span>
+<span class="sd">    mat_dir : string</span>
+<span class="sd">        path to the directory where the refractive index files and the spectrum file are located.</span>
+<span class="sd">    photopic_file : string, optional</span>
+<span class="sd">        name of the file that contains the photopic response (must be in the same directory as the refractive index files), by default None</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    Jsc : float</span>
+<span class="sd">        Short circuit current</span>
+<span class="sd">    AVT : float</span>
+<span class="sd">        Average visible transmittance</span>
+<span class="sd">    LUE : float</span>
+<span class="sd">        Light utilization efficiency</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Wrong indices for the thicknesses</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Wrong indices for the complex refractive index</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        Wavelengths out of range for the layer</span>
+<span class="sd">    ValueError</span>
+<span class="sd">        photopic_file must be defined to calculate AVT or LUE</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>     
+
+    <span class="k">if</span> <span class="n">photopic_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">calculate_AVT_LUE</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">calculate_AVT_LUE</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># prepare the stack</span>
+    <span class="n">pnames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="c1"># Read the parameters</span>
+    <span class="n">dnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pnames</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;d_&#39;</span><span class="p">)]</span> <span class="c1">#find parameters that start with &#39;d_&#39;</span>
+    <span class="n">dindices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">dnames</span><span class="p">]</span> <span class="c1"># read index after &#39;d_&#39; for these parameters</span>
+    <span class="n">nknames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pnames</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;nk_&#39;</span><span class="p">)]</span>
+    <span class="n">nkindices</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">nknames</span><span class="p">]</span>
+
+    <span class="c1"># check that all indexes in dinices are in nkindices are below the number of layers</span>
+    <span class="n">maxindex</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span><span class="o">&gt;</span><span class="n">maxindex</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dindices</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;dindices must be below the number of layers&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">i</span><span class="o">&gt;</span><span class="n">maxindex</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nkindices</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;nkindices must be below the number of layers&#39;</span><span class="p">)</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">thicknesses</span><span class="p">)</span>
+    <span class="n">lambdas</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">lambda_min</span><span class="p">,</span><span class="n">lambda_max</span><span class="o">+</span><span class="n">lambda_step</span><span class="p">,</span><span class="n">lambda_step</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">layers</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+    <span class="c1"># x_step = deepcopy(self.x_step)</span>
+    <span class="c1"># activeLayer = deepcopy(self.activeLayer)</span>
+
+    <span class="c1"># update the thicknesses</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">dindices</span><span class="p">:</span>
+        <span class="c1"># thicknesses[i] = [p.val for p in params if p.name == &#39;d_&#39;+str(i)][0]</span>
+        <span class="k">if</span> <span class="s1">&#39;d_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">thicknesses</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;d_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="s1">&#39;d_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;d_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+        <span class="c1"># t[i] = [p.val for p in params if p.name == &#39;d_&#39;+str(i)][0]</span>
+    <span class="c1"># update the nk values</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nkindices</span><span class="p">:</span>
+        <span class="c1"># layers[i] = [p.val for p in params if p.name == &#39;nk_&#39;+str(i)][0]</span>
+        <span class="c1"># layers[i] = [p.val for p in params if p.name == &#39;nk_&#39;+str(i)][0]</span>
+        <span class="k">if</span> <span class="s1">&#39;nk_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;nk_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span>
+
+    
+    <span class="c1"># load and interpolate AM1.5G Data</span>
+    <span class="n">am15</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s1">&#39;infer&#39;</span><span class="p">)</span>
+    <span class="n">am15_xData</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">am15</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">])</span>
+    <span class="n">am15_yData</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">am15</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">])</span>
+    <span class="n">am15_interp</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">am15_xData</span><span class="p">,</span><span class="n">am15_yData</span><span class="p">,</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+    <span class="n">am15_int_y</span> <span class="o">=</span> <span class="n">am15_interp</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span>
+
+    <span class="c1"># load and interpolate human eye response</span>
+    <span class="k">if</span> <span class="n">photopic_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">photopic_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">photopic_file</span><span class="p">)</span>
+        <span class="n">photopic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">photopic_file</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="s1">&#39;infer&#39;</span><span class="p">)</span>
+        <span class="n">photopic_xData</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">photopic_data</span><span class="p">[</span><span class="s1">&#39;lambda&#39;</span><span class="p">])</span>
+        <span class="n">photopic_yData</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">photopic_data</span><span class="p">[</span><span class="s1">&#39;photopic&#39;</span><span class="p">])</span>
+        <span class="n">photopic_interp</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">photopic_xData</span><span class="p">,</span><span class="n">photopic_yData</span><span class="p">,</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">photopic_int_y</span>  <span class="o">=</span> <span class="n">photopic_interp</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span>
+
+    <span class="c1"># ------ start actual calculation  --------------------------------------</span>
+    
+
+    <span class="c1"># initialize an array</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+
+    <span class="c1"># load index of refraction for each material in the stack</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layers</span><span class="p">):</span>
+        <span class="n">ni</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">get_ntotal</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">lambdas</span><span class="p">,</span><span class="n">mat_dir</span><span class="p">))</span>
+        <span class="n">n</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">ni</span>
+
+    <span class="c1"># calculate incoherent power transmission through substrate</span>
+
+    <span class="n">T_glass</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="mf">4.0</span><span class="o">*</span><span class="mf">1.0</span><span class="o">*</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span><span class="o">/</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="n">R_glass</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]))</span><span class="o">**</span><span class="mi">2</span>
+
+    <span class="c1"># calculate transfer matrices, and field at each wavelength and position</span>
+    <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> 		<span class="o">=</span> <span class="mi">0</span>
+    <span class="n">t_cumsum</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">x_pos</span>		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">((</span><span class="n">x_step</span><span class="o">/</span><span class="mf">2.0</span><span class="p">),</span><span class="nb">sum</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="n">x_step</span><span class="p">)</span>
+    <span class="c1"># get x_mat</span>
+    <span class="n">comp1</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span> <span class="p">),</span><span class="n">x_pos</span><span class="p">)</span>
+    <span class="n">comp2</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">kron</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_pos</span><span class="p">),</span><span class="mi">1</span><span class="p">)</span> <span class="p">),</span><span class="n">t_cumsum</span><span class="p">))</span>
+    <span class="n">x_mat</span> 	<span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">comp1</span><span class="o">&gt;</span><span class="n">comp2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> 	<span class="c1"># might need to get changed to better match python indices</span>
+
+    <span class="n">R</span>		<span class="o">=</span> <span class="n">lambdas</span><span class="o">*</span><span class="mf">0.0</span>
+    <span class="n">T2</span>		<span class="o">=</span> <span class="n">lambdas</span><span class="o">*</span><span class="mf">0.0</span>
+    <span class="n">E</span>		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_pos</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span> <span class="p">)</span>
+
+    <span class="c1"># start looping</span>
+    <span class="k">for</span> <span class="n">ind</span><span class="p">,</span><span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lambdas</span><span class="p">):</span>
+        <span class="c1"># calculate the transfer matrices for incoherent reflection/transmission at the first interface</span>
+        <span class="n">S</span> <span class="o">=</span> <span class="n">I_mat</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">ind</span><span class="p">],</span><span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">matind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">mL</span> <span class="o">=</span> <span class="n">L_mat</span><span class="p">(</span> <span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="p">,</span><span class="n">ind</span><span class="p">]</span> <span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="n">matind</span><span class="p">]</span> <span class="p">,</span> <span class="n">lambdas</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="p">)</span>
+            <span class="n">mI</span> <span class="o">=</span> <span class="n">I_mat</span><span class="p">(</span> <span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="p">,</span><span class="n">ind</span><span class="p">]</span> <span class="p">,</span> <span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">])</span>
+            <span class="n">S</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">S</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">mL</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">mI</span><span class="p">))</span>
+        <span class="n">R</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">T2</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">ind</span><span class="p">])))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">R_glass</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span><span class="o">*</span><span class="n">R</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+
+        <span class="c1"># this is not the transmittance! </span>
+        <span class="c1"># good up to here</span>
+        <span class="c1"># calculate all other transfer matrices</span>
+        <span class="k">for</span> <span class="n">material</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+            <span class="n">xi</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">n</span><span class="p">[</span><span class="n">material</span><span class="p">,</span><span class="n">ind</span><span class="p">]</span><span class="o">/</span><span class="n">lambdas</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+            <span class="n">dj</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="n">material</span><span class="p">]</span>
+            <span class="n">x_indices</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">x_mat</span> <span class="o">==</span> <span class="n">material</span><span class="p">)</span>
+            <span class="n">x</span>			<span class="o">=</span> <span class="n">x_pos</span><span class="p">[</span><span class="n">x_indices</span><span class="p">]</span><span class="o">-</span><span class="n">t_cumsum</span><span class="p">[</span><span class="n">material</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Calculate S_Prime</span>
+            <span class="n">S_prime</span>		<span class="o">=</span> <span class="n">I_mat</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">ind</span><span class="p">],</span><span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">matind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="n">material</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">mL</span> <span class="o">=</span> <span class="n">L_mat</span><span class="p">(</span> <span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="n">matind</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">lambdas</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="p">)</span>
+                <span class="n">mI</span> <span class="o">=</span> <span class="n">I_mat</span><span class="p">(</span> <span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">],</span><span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="p">,</span><span class="n">ind</span><span class="p">]</span> <span class="p">)</span>
+                <span class="n">S_prime</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">S_prime</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">mL</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">mI</span><span class="p">)</span> <span class="p">)</span>
+            <span class="c1"># Calculate S_dprime (double prime)</span>
+            <span class="n">S_dprime</span>	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">matind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">material</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">mI</span>	<span class="o">=</span> <span class="n">I_mat</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="p">,</span><span class="n">ind</span><span class="p">],</span><span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">])</span>
+                <span class="n">mL</span>	<span class="o">=</span> <span class="n">L_mat</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ind</span><span class="p">],</span><span class="n">t</span><span class="p">[</span><span class="n">matind</span><span class="o">+</span><span class="mi">1</span><span class="p">],</span><span class="n">lambdas</span><span class="p">[</span><span class="n">ind</span><span class="p">])</span>
+                <span class="n">S_dprime</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">S_dprime</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">mI</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asmatrix</span><span class="p">(</span><span class="n">mL</span><span class="p">)</span> <span class="p">)</span>
+            <span class="c1"># Normalized Electric Field Profile</span>
+            <span class="n">num</span> <span class="o">=</span> <span class="n">T2</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">S_dprime</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span> <span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">*</span><span class="n">xi</span><span class="o">*</span><span class="p">(</span><span class="n">dj</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="p">)</span> <span class="o">+</span> <span class="n">S_dprime</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">xi</span><span class="o">*</span><span class="p">(</span><span class="n">dj</span><span class="o">-</span><span class="n">x</span><span class="p">)))</span>
+            <span class="n">den</span> <span class="o">=</span> <span class="n">S_prime</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">S_dprime</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mf">1.0</span><span class="p">)</span><span class="o">*</span><span class="n">xi</span><span class="o">*</span><span class="n">dj</span><span class="p">)</span> <span class="o">+</span> <span class="n">S_prime</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">S_dprime</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="nb">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">xi</span><span class="o">*</span><span class="n">dj</span><span class="p">)</span>
+            
+            <span class="n">E</span><span class="p">[</span><span class="n">x_indices</span><span class="p">,</span><span class="n">ind</span><span class="p">]</span> <span class="o">=</span> <span class="n">num</span> <span class="o">/</span> <span class="n">den</span>
+    <span class="c1"># overall Reflection from device with incoherent reflections at first interface</span>
+    <span class="n">Reflectance</span> <span class="o">=</span> <span class="n">R_glass</span><span class="o">+</span><span class="n">T_glass</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">R</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">R_glass</span><span class="o">*</span><span class="n">R</span><span class="p">)</span>
+    
+    <span class="c1"># Absorption coefficient in 1/cm</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">lambdas</span><span class="p">))</span> <span class="p">)</span>
+    <span class="k">for</span> <span class="n">matind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">matind</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">(</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="p">,:])</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span> <span class="n">lambdas</span> <span class="p">)</span> <span class="c1">#* 1.0e-7 )</span>
+
+    <span class="c1"># Absorption</span>
+    <span class="n">Absorption</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">),</span><span class="nb">len</span><span class="p">(</span><span class="n">lambdas</span><span class="p">))</span> <span class="p">)</span>
+    <span class="k">for</span> <span class="n">matind</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)):</span>
+        <span class="n">Pos</span> 		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">x_mat</span> <span class="o">==</span> <span class="n">matind</span><span class="p">)</span>
+        <span class="n">AbsRate</span> 	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">matind</span><span class="p">,:]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">matind</span><span class="p">,:])),(</span><span class="nb">len</span><span class="p">(</span><span class="n">Pos</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">E</span><span class="p">[</span><span class="n">Pos</span><span class="p">,:])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">Absorption</span><span class="p">[</span><span class="n">matind</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">AbsRate</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">x_step</span><span class="c1">#*1.0e-7</span>
+
+    <span class="c1"># Transmittance</span>
+    <span class="n">Transmittance</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">Reflectance</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Absorption</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">Transmittance</span><span class="p">[</span><span class="n">Transmittance</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># set negative values to zero</span>
+
+    <span class="c1"># calculate generation profile</span>
+    <span class="n">ActivePos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">x_mat</span> <span class="o">==</span> <span class="n">activeLayer</span><span class="p">)</span>
+    <span class="n">tmp1</span>	<span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">activeLayer</span><span class="p">,:]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="n">activeLayer</span><span class="p">,:])</span><span class="o">*</span><span class="n">am15_int_y</span><span class="p">)</span>
+    <span class="n">Q</span>	 	<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">tmp1</span><span class="p">,(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">ActivePos</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">E</span><span class="p">[</span><span class="n">ActivePos</span><span class="p">,:])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># Exciton generation rate</span>
+    <span class="n">Gxl</span>		<span class="o">=</span> <span class="p">(</span><span class="n">Q</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span> <span class="p">(</span><span class="n">lambdas</span><span class="p">)</span> <span class="p">,</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">ActivePos</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="n">c</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">lambda_step</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lambda_step</span> <span class="o">=</span> <span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lambdas</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">Gx</span>		<span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Gxl</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">lambda_step</span>
+    
+    <span class="c1"># calculate Jsc </span>
+    <span class="n">Jsc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Gx</span><span class="p">)</span><span class="o">*</span><span class="n">x_step</span><span class="o">*</span><span class="n">q</span>
+
+    <span class="c1"># calculate AVT and LUE</span>
+    <span class="k">if</span> <span class="n">calculate_AVT_LUE</span><span class="p">:</span>
+        <span class="n">AVT</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">am15_int_y</span> <span class="o">*</span> <span class="n">photopic_int_y</span> <span class="o">*</span> <span class="n">Transmittance</span><span class="p">)</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="n">am15_int_y</span> <span class="o">*</span> <span class="n">photopic_int_y</span><span class="p">)</span>
+        <span class="n">LUE</span> <span class="o">=</span> <span class="n">Jsc</span> <span class="o">*</span> <span class="n">AVT</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">AVT</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">LUE</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">Jsc</span><span class="p">,</span><span class="n">AVT</span><span class="p">,</span><span class="n">LUE</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

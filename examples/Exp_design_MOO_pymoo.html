@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo) &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../_static/js/rtd_search_config.js"></script>
+      <script src="../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Fit non ideal diode equation to dark or light JV-curve" href="diode.html" />
+    <link rel="prev" title="Design of Experiment: perovskite thin film optimization PLQY and FWHM" href="Exp_design_MOO.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Get-the-data">Get the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/examples/Exp_design_MOO_pymoo.ipynb" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Design-of-Experiment:-perovskite-thin-film-optimization-PLQY-and-FWHM-(pymoo)">
+<h1>Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)<a class="headerlink" href="#Design-of-Experiment:-perovskite-thin-film-optimization-PLQY-and-FWHM-(pymoo)" title="Link to this heading"></a></h1>
+<div class="line-block">
+<div class="line">This notebook is made to use optimPV for experimental design. Here, we show how to load some data from a presampling, and how to use optimPV to suggest the next set of experiment using Bayesian optimization.</div>
+<div class="line">The goal here is to do multi-objective optimization (MO) to maximize the photoluminescence quantum yield (PLQY) and minimize the full width at half maximum (FWHM) of a perovskite thin film.</div>
+</div>
+<p>Note: The data used here is real data generated in the <a class="reference external" href="https://www.i-meet.ww.uni-erlangen.de/">i-MEET</a> and <a class="reference external" href="https://www.hi-ern.de/de">HI-ERN</a> labs at the university of Erlangen-Nuremberg (FAU) by Frederik Schmitt. The data is not published yet, and is only used here for demonstration purposes. For more information, please contact us.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span><span class="o">,</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span>
+<span class="c1"># remove warnings from the output</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONWARNINGS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ignore&quot;</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.optimizers.pymooOpti.pymooOptimizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PymooOptimizer</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">)</span> <span class="c1"># add the path to the optimpv module</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.optimizers.pymooOpti.pymooOptimizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PymooOptimizer</span>
+</pre></div>
+</div>
+</div>
+<section id="Get-the-data">
+<h2>Get the data<a class="headerlink" href="#Get-the-data" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the path to the data</span>
+<span class="n">data_dir</span> <span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">),</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;pero_MOO_opti&#39;</span><span class="p">)</span> <span class="c1"># path to the data directory</span>
+
+<span class="c1"># Load the data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s1">&#39;Pero_PLQY_FWHM.csv&#39;</span><span class="p">),</span><span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># load the data</span>
+
+<span class="n">stepsize_fraction</span> <span class="o">=</span> <span class="mf">0.05</span>
+<span class="n">stepsize_spin_speed</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="c1"># Display some information about the data</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+        iteration   batch_number  Cs_fraction  Fa_fraction  Ma_fraction  \
+count  128.000000     128.000000   128.000000   128.000000   128.000000
+mean     3.500000       7.500000     0.209375     0.533984     0.256641
+std      2.300291       4.627885     0.278052     0.361914     0.277742
+min      0.000000       0.000000     0.000000     0.000000     0.000000
+25%      1.750000       3.750000     0.000000     0.200000     0.050000
+50%      3.500000       7.500000     0.050000     0.500000     0.100000
+75%      5.250000      11.250000     0.400000     0.950000     0.462500
+max      7.000000      15.000000     1.000000     1.000000     1.000000
+
+       Spin_duration_Antisolvent  Spin_duration_High_Speed   Spin_speed  \
+count                 128.000000                128.000000   128.000000
+mean                   14.617188                 40.531250  2914.843750
+std                     7.183885                 14.651295  1015.400301
+min                     5.000000                 15.000000  1000.000000
+25%                    10.000000                 26.500000  2400.000000
+50%                    12.000000                 43.000000  2700.000000
+75%                    20.000000                 55.000000  3400.000000
+max                    30.000000                 60.000000  5000.000000
+
+             FWHM        PLQY       merit
+count  128.000000  128.000000  128.000000
+mean    98.012656    7.975000    0.549372
+std     82.719007   10.030822    0.148835
+min     45.740000    0.000000    0.219360
+25%     49.255000    0.000000    0.471784
+50%     53.950000    5.480000    0.528186
+75%    101.587500   11.952500    0.575939
+max    335.900000   40.920000    0.915136
+</pre></div></div>
+</div>
+</section>
+<section id="Define-the-parameters-for-the-simulation">
+<h2>Define the parameters for the simulation<a class="headerlink" href="#Define-the-parameters-for-the-simulation" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">params</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># list of parameters to be optimized</span>
+
+<span class="n">Cs_fraction</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Cs_fraction&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Cs fraction&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Cs_fraction</span><span class="p">)</span>
+
+<span class="n">Fa_fraction</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Fa_fraction&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Fa fraction&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Fa_fraction</span><span class="p">)</span>
+
+<span class="n">Spin_duration_Antisolvent</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_duration_Antisolvent&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">30</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin duration Antisolvent&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_duration_Antisolvent</span><span class="p">)</span>
+
+<span class="n">Spin_duration_High_Speed</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_duration_High_Speed&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">60</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin duration High Speed&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_duration_High_Speed</span><span class="p">)</span>
+
+<span class="n">Spin_speed</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_speed&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin speed&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;rpm&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_speed</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+</section>
+<section id="Run-the-optimization">
+<h2>Run the optimization<a class="headerlink" href="#Run-the-optimization" title="Link to this heading"></a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the Agent and the target metric/loss function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.SuggestOnlyAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">SuggestOnlyAgent</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span> <span class="c1"># thresholds for the metrics</span>
+<span class="n">suggest</span> <span class="o">=</span> <span class="n">SuggestOnlyAgent</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">exp_format</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PLQY&#39;</span><span class="p">,</span> <span class="s1">&#39;FWHM&#39;</span><span class="p">],</span><span class="n">minimize</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">],</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the optimizer</span>
+<span class="n">parameter_constraints</span> <span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Cs_fraction + Fa_fraction &lt;= 1&#39;</span><span class="p">]</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">PymooOptimizer</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="n">suggest</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;NSGA2&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_gen</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pymoo_single_obj&#39;</span><span class="p">,</span> <span class="n">verbose_logging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">max_parallelism</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">existing_data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">suggest_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parameter_constraints</span><span class="o">=</span><span class="n">parameter_constraints</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">to_run_next</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span> <span class="c1"># run the optimization with pymoo</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+[INFO 01-20 10:23:36] optimpv.pymooOptimizer: Starting optimization using NSGA2 algorithm
+[INFO 01-20 10:23:36] optimpv.pymooOptimizer: Population size: 6, Generations: 1
+[INFO 01-20 10:23:36] optimpv.pymooOptimizer: Using existing population of size 128
+[INFO 01-20 10:23:36] optimpv.pymooOptimizer: Suggesting new points without running agents
+[INFO 01-20 10:23:36] optimpv.pymooOptimizer: Attempt 2: Found 5 valid candidates out of 6 requested
+[INFO 01-20 10:23:36] optimpv.pymooOptimizer: Attempt 3: Found 6 valid candidates out of 6 requested
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the best parameters and update the params list in the optimizer and the agent</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">update_params_with_best_balance</span><span class="p">()</span> <span class="c1"># update the params list in the optimizer with the best parameters</span>
+<span class="n">suggest</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">params</span> <span class="c1"># update the params list in the agent with the best parameters</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best parameters found:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s2"> &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Best parameters found:
+Cs_fraction: 0.0
+Fa_fraction: 0.2
+Spin_duration_Antisolvent: 6.0 s
+Spin_duration_High_Speed: 41.0 s
+Spin_speed: 4500.0 rpm
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot optimization results</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">get_df_from_pymoo</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">rescale_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+<span class="n">all_metrics</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">all_metrics</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">all_metrics</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">suggest</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+       <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">metric</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+       <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="o">.</span><span class="n">accumulate</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">metric</span><span class="p">]),</span> <span class="n">label</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s2">&quot;log&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Iteration&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Best value seen so far&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Exp_design_MOO_pymoo_11_0.png" src="../_images/examples_Exp_design_MOO_pymoo_11_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># print the parameters to that are running in data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Parameters to run next:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">to_run_next</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Parameters to run next:
+   Cs_fraction  Fa_fraction  Spin_duration_Antisolvent  \
+0     0.416667     0.581196                  25.045924
+1     0.202270     0.645164                  29.429907
+2     0.513405     0.026391                   7.333619
+3     0.338730     0.011037                  10.761647
+4     0.078995     0.774708                  17.743361
+5     0.115885     0.459397                  28.118912
+
+   Spin_duration_High_Speed   Spin_speed
+0                 38.806388  1074.957957
+1                 23.239018  1746.335826
+2                 42.246583  4248.038384
+3                 56.328715  2814.421275
+4                 32.257086  3613.080083
+5                 36.025991  2997.485987
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the density of the exploration of the parameters</span>
+<span class="c1"># this gives a nice visualization of where the optimizer focused its exploration and may show some correlation between the parameters</span>
+<span class="n">plot_dens</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="n">plot_dens</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.posterior.exploration_density</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="n">params_orig_dict</span><span class="p">,</span> <span class="n">best_parameters</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+        <span class="n">best_parameters</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="n">fig_dens</span><span class="p">,</span> <span class="n">ax_dens</span> <span class="o">=</span> <span class="n">plot_density_exploration</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">best_parameters</span> <span class="o">=</span> <span class="n">best_parameters</span><span class="p">,</span>  <span class="n">optimizer_type</span> <span class="o">=</span> <span class="s1">&#39;pymoo&#39;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_Exp_design_MOO_pymoo_13_0.png" src="../_images/examples_Exp_design_MOO_pymoo_13_0.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Exp_design_MOO.html" class="btn btn-neutral float-left" title="Design of Experiment: perovskite thin film optimization PLQY and FWHM" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="diode.html" class="btn btn-neutral float-right" title="Fit non ideal diode equation to dark or light JV-curve" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,408 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.models.TransferMatrix package &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="optimpv.optimizers package" href="optimpv.optimizers.html" />
+    <link rel="prev" title="optimpv.models.RateEqfits package" href="optimpv.models.RateEqfits.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimpv</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimpv.html">optimpv package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimpv.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimpv.general.html">optimpv.general package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="optimpv.models.html">optimpv.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.posterior.html">optimpv.posterior package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.tests.html">optimpv.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimpv.html#module-optimpv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">optimpv</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.html">optimpv package</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.models.html">optimpv.models package</a></li>
+      <li class="breadcrumb-item active">optimpv.models.TransferMatrix package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/optimpv.models.TransferMatrix.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimpv-models-transfermatrix-package">
+<h1>optimpv.models.TransferMatrix package<a class="headerlink" href="#optimpv-models-transfermatrix-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.models.TransferMatrix.TransferMatrixAgent">
+<span id="optimpv-models-transfermatrix-transfermatrixagent-module"></span><h2>optimpv.models.TransferMatrix.TransferMatrixAgent module<a class="headerlink" href="#module-optimpv.models.TransferMatrix.TransferMatrixAgent" title="Link to this heading"></a></h2>
+<p>Provides general functionality for Agent objects for transfer matrix simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.models.TransferMatrix.TransferMatrixAgent.</span></span><span class="sig-name descname"><span class="pre">TransferMatrixAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thicknesses</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activeLayer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8e-07</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-09</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photopic_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Jsc'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TM'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixAgent.html#TransferMatrixAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimpv.general.html#optimpv.general.BaseAgent.BaseAgent" title="optimpv.general.BaseAgent.BaseAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAgent</span></code></a></p>
+<p>Initialize the TransferMatrixAgent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>dict</em>) – Dictionary of parameters.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Experimental data, by default None.</p></li>
+<li><p><strong>layers</strong> (<em>list</em><em>, </em><em>optional</em>) – List of material names in the stack, by default None. Note that these names will be used to find the refractive index files in the mat_dir. The filenames must be in the form of ‘nk_materialname.txt’.</p></li>
+<li><p><strong>thicknesses</strong> (<em>list</em><em>, </em><em>optional</em>) – List of thicknesses of the layers in the stack in meters, by default None.</p></li>
+<li><p><strong>lambda_min</strong> (<em>float</em><em>, </em><em>optional</em>) – Start wavelength in m, by default 350e-9.</p></li>
+<li><p><strong>lambda_max</strong> (<em>float</em><em>, </em><em>optional</em>) – Stop wavelength in m, by default 800e-9.</p></li>
+<li><p><strong>lambda_step</strong> (<em>float</em><em>, </em><em>optional</em>) – Wavelength step in m, by default 1e-9.</p></li>
+<li><p><strong>x_step</strong> (<em>float</em><em>, </em><em>optional</em>) – Step size for the x position in the stack in m, by default 1e-9.</p></li>
+<li><p><strong>activeLayer</strong> (<em>int</em><em>, </em><em>optional</em>) – Index of the active layer in the stack, i.e. the layer where the generation profile will be calculated. Counting starts at 0, by default None.</p></li>
+<li><p><strong>spectrum</strong> (<em>string</em><em>, </em><em>optional</em>) – Name of the file that contains the spectrum, by default None.</p></li>
+<li><p><strong>mat_dir</strong> (<em>string</em><em>, </em><em>optional</em>) – Path to the directory where the refractive index files and the spectrum file are located, by default None.</p></li>
+<li><p><strong>photopic_file</strong> (<em>string</em><em>, </em><em>optional</em>) – Name of the file that contains the photopic response (must be in the same directory as the refractive index files), by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Expected format of the output, by default ‘Jsc’.</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Metric to be used for optimization, by default None.</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Loss function to be used for optimization, by default None.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em>, </em><em>float</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Threshold value for the loss function, by default 10.</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Whether to minimize the loss function, by default False.</p></li>
+<li><p><strong>tracking_metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Additional metrics to track and report in run_Ax output, by default None.</p></li>
+<li><p><strong>tracking_loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss functions to apply to tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Experimental formats for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_y</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – y values for tracking metrics, by default None.</p></li>
+<li><p><strong>transforms</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default ‘linear’.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the agent, by default ‘TM’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any of the required parameters are not defined or if there is a mismatch in the lengths of metric, loss, threshold, minimize, and exp_format.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixAgent.html#TransferMatrixAgent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent.run" title="Link to this definition"></a></dt>
+<dd><p>Run the transfer matrix model and calculate the Jsc, AVT and LUE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary of parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>Jsc</strong> (<em>float</em>) – Short circuit current density in A/m^2.</p></li>
+<li><p><strong>AVT</strong> (<em>float</em>) – Average visible transmittance.</p></li>
+<li><p><strong>LUE</strong> (<em>float</em>) – Light utilization efficiency.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent.run_Ax">
+<span class="sig-name descname"><span class="pre">run_Ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixAgent.html#TransferMatrixAgent.run_Ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent.run_Ax" title="Link to this definition"></a></dt>
+<dd><p>Run the transfer matrix model and calculate the loss function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary of parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary of loss functions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent.target_metric">
+<span class="sig-name descname"><span class="pre">target_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixAgent.html#TransferMatrixAgent.target_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixAgent.TransferMatrixAgent.target_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculates the target metric based on the metric, loss, threshold and minimize values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the current values.</p></li>
+<li><p><strong>yfit</strong> (<em>array-like</em>) – 1-D array containing the fitted current values.</p></li>
+<li><p><strong>metric_name</strong> (<em>str</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.models.TransferMatrix.TransferMatrixModel">
+<span id="optimpv-models-transfermatrix-transfermatrixmodel-module"></span><h2>optimpv.models.TransferMatrix.TransferMatrixModel module<a class="headerlink" href="#module-optimpv.models.TransferMatrix.TransferMatrixModel" title="Link to this heading"></a></h2>
+<p>Transfer Matrix Model</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixModel.I_mat">
+<span class="sig-prename descclassname"><span class="pre">optimpv.models.TransferMatrix.TransferMatrixModel.</span></span><span class="sig-name descname"><span class="pre">I_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixModel.html#I_mat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixModel.I_mat" title="Link to this definition"></a></dt>
+<dd><p>calculate the interface matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n1</strong> (<em>float</em>) – refractive index of the first material</p></li>
+<li><p><strong>n2</strong> (<em>float</em>) – refractive index of the second material</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ret</strong> – interface matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixModel.L_mat">
+<span class="sig-prename descclassname"><span class="pre">optimpv.models.TransferMatrix.TransferMatrixModel.</span></span><span class="sig-name descname"><span class="pre">L_mat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixModel.html#L_mat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixModel.L_mat" title="Link to this definition"></a></dt>
+<dd><p>calculate the propagation matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> (<em>array</em>) – complex refractive index of the material</p></li>
+<li><p><strong>d</strong> (<em>float</em>) – thickness of the material</p></li>
+<li><p><strong>l</strong> (<em>float</em>) – wavelength</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>L</strong> – propagation matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixModel.TMM">
+<span class="sig-prename descclassname"><span class="pre">optimpv.models.TransferMatrix.TransferMatrixModel.</span></span><span class="sig-name descname"><span class="pre">TMM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thicknesses</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activeLayer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectrum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">photopic_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixModel.html#TMM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixModel.TMM" title="Link to this definition"></a></dt>
+<dd><p>Calculate the Jsc, AVT or LUE for a multilayer stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – dictionary of parameters note that all parameters must be in the form of ‘d_i’ or ‘nk_i’ where i is the index of the layer and the everything must be in SI units.</p></li>
+<li><p><strong>layers</strong> (<em>list</em>) – list of material names in the stack. Note that this names will be used to find the refractive index files in the mat_dir. The filenames must be in the form of ‘nk_materialname.txt’</p></li>
+<li><p><strong>thicknesses</strong> (<em>list</em>) – list of thicknesses of the layers in the stack in meters</p></li>
+<li><p><strong>lambda_min</strong> (<em>float</em>) – start wavelength in m</p></li>
+<li><p><strong>lambda_max</strong> (<em>float</em>) – stop wavelength in m</p></li>
+<li><p><strong>lambda_step</strong> (<em>float</em>) – wavelength step in m</p></li>
+<li><p><strong>x_step</strong> (<em>float</em>) – step size for the x position in the stack in m</p></li>
+<li><p><strong>activeLayer</strong> (<em>int</em>) – index of the active layer in the stack, i.e. the layer where the generation profile will be calculated. Counting starts at 0.</p></li>
+<li><p><strong>spectrum</strong> (<em>string</em>) – name of file that contains the spectrum.</p></li>
+<li><p><strong>mat_dir</strong> (<em>string</em>) – path to the directory where the refractive index files and the spectrum file are located.</p></li>
+<li><p><strong>photopic_file</strong> (<em>string</em><em>, </em><em>optional</em>) – name of the file that contains the photopic response (must be in the same directory as the refractive index files), by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>Jsc</strong> (<em>float</em>) – Short circuit current</p></li>
+<li><p><strong>AVT</strong> (<em>float</em>) – Average visible transmittance</p></li>
+<li><p><strong>LUE</strong> (<em>float</em>) – Light utilization efficiency</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – Wrong indices for the thicknesses</p></li>
+<li><p><strong>ValueError</strong> – Wrong indices for the complex refractive index</p></li>
+<li><p><strong>ValueError</strong> – Wavelengths out of range for the layer</p></li>
+<li><p><strong>ValueError</strong> – photopic_file must be defined to calculate AVT or LUE</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixModel.get_ntotal">
+<span class="sig-prename descclassname"><span class="pre">optimpv.models.TransferMatrix.TransferMatrixModel.</span></span><span class="sig-name descname"><span class="pre">get_ntotal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">matName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambdas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixModel.html#get_ntotal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixModel.get_ntotal" title="Link to this definition"></a></dt>
+<dd><p>get the complex refractive index of a material from a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>matName</strong> (<em>string</em>) – name of the material in the matdata folder</p></li>
+<li><p><strong>lambdas</strong> (<em>list</em>) – list of wavelengths in nm</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ntotal</strong> – list of complex refractive index values</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.models.TransferMatrix.TransferMatrixModel.openFile">
+<span class="sig-prename descclassname"><span class="pre">optimpv.models.TransferMatrix.TransferMatrixModel.</span></span><span class="sig-name descname"><span class="pre">openFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/TransferMatrix/TransferMatrixModel.html#openFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.TransferMatrix.TransferMatrixModel.openFile" title="Link to this definition"></a></dt>
+<dd><p>opens files and returns a list split at each new line</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fname</strong> (<em>string</em>) – path to the file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>fd</strong> – list of lines in the file</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – Target is not a readable file</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.models.TransferMatrix">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optimpv.models.TransferMatrix" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimpv.models.RateEqfits.html" class="btn btn-neutral float-left" title="optimpv.models.RateEqfits package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimpv.optimizers.html" class="btn btn-neutral float-right" title="optimpv.optimizers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

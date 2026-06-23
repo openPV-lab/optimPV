@@ -1,0 +1,1120 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.models.DDfits package &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="optimpv.models.Diodefits package" href="optimpv.models.Diodefits.html" />
+    <link rel="prev" title="optimpv.models package" href="optimpv.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimpv</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimpv.html">optimpv package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimpv.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimpv.general.html">optimpv.general package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="optimpv.models.html">optimpv.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.posterior.html">optimpv.posterior package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.tests.html">optimpv.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimpv.html#module-optimpv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">optimpv</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.html">optimpv package</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.models.html">optimpv.models package</a></li>
+      <li class="breadcrumb-item active">optimpv.models.DDfits package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/optimpv.models.DDfits.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimpv-models-ddfits-package">
+<h1>optimpv.models.DDfits package<a class="headerlink" href="#optimpv-models-ddfits-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.models.DDfits.CVAgent">
+<span id="optimpv-models-ddfits-cvagent-module"></span><h2>optimpv.models.DDfits.CVAgent module<a class="headerlink" href="#module-optimpv.models.DDfits.CVAgent" title="Link to this heading"></a></h2>
+<p>CVAgent class for steady-state CV simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.models.DDfits.CVAgent.</span></span><span class="sig-name descname"><span class="pre">CVAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">del_V</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CV'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent" title="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SIMsalabimAgent</span></code></a></p>
+<p>CVAgent class for Capacitance-Voltage simulations with SIMsalabim</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – 1-D or 2-D array containing the voltage values.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the current values.</p></li>
+<li><p><strong>session_path</strong> (<em>str</em>) – Path to the session directory.</p></li>
+<li><p><strong>Vmin</strong> (<em>float</em><em>, </em><em>optional</em>) – minimum voltage, by default 0.</p></li>
+<li><p><strong>Vmax</strong> (<em>float</em><em>, </em><em>optional</em>) – maximum voltage, by default 1.2.</p></li>
+<li><p><strong>V_step</strong> (<em>float</em><em>, </em><em>optional</em>) – Voltage difference, determines at which voltages the capacitance is determined, by default 0.1.</p></li>
+<li><p><strong>freq</strong> (<em>float</em><em>, </em><em>optional</em>) – Frequency of the CV measurement [Hz], by default 1e4.</p></li>
+<li><p><strong>G_frac</strong> (<em>float</em><em>, </em><em>optional</em>) – Fractional light intensity, by default 1.</p></li>
+<li><p><strong>del_V</strong> (<em>float</em><em>, </em><em>optional</em>) – Voltage step for the impedance simulation, by default 0.01.</p></li>
+<li><p><strong>simulation_setup</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the simulation setup file, if None then use the default file ‘simulation_setup.txt’in the session_path directory, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Format of the CV data, possible values are: ‘CV’, ‘MottSchottky’, by default ‘CV’.</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options, by default ‘mse’.</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss function to use, see optimpv.general.loss_function for options, by default ‘linear’.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Threshold value for the loss function used when doing multi-objective optimization, by default 100.</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em> or </em><em>list</em><em> of </em><em>bool</em><em>, </em><em>optional</em>) – If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</p></li>
+<li><p><strong>yerr</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Errors in the current values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.</p></li>
+<li><p><strong>tracking_metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Additional metrics to track and report in run_Ax output, by default None.</p></li>
+<li><p><strong>tracking_loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss functions to apply to tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Experimental formats for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_X</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – X values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_y</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – y values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights for tracking metrics, by default None.</p></li>
+<li><p><strong>transforms</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default ‘linear’.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the agent, by default ‘CV’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent.reformat_CV_data">
+<span class="sig-name descname"><span class="pre">reformat_CV_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent.reformat_CV_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent.reformat_CV_data" title="Link to this definition"></a></dt>
+<dd><p>Reformat the data depending on the exp_format and X values
+Also interpolates the data if the simulation did not return the same points as the experimental data (i.e. if some points did not converge)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>dataframe</em>) – Dataframe with the CV dara from run_CV_simulation function.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘CV’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple with the reformatted Xfit and yfit values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'CV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent.run" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return an array with the simulated values in the format specified by exp_format (default is ‘Cf’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘Cf’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1-D array with the simulated current values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent.run_Ax">
+<span class="sig-name descname"><span class="pre">run_Ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent.run_Ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent.run_Ax" title="Link to this definition"></a></dt>
+<dd><p>Function to run the simulation with the parameters and return the target metric value for Ax optimization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with the target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent.run_CV_simulation">
+<span class="sig-name descname"><span class="pre">run_CV_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent.run_CV_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent.run_CV_simulation" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return the simulated values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataframe with the simulated CV values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent.target_metric">
+<span class="sig-name descname"><span class="pre">target_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xfit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent.target_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent.target_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculate the target metric depending on self.metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the target values.</p></li>
+<li><p><strong>yfit</strong> (<em>array-like</em>) – 1-D array containing the fitted values.</p></li>
+<li><p><strong>metric_name</strong> (<em>str</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>Xfit</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the weights, by default None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.CVAgent.CVAgent.validate_exp_format">
+<span class="sig-name descname"><span class="pre">validate_exp_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/CVAgent.html#CVAgent.validate_exp_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.CVAgent.CVAgent.validate_exp_format" title="Link to this definition"></a></dt>
+<dd><p>Validate the exp_format parameter to ensure it is in the correct format for CVAgent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exp_format</strong> (<em>str</em>) – Format of the experimental data, must be one of the formats in self.exp_format.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.models.DDfits.HysteresisAgent">
+<span id="optimpv-models-ddfits-hysteresisagent-module"></span><h2>optimpv.models.DDfits.HysteresisAgent module<a class="headerlink" href="#module-optimpv.models.DDfits.HysteresisAgent" title="Link to this heading"></a></h2>
+<p>HysteresisAgent class for transient hysteresis JV simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.models.DDfits.HysteresisAgent.</span></span><span class="sig-name descname"><span class="pre">HysteresisAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scan_speed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">direction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'JV'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Hyst'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent" title="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SIMsalabimAgent</span></code></a></p>
+<p>HysteresisAgent class for JV hysteresis simulations with SIMsalabim</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – 1-D or 2-D array containing the voltage values.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the current values.</p></li>
+<li><p><strong>session_path</strong> (<em>str</em>) – Path to the session directory.</p></li>
+<li><p><strong>Vmin</strong> (<em>float</em><em>, </em><em>optional</em>) – minimum voltage, by default 0.</p></li>
+<li><p><strong>Vmax</strong> (<em>float</em><em>, </em><em>optional</em>) – maximum voltage, by default 1.2.</p></li>
+<li><p><strong>scan_speed</strong> (<em>float</em><em>, </em><em>optional</em>) – Voltage scan speed [V/s], by default 0.1.</p></li>
+<li><p><strong>steps</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of time steps, by default 100.</p></li>
+<li><p><strong>direction</strong> (<em>integer</em><em>, </em><em>optional</em>) – Perform a forward-backward (1) or backward-forward scan (-1), by default 1.</p></li>
+<li><p><strong>G_frac</strong> (<em>float</em><em>, </em><em>optional</em>) – Fractional light intensity, by default 1.</p></li>
+<li><p><strong>simulation_setup</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the simulation setup file, if None then use the default file ‘simulation_setup.txt’in the session_path directory, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Format of the hysteresis data, possible values are: ‘JV’, by default ‘JV’.</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options, by default ‘mse’.</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss function to use, see optimpv.general.loss_function for options, by default ‘linear’.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Threshold value for the loss function used when doing multi-objective optimization, by default 100.</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em> or </em><em>list</em><em> of </em><em>bool</em><em>, </em><em>optional</em>) – If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</p></li>
+<li><p><strong>yerr</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Errors in the current values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.</p></li>
+<li><p><strong>tracking_metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Additional metrics to track and report in run_Ax output, by default None.</p></li>
+<li><p><strong>tracking_loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss functions to apply to tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Experimental formats for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_X</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – X values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_y</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – y values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights for tracking metrics, by default None.</p></li>
+<li><p><strong>transforms</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default ‘linear’.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the agent, by default ‘Hyst’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.reformat_hysteresis_data">
+<span class="sig-name descname"><span class="pre">reformat_hysteresis_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'JV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent.reformat_hysteresis_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.reformat_hysteresis_data" title="Link to this definition"></a></dt>
+<dd><p>Reformat the data depending on the exp_format and X values
+Also interpolates the data if the simulation did not return the same points as the experimental data (i.e. if some points did not converge)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>dataframe</em>) – Dataframe with the hysteresis dara from run_hysteresis_simulation function.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘JV’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple with the reformatted Xfit and yfit values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'JV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.run" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return an array with the simulated values in the format specified by exp_format (default is ‘Cf’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘Cf’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1-D array with the simulated current values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.run_Ax">
+<span class="sig-name descname"><span class="pre">run_Ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent.run_Ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.run_Ax" title="Link to this definition"></a></dt>
+<dd><p>Function to run the simulation with the parameters and return the target metric value for Ax optimization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with the target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.run_hysteresis_simulation">
+<span class="sig-name descname"><span class="pre">run_hysteresis_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent.run_hysteresis_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.run_hysteresis_simulation" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return the simulated values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataframe with the simulated hysteresis values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.target_metric">
+<span class="sig-name descname"><span class="pre">target_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xfit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent.target_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.target_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculate the target metric depending on self.metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the target values.</p></li>
+<li><p><strong>yfit</strong> (<em>array-like</em>) – 1-D array containing the fitted values.</p></li>
+<li><p><strong>metric_name</strong> (<em>str</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>Xfit</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the weights, by default None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.validate_exp_format">
+<span class="sig-name descname"><span class="pre">validate_exp_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/HysteresisAgent.html#HysteresisAgent.validate_exp_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.HysteresisAgent.HysteresisAgent.validate_exp_format" title="Link to this definition"></a></dt>
+<dd><p>Validate the exp_format parameter to ensure it is in the correct format for HysteresisAgent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exp_format</strong> (<em>str</em>) – Format of the experimental data, must be one of the allowed formats for hysteresis data.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid or not found in self.exp_format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.models.DDfits.IMPSAgent">
+<span id="optimpv-models-ddfits-impsagent-module"></span><h2>optimpv.models.DDfits.IMPSAgent module<a class="headerlink" href="#module-optimpv.models.DDfits.IMPSAgent" title="Link to this heading"></a></h2>
+<p>IMPSAgent class for steady-state IMPS simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.models.DDfits.IMPSAgent.</span></span><span class="sig-name descname"><span class="pre">IMPSAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">V</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">GStep</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ImY'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'IMPS'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent" title="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SIMsalabimAgent</span></code></a></p>
+<p>IMPSAgent class for IMPS simulations with SIMsalabim</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – 1-D or 2-D array containing the voltage values.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the current values.</p></li>
+<li><p><strong>session_path</strong> (<em>str</em>) – Path to the session directory.</p></li>
+<li><p><strong>f_min</strong> (<em>float</em>) – Minimum frequency for the IMPS simulation in Hz.</p></li>
+<li><p><strong>f_max</strong> (<em>float</em>) – Maximum frequency for the IMPS simulation in Hz.</p></li>
+<li><p><strong>f_steps</strong> (<em>float</em><em>, </em><em>optional</em>) – Number of frequency steps for the IMPS simulation (log spaced), by default 30.</p></li>
+<li><p><strong>V</strong> (<em>float</em><em>, </em><em>optional</em>) – Voltage value for the simulation, by default 0.</p></li>
+<li><p><strong>G_frac</strong> (<em>float</em><em>, </em><em>optional</em>) – Fractional light intensity, by default 1.</p></li>
+<li><p><strong>GStep</strong> (<em>float</em><em>, </em><em>optional</em>) – Applied generation rate increase at t=0, by default 0.05.</p></li>
+<li><p><strong>simulation_setup</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the simulation setup file, if None then use the default file ‘simulation_setup.txt’in the session_path directory, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the IMPS data, possible values are: ‘ReY’, ‘ImY’, ‘ColeCole’, by default ‘ImY’.</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options, by default ‘mse’.</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss function to use, see optimpv.general.loss_function for options, by default ‘linear’.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Threshold value for the loss function used when doing multi-objective optimization, by default 100.</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em> or </em><em>list</em><em> of </em><em>bool</em><em>, </em><em>optional</em>) – If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</p></li>
+<li><p><strong>yerr</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Errors in the current values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.</p></li>
+<li><p><strong>tracking_metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Additional metrics to track and report in run_Ax output, by default None.</p></li>
+<li><p><strong>tracking_loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss functions to apply to tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Experimental formats for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_X</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – X values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_y</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – y values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights for tracking metrics, by default None.</p></li>
+<li><p><strong>transforms</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default ‘linear’.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the agent, by default ‘IMPS’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent.reformat_IMPS_data">
+<span class="sig-name descname"><span class="pre">reformat_IMPS_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'IMPS'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent.reformat_IMPS_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent.reformat_IMPS_data" title="Link to this definition"></a></dt>
+<dd><p>Reformat the data depending on the exp_format and X values
+Also interpolates the data if the simulation did not return the same points as the experimental data (i.e. if some points did not converge)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>dataframe</em>) – Dataframe with the IMPS dara from run_IMPS_simulation function.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘IMPS’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple with the reformatted Xfit and yfit values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ImY'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent.run" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return an array with the simulated values in the format specified by exp_format (default is ‘Cf’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘Cf’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1-D array with the simulated current values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent.run_Ax">
+<span class="sig-name descname"><span class="pre">run_Ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent.run_Ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent.run_Ax" title="Link to this definition"></a></dt>
+<dd><p>Function to run the simulation with the parameters and return the target metric value for Ax optimization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with the target metric value and any tracking metrics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent.run_IMPS_simulation">
+<span class="sig-name descname"><span class="pre">run_IMPS_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent.run_IMPS_simulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent.run_IMPS_simulation" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return the simulated values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataframe with the simulated IMPS values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent.target_metric">
+<span class="sig-name descname"><span class="pre">target_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xfit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent.target_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent.target_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculate the target metric depending on self.metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the target values.</p></li>
+<li><p><strong>yfit</strong> (<em>array-like</em>) – 1-D array containing the fitted values.</p></li>
+<li><p><strong>metric_name</strong> (<em>str</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>Xfit</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the x axis values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D array containing the weights, by default None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.IMPSAgent.IMPSAgent.validate_exp_format">
+<span class="sig-name descname"><span class="pre">validate_exp_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/IMPSAgent.html#IMPSAgent.validate_exp_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.IMPSAgent.IMPSAgent.validate_exp_format" title="Link to this definition"></a></dt>
+<dd><p>Validate the exp_format parameter to ensure it is in the correct format for IMPSAgent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exp_format</strong> (<em>str</em>) – Format of the experimental data, must be one of the allowed formats for IMPS data: ‘ReY’, ‘ImY’, ‘ColeCole’.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="optimpv-models-ddfits-impedanceagent-module">
+<h2>optimpv.models.DDfits.ImpedanceAgent module<a class="headerlink" href="#optimpv-models-ddfits-impedanceagent-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.models.DDfits.JVAgent">
+<span id="optimpv-models-ddfits-jvagent-module"></span><h2>optimpv.models.DDfits.JVAgent module<a class="headerlink" href="#module-optimpv.models.DDfits.JVAgent" title="Link to this heading"></a></h2>
+<p>JVAgent class for steady-state JV simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.models.DDfits.JVAgent.</span></span><span class="sig-name descname"><span class="pre">JVAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['JV']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['mse']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['linear']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[100]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'JV'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent" title="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">SIMsalabimAgent</span></code></a></p>
+<p>JVAgent class for steady-state JV simulations with SIMsalabim</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – 1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the current values.</p></li>
+<li><p><strong>session_path</strong> (<em>str</em>) – Path to the session directory.</p></li>
+<li><p><strong>simulation_setup</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the simulation setup file, if None then use the default file ‘simulation_setup.txt’in the session_path directory, by default None.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘JV’.</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options, by default ‘mse’.</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss function to use, see optimpv.general.loss_function for options, by default ‘linear’.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Threshold value for the loss function used when doing multi-objective optimization, by default 100.</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em> or </em><em>list</em><em> of </em><em>bool</em><em>, </em><em>optional</em>) – If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</p></li>
+<li><p><strong>yerr</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Errors in the current values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.</p></li>
+<li><p><strong>tracking_metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Additional metrics to track and report in run_Ax output, by default None.</p></li>
+<li><p><strong>tracking_loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss functions to apply to tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Experimental formats for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_X</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – X values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_y</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – y values for tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_weight</strong> (<em>array-like</em><em> or </em><em>list</em><em> of </em><em>array-like</em><em>, </em><em>optional</em>) – Weights for tracking metrics, by default None.</p></li>
+<li><p><strong>transforms</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default ‘linear’.</p></li>
+<li><p><strong>tracking_transforms</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Type of transformation to apply to tracking metrics data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default ‘linear’.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the agent, by default ‘JV’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent.reformat_JV_data">
+<span class="sig-name descname"><span class="pre">reformat_JV_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'JV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent.reformat_JV_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent.reformat_JV_data" title="Link to this definition"></a></dt>
+<dd><p>Reformat the data depending on the exp_format and X values
+Also interpolates the data if the simulation did not return the same points as the experimental data (i.e. if some points did not converge)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>dataframe</em>) – Dataframe with the JV data from run_JV function.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em>) – 1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘JV’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple with the reformatted Xfit and yfit values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not ‘JV’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'JV'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent.run" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return an array with the simulated values in the format specified by exp_format (default is ‘JV’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values, it must match the X values used for the specified exp_format, by default None</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default ‘JV’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1-D array with the simulated current values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array-like</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent.run_Ax">
+<span class="sig-name descname"><span class="pre">run_Ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent.run_Ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent.run_Ax" title="Link to this definition"></a></dt>
+<dd><p>Function to run the simulation with the parameters and return the target metric value for Ax optimization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with the target metric value and any tracking metrics.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent.run_JV">
+<span class="sig-name descname"><span class="pre">run_JV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent.run_JV"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent.run_JV" title="Link to this definition"></a></dt>
+<dd><p>Run the simulation with the parameters and return the simulated values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em>) – Dictionary with the parameter names and values.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dataframe with the simulated JV data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dataframe</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent.target_metric">
+<span class="sig-name descname"><span class="pre">target_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xfit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent.target_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent.target_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculate the target metric depending on self.metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – 1-D array containing the current values.</p></li>
+<li><p><strong>yfit</strong> (<em>array-like</em>) – 1-D array containing the fitted current values.</p></li>
+<li><p><strong>metric_name</strong> (<em>str</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values, by default None.</p></li>
+<li><p><strong>Xfit</strong> (<em>array-like</em><em>, </em><em>optional</em>) – 1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values, by default None.</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Weights used for fitting, by default None.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Target metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.JVAgent.JVAgent.validate_exp_format">
+<span class="sig-name descname"><span class="pre">validate_exp_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/JVAgent.html#JVAgent.validate_exp_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.JVAgent.JVAgent.validate_exp_format" title="Link to this definition"></a></dt>
+<dd><p>Validate the exp_format parameter to ensure it is in the correct format for JVAgent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exp_format</strong> (<em>str</em>) – Format of the experimental data, must be one of allowed formats for JV data, which are: ‘JV’ or ‘QFLSL’ followed by an integer (e.g., QFLSL1, QFLSL2, etc.) or ‘K_QFLSL’ followed by an integer (e.g., K_QFLSL1, K_QFLSL2, etc.)</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the exp_format is not valid or not found in self.exp_format.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.models.DDfits.SIMsalabimAgent">
+<span id="optimpv-models-ddfits-simsalabimagent-module"></span><h2>optimpv.models.DDfits.SIMsalabimAgent module<a class="headerlink" href="#module-optimpv.models.DDfits.SIMsalabimAgent" title="Link to this heading"></a></h2>
+<p>Provides general functionality for Agent objects for SIMsalabim simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.models.DDfits.SIMsalabimAgent.</span></span><span class="sig-name descname"><span class="pre">SIMsalabimAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">session_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_setup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mse'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yerr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SIMsalabim'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimpv.general.html#optimpv.general.BaseAgent.BaseAgent" title="optimpv.general.BaseAgent.BaseAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAgent</span></code></a></p>
+<p>Provides general functionality for Agent objects for SIMsalabim simulations</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.ambi_param_transform">
+<span class="sig-name descname"><span class="pre">ambi_param_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">param</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmd_pars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.ambi_param_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.ambi_param_transform" title="Link to this definition"></a></dt>
+<dd><p>Transform the ambipolar parameters to the SIMsalabim format
+example:
+mu_ions -&gt; mu_anion and mu_cation
+N_ions -&gt; N_anion and N_cation
+mu_np -&gt; mu_n and mu_p
+C_np_bulk -&gt; C_n_bulk and C_p_bulk
+C_np_int -&gt; C_n_int and C_p_int</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>param</strong> (<em>Fitparam</em><em>(</em><em>) </em><em>object</em>) – Fitparam() object</p></li>
+<li><p><strong>value</strong> (<em>float</em>) – value of the parameter</p></li>
+<li><p><strong>cmd_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries with the following form {‘par’: string, ‘val’: string}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dictionaries with the following form {‘par’: string, ‘val’: string}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.check_duplicated_parameters">
+<span class="sig-name descname"><span class="pre">check_duplicated_parameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd_pars</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.check_duplicated_parameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.check_duplicated_parameters" title="Link to this definition"></a></dt>
+<dd><p>Check if there are duplicated parameters in the cmd_pars</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cmd_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries with the following form {‘par’: string, ‘val’: string}</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – There are duplicated parameters in the cmd_pars</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.convert_parameter_to_basename">
+<span class="sig-name descname"><span class="pre">convert_parameter_to_basename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.convert_parameter_to_basename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.convert_parameter_to_basename" title="Link to this definition"></a></dt>
+<dd><p>Convert the parameter value to its basename if it is a file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – parameter name</p></li>
+<li><p><strong>value</strong> (<em>str</em><em> or </em><em>float</em><em> or </em><em>int</em>) – parameter value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>parameter value in its basename</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.energy_level_offsets">
+<span class="sig-name descname"><span class="pre">energy_level_offsets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_pars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_pars</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.energy_level_offsets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.energy_level_offsets" title="Link to this definition"></a></dt>
+<dd><p>Convert the energy level offsets to the SIMsalabim format energy levels
+The formats are:
+offset_lX_lY.E_c is the offset from layer X to layer Y conduction band =&gt; E_c_layerY = E_c_layerX - offset
+offset_lX_lY.E_v is the offset from layer X to layer Y valence band =&gt; E_v_layerY = E_v_layerX - offset
+Egap_lX.E_c is the bandgap energy of layer X =&gt; E_c_layerX = E_v_layerX - Egap
+Egap_lX.E_v is the bandgap energy of layer X =&gt; E_v_layerX = E_c_layerX + Egap
+offset_W_L.E_c is the offset from the left electrode work function to the conduction band of layer 1 =&gt; W_L = E_c_layer1 - offset
+offset_W_L.E_v is the offset from the left electrode work function to the valence band of layer 1 =&gt; W_L = E_v_layer1 - offset
+offset_W_R.E_c is the offset from the right electrode work function to the conduction band of the last layer =&gt; W_R = E_c_layerN - offset
+offset_W_R.E_v is the offset from the right electrode work function to the valence band of the last layer =&gt; W_R = E_v_layerN - offset
+offset_WLR is the offset between the left and right electrode work functions =&gt; W_L = W_R - offset or W_R = W_L + offset
+offset_WRL is the offset between the right and left electrode work functions =&gt; W_R = W_L - offset or W_L = W_R + offset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>custom_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries these contain all the parameters that are not explicitely in the SIMsalabim format and not in the ambipolar format (see ambi_param_transform). The dictionaries are of the form {‘par’: string, ‘val’: string}</p></li>
+<li><p><strong>clean_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries these contain all the parameters that are explicitely in the SIMsalabim format. The dictionaries are of the form {‘par’: string, ‘val’: string}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dictionaries these contain all the parameters converted to the SIMsalabim format. The dictionaries are of the form {‘par’: string, ‘val’: string}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Energy level offset between conduction bands must be defined from right to left</p></li>
+<li><p><strong>ValueError</strong> – Energy level offset between valence bands must be defined from left to right</p></li>
+<li><p><strong>ValueError</strong> – The offset of the work function of the left electrode with respect to the conduction band must be negative</p></li>
+<li><p><strong>ValueError</strong> – The offset of the work function of the left electrode with respect to the valence band must be positive</p></li>
+<li><p><strong>ValueError</strong> – The offset of the work function of the right electrode with respect to the conduction band must be negative</p></li>
+<li><p><strong>ValueError</strong> – The offset of the work function of the right electrode with respect to the valence band must be positive</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.get_SIMsalabim_clean_cmd">
+<span class="sig-name descname"><span class="pre">get_SIMsalabim_clean_cmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'simss'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.get_SIMsalabim_clean_cmd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.get_SIMsalabim_clean_cmd" title="Link to this definition"></a></dt>
+<dd><p>Get the command line arguments for the SIMsalabim simulation with properly formatted parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em><em> or </em><em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – dictionary of parameter names and values or list of Fitparam() objects</p></li>
+<li><p><strong>sim_type</strong> (<em>str</em><em>, </em><em>optional</em>) – type of simulation (‘simss’ or ‘zimt’), by default ‘simss’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>command line arguments for the SIMsalabim simulation</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.get_SIMsalabim_clean_cmd_pars">
+<span class="sig-name descname"><span class="pre">get_SIMsalabim_clean_cmd_pars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.get_SIMsalabim_clean_cmd_pars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.get_SIMsalabim_clean_cmd_pars" title="Link to this definition"></a></dt>
+<dd><p>Get the clean cmd_pars list for the SIMsalabim simulation with properly formatted parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>parameters</strong> (<em>dict</em><em> or </em><em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – dictionary of parameter names and values or list of Fitparam() objects</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dictionaries containing the parameters that have a direct match in the SIMsalabim parameter files with the following form {‘par’: string, ‘val’: string}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – Parameter name is not defined in the SIMsalabim parameter files. Please check the parameter names.</p></li>
+<li><p><strong>ValueError</strong> – Parameter name is defined in both the parameters and cmd_pars. Please remove one of them.</p></li>
+<li><p><strong>UserWarning</strong> – Parameter name is not defined in the SIMsalabim parameter files. Please check the parameter names. The optimization will proceed but the parameter will not be used by SIMsalabim.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.is_inputFile">
+<span class="sig-name descname"><span class="pre">is_inputFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.is_inputFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.is_inputFile" title="Link to this definition"></a></dt>
+<dd><p>Check if the parameter is an input file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – parameter name</p></li>
+<li><p><strong>value</strong> (<em>str</em><em> or </em><em>float</em><em> or </em><em>int</em>) – parameter value</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the parameter is an input file, False otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.package_SIMsalabim_files">
+<span class="sig-name descname"><span class="pre">package_SIMsalabim_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sim_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.package_SIMsalabim_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.package_SIMsalabim_files" title="Link to this definition"></a></dt>
+<dd><p>Package the SIMsalabim files for the simulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em><em> or </em><em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – dictionary of parameter names and values or list of Fitparam() objects</p></li>
+<li><p><strong>sim_type</strong> (<em>str</em>) – type of simulation (‘simss’ or ‘zimt’)</p></li>
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – path to save the simulation files, if None, it will be saved in the session_path/tmp_results, by default None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if sim_type is not ‘simss’ or ‘zimt’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.prepare_cmd_pars">
+<span class="sig-name descname"><span class="pre">prepare_cmd_pars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">custom_pars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_pars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">VarNames</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.prepare_cmd_pars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.prepare_cmd_pars" title="Link to this definition"></a></dt>
+<dd><p>Prepare the cmd_pars for the SIMsalabim simulation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – dictionary of parameter names and values</p></li>
+<li><p><strong>custom_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries containing the custom parameters that do not have a direct match in the SIMsalabim parameter files with the following form {‘par’: string, ‘val’: string}</p></li>
+<li><p><strong>clean_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries containing the parameters that have a direct match in the SIMsalabim parameter files with the following form {‘par’: string, ‘val’: string}</p></li>
+<li><p><strong>VarNames</strong> (<em>list</em><em> of </em><em>str</em>) – list of parameter names</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>list of dict</em> – list of dictionaries containing the custom parameters that do not have a direct match in the SIMsalabim parameter files with the following form {‘par’: string, ‘val’: string}</p></li>
+<li><p><em>list of dict</em> – list of dictionaries containing the parameters that have a direct match in the SIMsalabim parameter files with the following form {‘par’: string, ‘val’: string}</p></li>
+<li><p><em>list of str</em> – list of parameter names</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ValueError</strong> – If the parameter name is not in the self.params list</p></li>
+<li><p><strong>ValueError</strong> – If the parameter name is in both the parameters and cmd_pars</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.target_metric">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">target_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Xfit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.target_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.target_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculate the target metric. Must be overridden by child classes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.transform_metrics">
+<span class="sig-name descname"><span class="pre">transform_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_fit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_fit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_G_frac_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.transform_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.transform_metrics" title="Link to this definition"></a></dt>
+<dd><p>Calculate the transformed metrics.
+Transformations can be specified as strings such as ‘linear’, ‘normalize’ and more or by a list, see transform_data() function for more details.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>array-like</em>) – True values.</p></li>
+<li><p><strong>y_fit</strong> (<em>array-like</em>) – Predicted values.</p></li>
+<li><p><strong>metric</strong> (<em>str</em>) – Name of the metric to calculate.</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – array, by default None</p></li>
+<li><p><strong>X_fit</strong> (<em>array-like</em><em>, </em><em>optional</em>) – array, by default None</p></li>
+<li><p><strong>weight</strong> (<em>array-like</em><em>, </em><em>optional</em>) – Sample weights, by default None</p></li>
+<li><p><strong>transforms</strong> (<em>str</em><em> or </em><em>list</em><em>, </em><em>optional</em>) – Transformation(s) to apply, by default ‘linear’</p></li>
+<li><p><strong>do_G_frac_transform</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to apply G fraction transformation, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Calculated metric value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.trap_depth_2_energy_level">
+<span class="sig-name descname"><span class="pre">trap_depth_2_energy_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_pars</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_pars</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.trap_depth_2_energy_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.trap_depth_2_energy_level" title="Link to this definition"></a></dt>
+<dd><p>Convert the trap depth parameters to the SIMsalabim format energy levels
+This need to be done after the energy level offsets have been set
+The formats are:
+lX.E_t_bulk_depth.E_c = depth from conduction band =&gt; E_t_bulk = E_c + depth
+lX.E_t_bulk_depth.E_v = depth from valence band =&gt; E_t_bulk = E_v - depth
+lX.E_t_int_depth.E_c = depth from conduction band =&gt; E_t_int = E_c + depth
+lX.E_t_int_depth.E_v = depth from valence band =&gt; E_t_int = E_v - depth</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>custom_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries these contain all the parameters that are not explicitely in the SIMsalabim format. The dictionaries are of the form {‘par’: string, ‘val’: string}</p></li>
+<li><p><strong>clean_pars</strong> (<em>list</em><em> of </em><em>dict</em>) – list of dictionaries these contain all the parameters that are explicitely in the SIMsalabim format. The dictionaries are of the form {‘par’: string, ‘val’: string}</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of dictionaries these contain all the parameters converted to the SIMsalabim format. The dictionaries are of the form {‘par’: string, ‘val’: string}</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.validate_exp_format">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">validate_exp_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp_format</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/models/DDfits/SIMsalabimAgent.html#SIMsalabimAgent.validate_exp_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.models.DDfits.SIMsalabimAgent.SIMsalabimAgent.validate_exp_format" title="Link to this definition"></a></dt>
+<dd><p>Validate the exp_format. Must be overridden by child classes.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.models.DDfits">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optimpv.models.DDfits" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimpv.models.html" class="btn btn-neutral float-left" title="optimpv.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimpv.models.Diodefits.html" class="btn btn-neutral float-right" title="optimpv.models.Diodefits package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,912 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.general package &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="optimpv.models package" href="optimpv.models.html" />
+    <link rel="prev" title="optimpv package" href="optimpv.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimpv</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimpv.html">optimpv package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimpv.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">optimpv.general package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.models.html">optimpv.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.posterior.html">optimpv.posterior package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.tests.html">optimpv.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimpv.html#module-optimpv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">optimpv</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.html">optimpv package</a></li>
+      <li class="breadcrumb-item active">optimpv.general package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/optimpv.general.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimpv-general-package">
+<h1>optimpv.general package<a class="headerlink" href="#optimpv-general-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.general.BaseAgent">
+<span id="optimpv-general-baseagent-module"></span><h2>optimpv.general.BaseAgent module<a class="headerlink" href="#module-optimpv.general.BaseAgent" title="Link to this heading"></a></h2>
+<p>BaseAgent class for Agent objects</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.BaseAgent.</span></span><span class="sig-name descname"><span class="pre">BaseAgent</span></span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Provides general functionality for Agent objects</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.bounds_descale">
+<span class="sig-name descname"><span class="pre">bounds_descale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bounds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.bounds_descale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.bounds_descale" title="Link to this definition"></a></dt>
+<dd><p>Descale the bounds to match the Fitparam() objects descaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bounds</strong> (<em>list</em>) – list of bounds to descale</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to descale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of bounds descaled</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.create_metrics_list">
+<span class="sig-name descname"><span class="pre">create_metrics_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.create_metrics_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.create_metrics_list" title="Link to this definition"></a></dt>
+<dd><p>Create a list of all metrics from all agents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p><em>list</em> – List of metric names</p></li>
+<li><p><em>list</em> – List of minimize values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.descale_dataframe">
+<span class="sig-name descname"><span class="pre">descale_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.descale_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.descale_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Descale the dataframe to match the Fitparam() objects descaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>DataFrame</em>) – dataframe to descale</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to descale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dataframe descaled</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.get_all_agent_metric_names">
+<span class="sig-name descname"><span class="pre">get_all_agent_metric_names</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.get_all_agent_metric_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.get_all_agent_metric_names" title="Link to this definition"></a></dt>
+<dd><p>Get all metric names from the agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of all metric names from the agent, formatted as ‘name_exp_format_metric_loss’</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – If no metric or exp_format is defined in the agent</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.get_all_agent_tracking_metric_names">
+<span class="sig-name descname"><span class="pre">get_all_agent_tracking_metric_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">add_tracking_suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.get_all_agent_tracking_metric_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.get_all_agent_tracking_metric_names" title="Link to this definition"></a></dt>
+<dd><p>Get all tracking metric names from the agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>add_tracking_suffix</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to add a ‘_tracking’ suffix to the metric names, by default True</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of all tracking metric names from the agent, formatted as ‘name_exp_format_metric_loss’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no metric or exp_format is defined in the agent</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.get_bounds_list">
+<span class="sig-name descname"><span class="pre">get_bounds_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.get_bounds_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.get_bounds_list" title="Link to this definition"></a></dt>
+<dd><p>Get the bounds list from the agent’s parameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of bounds from the agent’s parameters</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.params_descale">
+<span class="sig-name descname"><span class="pre">params_descale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.params_descale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.params_descale" title="Link to this definition"></a></dt>
+<dd><p>Descale the parameters dictionary to match the Fitparam() objects descaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – dictionary of parameter names and values to descale the Fitparam() objects</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to descale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the value_type of the parameter is not ‘float’, ‘int’, ‘str’, ‘cat’, ‘sub’ or ‘bool’</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary of parameter names and values descaled</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.params_rescale">
+<span class="sig-name descname"><span class="pre">params_rescale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.params_rescale"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.params_rescale" title="Link to this definition"></a></dt>
+<dd><p>Rescale the parameters dictionary to match the Fitparam() objects rescaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – dictionary of parameter names and values to rescale the Fitparam() objects</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to rescale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the value_type of the parameter is not ‘float’, ‘int’, ‘str’, ‘cat’, ‘sub’ or ‘bool’</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary of parameter names and values rescaled</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.params_w">
+<span class="sig-name descname"><span class="pre">params_w</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.params_w"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.params_w" title="Link to this definition"></a></dt>
+<dd><p>Populate the Fitparam() objects with the values from the parameters dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parameters</strong> (<em>dict</em>) – dictionary of parameter names and values to populate the Fitparam() objects</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to populate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the value_type of the parameter is not ‘float’, ‘int’, ‘str’, ‘cat’, ‘sub’ or ‘bool’</p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of Fitparam() objects populated with the values from the parameters dictionary</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of Fitparam() objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.rescale_array">
+<span class="sig-name descname"><span class="pre">rescale_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">param_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.rescale_array"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.rescale_array" title="Link to this definition"></a></dt>
+<dd><p>Rescale the array to match the Fitparam() objects rescaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>array</strong> (<em>list</em>) – list of values to rescale</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to rescale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of values rescaled</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.BaseAgent.BaseAgent.rescale_dataframe">
+<span class="sig-name descname"><span class="pre">rescale_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/BaseAgent.html#BaseAgent.rescale_dataframe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.BaseAgent.BaseAgent.rescale_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Rescale the dataframe to match the Fitparam() objects rescaling</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>DataFrame</em>) – dataframe to rescale</p></li>
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – list of Fitparam() objects to rescale</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dataframe rescaled</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.general.FitParams">
+<span id="optimpv-general-fitparams-module"></span><h2>optimpv.general.FitParams module<a class="headerlink" href="#module-optimpv.general.FitParams" title="Link to this heading"></a></h2>
+<p>FitParams class</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.FitParams.FitParam">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.FitParams.</span></span><span class="sig-name descname"><span class="pre">FitParam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'range'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'float'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bounds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rescale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fscale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stepsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_ordered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_sorted</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_log</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/FitParams.html#FitParam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.FitParams.FitParam" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.general.SuggestOnlyAgent">
+<span id="optimpv-general-suggestonlyagent-module"></span><h2>optimpv.general.SuggestOnlyAgent module<a class="headerlink" href="#module-optimpv.general.SuggestOnlyAgent" title="Link to this heading"></a></h2>
+<p>Provides general functionality for Agent objects for non ideal diode simulations</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.SuggestOnlyAgent.SuggestOnlyAgent">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.SuggestOnlyAgent.</span></span><span class="sig-name descname"><span class="pre">SuggestOnlyAgent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minimize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tracking_exp_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'suggest'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/SuggestOnlyAgent.html#SuggestOnlyAgent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.SuggestOnlyAgent.SuggestOnlyAgent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.general.BaseAgent.BaseAgent" title="optimpv.general.BaseAgent.BaseAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAgent</span></code></a></p>
+<p>Agent object for suggesting new points in an optimization process without running the agents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – List of Fitparam() objects.</p></li>
+<li><p><strong>exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Format of the experimental data, by default [].</p></li>
+<li><p><strong>metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Metric to evaluate the model, see optimpv.general.calc_metric for options, by default ‘mse’.</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss function to use, see optimpv.general.loss_function for options, by default ‘linear’.</p></li>
+<li><p><strong>threshold</strong> (<em>int</em><em> or </em><em>list</em><em> of </em><em>int</em><em>, </em><em>optional</em>) – Threshold value for the loss function used when doing multi-objective optimization, by default 100.</p></li>
+<li><p><strong>minimize</strong> (<em>bool</em><em> or </em><em>list</em><em> of </em><em>bool</em><em>, </em><em>optional</em>) – If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</p></li>
+<li><p><strong>tracking_metric</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Additional metrics to track and report in run_Ax output, by default None.</p></li>
+<li><p><strong>tracking_loss</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Loss functions to apply to tracking metrics, by default None.</p></li>
+<li><p><strong>tracking_exp_format</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – Experimental formats for tracking metrics, by default None.
+Weights for tracking metrics, by default None.</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the agent, by default ‘diode’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.general.general">
+<span id="optimpv-general-general-module"></span><h2>optimpv.general.general module<a class="headerlink" href="#module-optimpv.general.general" title="Link to this heading"></a></h2>
+<p>General functions</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.calc_metric">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">calc_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yfit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mse'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#calc_metric"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.calc_metric" title="Link to this definition"></a></dt>
+<dd><p>Calculate the metric between the true values and the predicted values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True values</p></li>
+<li><p><strong>yfit</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted values</p></li>
+<li><p><strong>sample_weight</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em><em>, </em><em>optional</em>) – Sample weights, by default None</p></li>
+<li><p><strong>metric_name</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Name of the metric to calculate, by default ‘mse’
+Possible values are:</p>
+<blockquote>
+<div><ul>
+<li><p>’mse’: Mean Squared Error</p></li>
+<li><p>’mae’: Mean Absolute Error</p></li>
+<li><p>’mape’: Mean Absolute Percentage Error</p></li>
+<li><p>’msle’: Mean Squared Log Error</p></li>
+<li><p>’rmsle’: Root Mean Squared Log Error</p></li>
+<li><p>’rmse’: Root Mean Squared Error</p></li>
+<li><p>’medae’: Median Absolute Error</p></li>
+<li><p>’nrmse’: Normalized Root Mean Squared Error</p></li>
+<li><p>’rmsre’: Root Mean Squared Relative Error</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The calculated metric</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the metric is not implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.direct_mean_euclidean_distance">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">direct_mean_euclidean_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_fit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_fit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#direct_mean_euclidean_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.direct_mean_euclidean_distance" title="Link to this definition"></a></dt>
+<dd><p>Calculate the mean euclidean distance between the true and the predicted values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_true</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True values of the X coordinate</p></li>
+<li><p><strong>y_true</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True values of the y coordinate</p></li>
+<li><p><strong>X_fit</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted values of the X coordinate</p></li>
+<li><p><strong>y_fit</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted values of the y coordinate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The average euclidian distance between the true and the predicted values</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.interpolation_safe">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">interpolation_safe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xnew</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#interpolation_safe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.interpolation_safe" title="Link to this definition"></a></dt>
+<dd><p>Interpolate y at xnew.</p>
+<p>Invalid source values are dropped before interpolation.
+Invalid query values are returned as NaN.
+For log modes, interpolation is performed in log space but the output
+is returned on the original y scale.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.interpolation_safe2">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">interpolation_safe2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xnew</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_base</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope_ratio_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#interpolation_safe2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.interpolation_safe2" title="Link to this definition"></a></dt>
+<dd><p>Robust interpolation supporting linear, loglin and loglog modes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array-like</em>) – Input data.</p></li>
+<li><p><strong>y</strong> (<em>array-like</em>) – Input data.</p></li>
+<li><p><strong>xnew</strong> (<em>array-like</em>) – Query points.</p></li>
+<li><p><strong>mode</strong> (<em>{&quot;linear&quot;</em><em>, </em><em>&quot;loglin&quot;</em><em>, </em><em>&quot;loglog&quot;}</em>)</p></li>
+<li><p><strong>method</strong> (<em>{&quot;auto&quot;</em><em>, </em><em>&quot;pchip&quot;</em><em>, </em><em>&quot;spline&quot;</em><em>, </em><em>&quot;linear&quot;}</em>)</p></li>
+<li><p><strong>log_base</strong> (<em>{10</em><em>, </em><em>np.e}</em>)</p></li>
+<li><p><strong>slope_ratio_threshold</strong> (<em>float</em>) – Threshold used by auto mode to detect sharp transitions.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ynew</strong></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.inv_loss_function">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">inv_loss_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#inv_loss_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.inv_loss_function" title="Link to this definition"></a></dt>
+<dd><p>Calculate the inverse loss function for the given value. Inspired by the scipy loss functions (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html</a>).
+The following loss functions are implemented:</p>
+<blockquote>
+<div><ul>
+<li><dl>
+<dt>‘linear’ (default)<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">z</span></code>. Gives a standard</span></dt><dd><p>least-squares problem.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘soft_l1’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">((1</span> <span class="pre">+</span> <span class="pre">z)**0.5</span> <span class="pre">-</span> <span class="pre">1)</span></code>. The smooth</span></dt><dd><p>approximation of l1 (absolute value) loss. Usually a good
+choice for robust least squares.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘huber’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">z</span> <span class="pre">if</span> <span class="pre">z</span> <span class="pre">&lt;=</span> <span class="pre">1</span> <span class="pre">else</span> <span class="pre">2*z**0.5</span> <span class="pre">-</span> <span class="pre">1</span></code>. Works</span></dt><dd><p>similarly to ‘soft_l1’.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘cauchy’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">ln(1</span> <span class="pre">+</span> <span class="pre">z)</span></code>. Severely weakens outliers</span></dt><dd><p>influence, but may cause difficulties in optimization process.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘arctan’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">arctan(z)</span></code>. Limits a maximum loss on</span></dt><dd><p>a single residual, has properties similar to ‘cauchy’.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘log’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">log(</span> <span class="pre">z)</span></code>. Logarithmically scales the</span></dt><dd><p>loss, very similar to ‘cauchy’ but not as safe.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘log10’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">log10(z)</span></code>. Logarithmically scales the</span></dt><dd><p>loss with base 10 log, very similar to ‘cauchy’ but not as safe.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – value to calculate the inverse loss function</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em>, </em><em>optional</em>) – loss function to use, by default ‘linear’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>value of the inverse loss function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the loss function is not implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.loss_function">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">loss_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#loss_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.loss_function" title="Link to this definition"></a></dt>
+<dd><p>Calculate the loss function for the given value. Inspired by the scipy loss functions (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html">https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html</a>).
+The following loss functions are implemented:</p>
+<blockquote>
+<div><ul>
+<li><dl>
+<dt>‘linear’ (default)<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">z</span></code>. Gives a standard</span></dt><dd><p>least-squares problem.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘soft_l1’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">2</span> <span class="pre">*</span> <span class="pre">((1</span> <span class="pre">+</span> <span class="pre">z)**0.5</span> <span class="pre">-</span> <span class="pre">1)</span></code>. The smooth</span></dt><dd><p>approximation of l1 (absolute value) loss. Usually a good
+choice for robust least squares.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘huber’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">z</span> <span class="pre">if</span> <span class="pre">z</span> <span class="pre">&lt;=</span> <span class="pre">1</span> <span class="pre">else</span> <span class="pre">2*z**0.5</span> <span class="pre">-</span> <span class="pre">1</span></code>. Works</span></dt><dd><p>similarly to ‘soft_l1’.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘cauchy’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">ln(1</span> <span class="pre">+</span> <span class="pre">z)</span></code>. Severely weakens outliers</span></dt><dd><p>influence, but may cause difficulties in optimization process.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘arctan’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">arctan(z)</span></code>. Limits a maximum loss on</span></dt><dd><p>a single residual, has properties similar to ‘cauchy’.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘log’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">log(</span> <span class="pre">z)</span></code>. Logarithmically scales the</span></dt><dd><p>loss, very similar to ‘cauchy’ but not as safe.</p>
+</dd>
+</dl>
+</li>
+<li><dl>
+<dt>‘log10’<span class="classifier"><code class="docutils literal notranslate"><span class="pre">rho(z)</span> <span class="pre">=</span> <span class="pre">log10(z)</span></code>. Logarithmically scales the</span></dt><dd><p>loss with base 10 log, very similar to ‘cauchy’ but not as safe.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>value</strong> (<em>float</em>) – value to calculate the loss function</p></li>
+<li><p><strong>loss</strong> (<em>str</em><em>, </em><em>optional</em>) – loss function to use, by default</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>value of the loss function</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the loss function is not implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.mean_min_euclidean_distance">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">mean_min_euclidean_distance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_fit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_fit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#mean_min_euclidean_distance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.mean_min_euclidean_distance" title="Link to this definition"></a></dt>
+<dd><p>Calculate the minimum euclidean distance between the true and the predicted values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_true</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True values of the X coordinate</p></li>
+<li><p><strong>y_true</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – True values of the y coordinate</p></li>
+<li><p><strong>X_fit</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted values of the X coordinate</p></li>
+<li><p><strong>y_fit</strong> (<em>array-like</em><em> of </em><em>shape</em><em> (</em><em>n_samples</em><em>,</em><em>)</em>) – Predicted values of the y coordinate</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The average minimum euclidian distance between the true and the predicted values</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.transform_data">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">transform_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_pred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_G_frac_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#transform_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.transform_data" title="Link to this definition"></a></dt>
+<dd><p>Transform data according to specified transformation type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – True values to transform</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em>) – Predicted values to transform alongside y</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – X coordinates of true values, by default None</p></li>
+<li><p><strong>X_pred</strong> (<em>array-like</em><em>, </em><em>optional</em>) – X coordinates of predicted/fitted values, by default None</p></li>
+<li><p><strong>transform_type</strong> (<em>str</em><em> or </em><em>list</em><em> of </em><em>str</em><em>, </em><em>optional</em>) – <p>Type of transformation to apply, if a list is provided, transformations are applied sequentially, by default ‘linear’
+Possible values are:</p>
+<blockquote>
+<div><ul>
+<li><p>’linear’: No transformation</p></li>
+<li><p>’log’: Log10 transformation of absolute values</p></li>
+<li><p>’normalize’: Division by maximum value</p></li>
+<li><p>’sqrt’: Square root transformation</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em><em>, </em><em>optional</em>) – Small value to add to avoid log(0), by default the machine epsilon for float64</p></li>
+<li><p><strong>do_G_frac_transform</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to apply a specific transformation based on the second column of X, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(y_transformed, y_pred_transformed)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of array-like</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the transformation type is not implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.general.transform_data_old">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.general.</span></span><span class="sig-name descname"><span class="pre">transform_data_old</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_pred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epsilon</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_G_frac_transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/general.html#transform_data_old"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.general.transform_data_old" title="Link to this definition"></a></dt>
+<dd><p>Transform data according to specified transformation type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array-like</em>) – True values to transform</p></li>
+<li><p><strong>y_pred</strong> (<em>array-like</em>) – Predicted values to transform alongside y</p></li>
+<li><p><strong>X</strong> (<em>array-like</em><em>, </em><em>optional</em>) – X coordinates of true values, by default None</p></li>
+<li><p><strong>X_pred</strong> (<em>array-like</em><em>, </em><em>optional</em>) – X coordinates of predicted/fitted values, by default None</p></li>
+<li><p><strong>transform_type</strong> (<em>str</em><em>, </em><em>optional</em>) – <p>Type of transformation to apply, by default ‘linear’
+Possible values are:</p>
+<blockquote>
+<div><ul>
+<li><p>’linear’: No transformation</p></li>
+<li><p>’log’: Log10 transformation of absolute values</p></li>
+<li><p>’normalized’: Division by maximum value</p></li>
+<li><p>’normalized_log’: Normalization followed by log transformation</p></li>
+<li><p>’sqrt’: Square root transformation</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+<li><p><strong>epsilon</strong> (<em>float</em><em>, </em><em>optional</em>) – Small value to add to avoid log(0), by default the machine epsilon for float64</p></li>
+<li><p><strong>do_G_frac_transform</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to apply a specific transformation based on the second column of X, by default False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(y_transformed, y_pred_transformed)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of array-like</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If the transformation type is not implemented</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.general.logger">
+<span id="optimpv-general-logger-module"></span><h2>optimpv.general.logger module<a class="headerlink" href="#module-optimpv.general.logger" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.logger.ClassDecorator">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">ClassDecorator</span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#ClassDecorator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.ClassDecorator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.logger.ClassDecorator.decorate_callable">
+<span class="sig-name descname"><span class="pre">decorate_callable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/logger.html#ClassDecorator.decorate_callable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.ClassDecorator.decorate_callable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.logger.OptimpvOutputNameFilter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">OptimpvOutputNameFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/logger.html#OptimpvOutputNameFilter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.OptimpvOutputNameFilter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Filter</span></code></p>
+<p>This is a filter which sets the record’s output_name, if
+not configured</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.logger.OptimpvOutputNameFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#OptimpvOutputNameFilter.filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.OptimpvOutputNameFilter.filter" title="Link to this definition"></a></dt>
+<dd><p>Determine if the specified record is to be logged.</p>
+<p>Returns True if the record should be logged, or False otherwise.
+If deemed appropriate, the record may be modified in-place.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.logger.build_file_handler">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">build_file_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">StreamHandler</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#build_file_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.build_file_handler" title="Link to this definition"></a></dt>
+<dd><p>Build a file handle that logs entries to the given file, using the
+same formatting as the stream handler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> – Location of the file to log output to. If the file exists, output
+will be appended. If it does not exist, a new file will be created.</p></li>
+<li><p><strong>level</strong> – The log level. By default, sets level to INFO</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A logging.FileHandler instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.logger.build_stream_handler">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">build_stream_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">StreamHandler</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#build_stream_handler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.build_stream_handler" title="Link to this definition"></a></dt>
+<dd><p>Build the default stream handler used for most optimpv logging. Sets
+default level to INFO, instead of WARNING.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level</strong> – The log level. By default, sets level to INFO</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A logging.StreamHandler instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.logger.disable_logger">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">disable_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/logger.html#disable_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.disable_logger" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.general.logger.ClassDecorator" title="optimpv.general.logger.ClassDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassDecorator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.logger.disable_logger.decorate_callable">
+<span class="sig-name descname"><span class="pre">decorate_callable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#disable_logger.decorate_callable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.disable_logger.decorate_callable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.general.logger.disable_loggers">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">disable_loggers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/general/logger.html#disable_loggers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.disable_loggers" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#optimpv.general.logger.ClassDecorator" title="optimpv.general.logger.ClassDecorator"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassDecorator</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.general.logger.disable_loggers.decorate_callable">
+<span class="sig-name descname"><span class="pre">decorate_callable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#disable_loggers.decorate_callable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.disable_loggers.decorate_callable" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.logger.get_logger">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Logger</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.get_logger" title="Link to this definition"></a></dt>
+<dd><p>Get an optimpv logger.</p>
+<p>To set a human-readable “output_name” that appears in logger outputs,
+add <cite>{“output_name”: “[MY_OUTPUT_NAME]”}</cite> to the logger’s contextual
+information. By default, we use the logger’s <cite>name</cite></p>
+<p>NOTE: To change the log level on particular outputs (e.g. STDERR logs),
+set the proper log level on the relevant handler, instead of the logger
+e.g. logger.handers[0].setLevel(INFO)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – The name of the logger.</p></li>
+<li><p><strong>level</strong> – The level at which to actually log.  Logs
+below this level of importance will be discarded</p></li>
+<li><p><strong>force_name</strong> – If set to false and the module specified
+is not ultimately a descendent of the <cite>optimpv</cite> module
+specified by <cite>name</cite>, “optimpv.” will be prepended to <cite>name</cite></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The logging.Logger object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.logger.make_indices_str">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">make_indices_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">indices</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#make_indices_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.make_indices_str" title="Link to this definition"></a></dt>
+<dd><p>Generate a string representation of an iterable of indices;
+if indices are contiguous, returns a string formatted like like
+‘&lt;min_idx&gt; - &lt;max_idx&gt;’, otherwise a string formatted like
+‘[idx_1, idx_2, …, idx_n’].</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.logger.set_optimpv_logger_levels">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">set_optimpv_logger_levels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#set_optimpv_logger_levels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.set_optimpv_logger_levels" title="Link to this definition"></a></dt>
+<dd><p>Set the log level for all optimpv loggers, such that logs of given level
+are printed to STDERR by the root logger</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.general.logger.set_stderr_log_level">
+<span class="sig-prename descclassname"><span class="pre">optimpv.general.logger.</span></span><span class="sig-name descname"><span class="pre">set_stderr_log_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/optimpv/general/logger.html#set_stderr_log_level"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.general.logger.set_stderr_log_level" title="Link to this definition"></a></dt>
+<dd><p>Set the log level for stream handler, such that logs of given level
+are printed to STDERR by the root logger</p>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.general">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optimpv.general" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimpv.html" class="btn btn-neutral float-left" title="optimpv package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimpv.models.html" class="btn btn-neutral float-right" title="optimpv.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

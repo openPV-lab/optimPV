@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.tests package &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="optimpv.posterior package" href="optimpv.posterior.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimpv</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimpv.html">optimpv package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimpv.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimpv.general.html">optimpv.general package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.models.html">optimpv.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.posterior.html">optimpv.posterior package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">optimpv.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimpv.html#module-optimpv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">optimpv</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.html">optimpv package</a></li>
+      <li class="breadcrumb-item active">optimpv.tests package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/optimpv.tests.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimpv-tests-package">
+<h1>optimpv.tests package<a class="headerlink" href="#optimpv-tests-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.tests.test_axBOtorch">
+<span id="optimpv-tests-test-axbotorch-module"></span><h2>optimpv.tests.test_axBOtorch module<a class="headerlink" href="#module-optimpv.tests.test_axBOtorch" title="Link to this heading"></a></h2>
+<p>Test EQE module with pySIMsalabim</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_DOE_MOO">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_DOE_MOO</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_DOE_MOO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_DOE_MOO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_DOE_SOO">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_DOE_SOO</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_DOE_SOO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_DOE_SOO" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_DOE_SOO_Turbo">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_DOE_SOO_Turbo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_DOE_SOO_Turbo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_DOE_SOO_Turbo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_MOO_trPLtrMC">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_MOO_trPLtrMC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_MOO_trPLtrMC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_MOO_trPLtrMC" title="Link to this definition"></a></dt>
+<dd><p>Test the multi-objective optimization of a rate equation model using axBOtorchOptimizer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_SOO_TurBO">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_SOO_TurBO</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_SOO_TurBO"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_SOO_TurBO" title="Link to this definition"></a></dt>
+<dd><p>Test the single-objective optimization of a diode model using axBOtorchOptimizer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_SOO_diode_fit">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_SOO_diode_fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_SOO_diode_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_SOO_diode_fit" title="Link to this definition"></a></dt>
+<dd><p>Test the single-objective optimization of a diode model using axBOtorchOptimizer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_diff_rec">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_diff_rec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_diff_rec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_diff_rec" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_axBOtorch.test_multi_trap">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_axBOtorch.</span></span><span class="sig-name descname"><span class="pre">test_multi_trap</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_axBOtorch.html#test_multi_trap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_axBOtorch.test_multi_trap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-optimpv.tests.test_emcee">
+<span id="optimpv-tests-test-emcee-module"></span><h2>optimpv.tests.test_emcee module<a class="headerlink" href="#module-optimpv.tests.test_emcee" title="Link to this heading"></a></h2>
+<p>Test EQE module with pySIMsalabim</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_emcee.test_SOO_JV_fit_emcee">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_emcee.</span></span><span class="sig-name descname"><span class="pre">test_SOO_JV_fit_emcee</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_emcee.html#test_SOO_JV_fit_emcee"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_emcee.test_SOO_JV_fit_emcee" title="Link to this definition"></a></dt>
+<dd><p>Test the single-objective optimization of a diode model using axBOtorchOptimizer.</p>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.tests.test_pymoo">
+<span id="optimpv-tests-test-pymoo-module"></span><h2>optimpv.tests.test_pymoo module<a class="headerlink" href="#module-optimpv.tests.test_pymoo" title="Link to this heading"></a></h2>
+<p>Test EQE module with pySIMsalabim</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_pymoo.test_DOE_MOO_pymoo">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_pymoo.</span></span><span class="sig-name descname"><span class="pre">test_DOE_MOO_pymoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_pymoo.html#test_DOE_MOO_pymoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_pymoo.test_DOE_MOO_pymoo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_pymoo.test_DOE_SOO_pymoo">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_pymoo.</span></span><span class="sig-name descname"><span class="pre">test_DOE_SOO_pymoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_pymoo.html#test_DOE_SOO_pymoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_pymoo.test_DOE_SOO_pymoo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_pymoo.test_MOO_TransferMatrix_pymoo">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_pymoo.</span></span><span class="sig-name descname"><span class="pre">test_MOO_TransferMatrix_pymoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_pymoo.html#test_MOO_TransferMatrix_pymoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_pymoo.test_MOO_TransferMatrix_pymoo" title="Link to this definition"></a></dt>
+<dd><p>Test the multi-objective optimization of a rate equation model using PymooOptimizer.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_pymoo.test_SOO_diode_fit_pymoo">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_pymoo.</span></span><span class="sig-name descname"><span class="pre">test_SOO_diode_fit_pymoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_pymoo.html#test_SOO_diode_fit_pymoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_pymoo.test_SOO_diode_fit_pymoo" title="Link to this definition"></a></dt>
+<dd><p>Test the single-objective optimization of a diode model using axBOtorchOptimizer.</p>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.tests.test_scipy">
+<span id="optimpv-tests-test-scipy-module"></span><h2>optimpv.tests.test_scipy module<a class="headerlink" href="#module-optimpv.tests.test_scipy" title="Link to this heading"></a></h2>
+<p>Test EQE module with pySIMsalabim</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="optimpv.tests.test_scipy.test_SOO_diode_fit">
+<span class="sig-prename descclassname"><span class="pre">optimpv.tests.test_scipy.</span></span><span class="sig-name descname"><span class="pre">test_SOO_diode_fit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/tests/test_scipy.html#test_SOO_diode_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.tests.test_scipy.test_SOO_diode_fit" title="Link to this definition"></a></dt>
+<dd><p>Test the single-objective optimization of a diode model using scipyOptimizer with scipy.optimize.least_squares.</p>
+</dd></dl>
+
+</section>
+<section id="module-optimpv.tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optimpv.tests" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimpv.posterior.html" class="btn btn-neutral float-left" title="optimpv.posterior package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

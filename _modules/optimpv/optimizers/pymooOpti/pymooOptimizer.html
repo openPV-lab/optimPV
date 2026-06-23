@@ -1,0 +1,1179 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.optimizers.pymooOpti.pymooOptimizer &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optimpv.optimizers.pymooOpti.pymooOptimizer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optimpv.optimizers.pymooOpti.pymooOptimizer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;PymooOptimizer module. This module contains the PymooOptimizer class, which is used to optimize a given function using pymoo&#39;s genetic algorithms.&quot;&quot;&quot;</span>
+<span class="c1">######### Package Imports #########################################################################</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.BaseAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.multiprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="c1"># PyMOO imports</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElementwiseProblem</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.moo.nsga2</span><span class="w"> </span><span class="kn">import</span> <span class="n">NSGA2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.moo.nsga3</span><span class="w"> </span><span class="kn">import</span> <span class="n">NSGA3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.moo.moead</span><span class="w"> </span><span class="kn">import</span> <span class="n">MOEAD</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.soo.nonconvex.ga</span><span class="w"> </span><span class="kn">import</span> <span class="n">GA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.soo.nonconvex.de</span><span class="w"> </span><span class="kn">import</span> <span class="n">DE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.soo.nonconvex.pso</span><span class="w"> </span><span class="kn">import</span> <span class="n">PSO</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.algorithms.soo.nonconvex.cmaes</span><span class="w"> </span><span class="kn">import</span> <span class="n">CMAES</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.optimize</span><span class="w"> </span><span class="kn">import</span> <span class="n">minimize</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.callback</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">multiprocessing.pool</span><span class="w"> </span><span class="kn">import</span> <span class="n">ThreadPool</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.problem</span><span class="w"> </span><span class="kn">import</span> <span class="n">StarmapParallelization</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.parallelization.starmap</span><span class="w"> </span><span class="kn">import</span> <span class="n">StarmapParallelization</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.population</span><span class="w"> </span><span class="kn">import</span> <span class="n">Population</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.core.individual</span><span class="w"> </span><span class="kn">import</span> <span class="n">Individual</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pymoo.util.ref_dirs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_reference_directions</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">_round_floats_for_logging</span>
+
+<span class="n">logger</span><span class="p">:</span> <span class="n">Logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s1">&#39;pymooOptimizer&#39;</span><span class="p">)</span>
+<span class="n">ROUND_FLOATS_IN_LOGS_TO_DECIMAL_PLACES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">round_floats_for_logging</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">_round_floats_for_logging</span><span class="p">,</span>
+    <span class="n">decimal_places</span><span class="o">=</span><span class="n">ROUND_FLOATS_IN_LOGS_TO_DECIMAL_PLACES</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1">######### Problem Definition #######################################################################</span>
+<div class="viewcode-block" id="PymooProblem">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PymooProblem</span><span class="p">(</span><span class="n">ElementwiseProblem</span><span class="p">):</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agents</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">agents</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="s1">&#39;params&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">agents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_var</span> <span class="o">=</span> <span class="nb">len</span><span class="p">([</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;fixed&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_metrics</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_obj</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_threads</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_threads&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1"># Handle parameter constraints</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_constraints</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameter_constraints&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">n_constr</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraint_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_constraints</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">constraint_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_constraints</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_constraints</span><span class="p">)</span>
+            <span class="n">n_constr</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint_data</span><span class="p">)</span>
+        
+        <span class="c1"># Check parameters and set bounds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xl</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_search_space</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="c1"># Configuration for parallel evaluation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallel_agents</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parallel_agents&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_parallelism&#39;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># If there is only one agent, disable parallelism</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parallel_agents</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># initialize the thread pool and create the runner</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">ThreadPool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elementwise_runner</span> <span class="o">=</span> <span class="n">StarmapParallelization</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">starmap</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_threads</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_var</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obj</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="n">n_constr</span><span class="p">,</span> 
+                           <span class="n">xl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xl</span><span class="p">,</span> <span class="n">xu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xu</span><span class="p">,</span> <span class="n">elementwise_runner</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">elementwise_runner</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">n_var</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_var</span><span class="p">,</span> <span class="n">n_obj</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_obj</span><span class="p">,</span> <span class="n">n_constr</span><span class="o">=</span><span class="n">n_constr</span><span class="p">,</span> 
+                           <span class="n">xl</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xl</span><span class="p">,</span> <span class="n">xu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">xu</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+
+<div class="viewcode-block" id="PymooProblem.get_all_metrics">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.get_all_metrics">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_all_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create the objectives for the optimization process.&quot;&quot;&quot;</span>
+        <span class="n">append_metrics</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">append_metrics</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">)):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span></div>
+
+    
+<div class="viewcode-block" id="PymooProblem.create_search_space">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.create_search_space">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_search_space</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a search space suitable for scipy.optimize.minimize based on parameters.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        params : list of Fitparam() objects</span>
+<span class="sd">            List of parameter objects</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            A tuple containing (x0, bounds) where x0 is the initial parameter vector</span>
+<span class="sd">            and bounds is a list of (lower, upper) bound tuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x0</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">xl</span><span class="p">,</span> <span class="n">xu</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param_mapping</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Store mapping of parameter indices to names for reconstruction</span>
+        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="c1"># Fixed parameters are not included in the optimization</span>
+                <span class="k">continue</span>
+                
+            <span class="bp">self</span><span class="o">.</span><span class="n">param_mapping</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">force_log</span><span class="p">:</span>
+                    <span class="c1"># For log-scale parameters, we optimize in log space</span>
+                    <span class="n">x0</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+                    <span class="n">xu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                    <span class="n">xl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># For regular float parameters</span>
+                    <span class="n">scale_factor</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">fscale</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s1">&#39;fscale&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mf">1.0</span>
+                    <span class="n">x0</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">value</span> <span class="o">/</span> <span class="n">scale_factor</span><span class="p">)</span>
+                    <span class="n">xu</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">scale_factor</span><span class="p">)</span>
+                    <span class="n">xl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">scale_factor</span><span class="p">)</span>
+            
+            <span class="c1"># elif param.value_type == &#39;int&#39;:</span>
+            <span class="c1">#     # For integer parameters, we optimize in integer space</span>
+            <span class="c1">#     # but will round to integers when evaluating</span>
+            <span class="c1">#     step_size = param.stepsize if hasattr(param, &#39;stepsize&#39;) else 1</span>
+            <span class="c1">#     x0.append(param.value / step_size)</span>
+            <span class="c1">#     xu.append(param.bounds[1] / step_size)</span>
+            <span class="c1">#     xl.append(param.bounds[0] / step_size)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported parameter type: </span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">value_type</span><span class="si">}</span><span class="s2"> for parameter </span><span class="si">{</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">xl</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">xu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PymooProblem.reconstruct_params">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.reconstruct_params">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reconstruct_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reconstruct a parameter dictionary from an optimization vector.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : array-like</span>
+<span class="sd">            Parameter vector from the optimizer</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary mapping parameter names to values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">param_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">x_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="c1"># Include fixed parameters with their fixed values</span>
+                <span class="c1"># param_dict[param.name] = param.value</span>
+                <span class="k">continue</span>
+                
+            <span class="c1"># Get the optimized value for this parameter</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;float&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">force_log</span><span class="p">:</span>
+                    <span class="c1"># Convert back from log space</span>
+                    <span class="n">param_dict</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">x</span><span class="p">[</span><span class="n">x_idx</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Apply scaling factor</span>
+                    <span class="n">scale_factor</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">fscale</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s1">&#39;fscale&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mf">1.0</span>
+                    <span class="n">param_dict</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">x_idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">scale_factor</span>
+            
+            <span class="k">elif</span> <span class="n">param</span><span class="o">.</span><span class="n">value_type</span> <span class="o">==</span> <span class="s1">&#39;int&#39;</span><span class="p">:</span>
+                <span class="c1"># Convert back to integer with proper step size</span>
+                <span class="n">step_size</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">stepsize</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">param</span><span class="p">,</span> <span class="s1">&#39;stepsize&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">1</span>
+                <span class="n">param_dict</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x_idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">step_size</span><span class="p">))</span>
+            
+            <span class="n">x_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+        <span class="k">return</span> <span class="n">param_dict</span></div>
+
+            
+<div class="viewcode-block" id="PymooProblem.evaluate_single">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.evaluate_single">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">evaluate_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate a single agent on a parameter point&quot;&quot;&quot;</span>
+        <span class="n">agent_idx</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">param_dict</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run_Ax</span><span class="p">(</span><span class="n">param_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">agent_idx</span><span class="p">,</span> <span class="n">res</span></div>
+
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Evaluate the objective functions for a given parameter vector&quot;&quot;&quot;</span>
+        <span class="c1"># Convert parameter vector to parameter dictionary</span>
+        <span class="c1"># param_dict = self.reconstruct_params(x)</span>
+        <span class="n">param_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">x_idx</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">param</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                <span class="c1"># Include fixed parameters with their fixed values</span>
+                <span class="c1"># param_dict[param.name] = param.value</span>
+                <span class="k">continue</span>
+            <span class="n">param_dict</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">x_idx</span><span class="p">]</span>  <span class="c1"># Initialize with the current value</span>
+            <span class="n">x_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallel_agents</span><span class="p">:</span>
+            <span class="c1"># Sequential evaluation: run each agent sequentially</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+                <span class="n">agent_result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run_Ax</span><span class="p">(</span><span class="n">param_dict</span><span class="p">)</span>
+                <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent_result</span><span class="p">)</span>
+            
+            <span class="c1"># Merge results from all agents</span>
+            <span class="n">merged_results</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                <span class="n">merged_results</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+                
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Parallel evaluation: run all agents in parallel</span>
+            <span class="n">agent_param_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">agent</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">):</span>
+                <span class="n">agent_param_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">idx</span><span class="p">,</span> <span class="n">agent</span><span class="p">,</span> <span class="n">param_dict</span><span class="p">))</span>
+            
+            <span class="c1"># Run all agents in parallel using multiprocessing</span>
+            <span class="k">with</span> <span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent_param_list</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span><span class="p">))</span> <span class="k">as</span> <span class="n">pool</span><span class="p">:</span>
+                <span class="n">parallel_results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">evaluate_single</span><span class="p">,</span> <span class="n">agent_param_list</span><span class="p">)</span>
+            
+            <span class="c1"># Collect and merge results</span>
+            <span class="n">results_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">agent_idx</span><span class="p">,</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">parallel_results</span><span class="p">:</span>
+                <span class="n">results_dict</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">res</span>
+            
+            <span class="c1"># Merge results from all agents</span>
+            <span class="n">merged_results</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">agent_idx</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">results_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                <span class="n">merged_results</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">results_dict</span><span class="p">[</span><span class="n">agent_idx</span><span class="p">])</span>
+        
+        <span class="c1"># Extract objective values in the correct order</span>
+        <span class="n">objectives</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">)):</span>
+                <span class="n">metric_name</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">metric_name</span> <span class="ow">in</span> <span class="n">merged_results</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">merged_results</span><span class="p">[</span><span class="n">metric_name</span><span class="p">]</span>
+                    <span class="c1"># Apply sign for minimization/maximization</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                        <span class="c1"># Handle NaN values with large penalty</span>
+                        <span class="n">value</span> <span class="o">=</span> <span class="mf">1e6</span>
+                    <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+                    <span class="n">objectives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sign</span> <span class="o">*</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Handle missing metrics with large penalty</span>
+                    <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+                    <span class="n">objectives</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sign</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+        
+        <span class="c1"># Check for NaN values and handle failed evaluations</span>
+        <span class="c1"># if any(np.isnan(obj) for obj in objectives):</span>
+        <span class="c1">#     # Return a large penalty value for failed evaluations</span>
+
+        <span class="c1">#     objectives = [1e6] * len(self.all_metrics)</span>
+        
+        <span class="n">out</span><span class="p">[</span><span class="s2">&quot;F&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">objectives</span><span class="p">)</span>
+        
+        <span class="c1"># Evaluate constraints if they exist</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_constr</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">constraints</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">constraint_data</span><span class="p">:</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;indices&#39;</span><span class="p">]</span>
+                <span class="n">coefficients</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;coefficients&#39;</span><span class="p">]</span>
+                <span class="n">rhs</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;rhs&#39;</span><span class="p">]</span>
+                <span class="n">operator</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">]</span>
+                
+                <span class="c1"># Calculate constraint value: sum_i (coef[i] * x[idx[i]])</span>
+                <span class="n">constraint_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coefficients</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+                
+                <span class="c1"># Convert BoTorch-style to pymoo-style constraints</span>
+                <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span>
+                    <span class="c1"># BoTorch: sum_i coef[i]*x[idx[i]] &lt;= rhs</span>
+                    <span class="c1"># Pymoo: constraint_value - rhs &lt;= 0</span>
+                    <span class="n">g_val</span> <span class="o">=</span> <span class="n">constraint_value</span> <span class="o">-</span> <span class="n">rhs</span>
+                <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span>
+                    <span class="c1"># BoTorch: sum_i coef[i]*x[idx[i]] &gt;= rhs</span>
+                    <span class="c1"># Pymoo: rhs - constraint_value &lt;= 0</span>
+                    <span class="n">g_val</span> <span class="o">=</span> <span class="n">rhs</span> <span class="o">-</span> <span class="n">constraint_value</span>
+                <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;==&#39;</span><span class="p">:</span>
+                    <span class="c1"># Equality constraint: |constraint_value - rhs| &lt;= tolerance</span>
+                    <span class="c1"># For pymoo, we can use constraint_value - rhs = 0</span>
+                    <span class="n">g_val</span> <span class="o">=</span> <span class="n">constraint_value</span> <span class="o">-</span> <span class="n">rhs</span>
+                
+                <span class="n">constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g_val</span><span class="p">)</span>
+            
+            <span class="n">out</span><span class="p">[</span><span class="s2">&quot;G&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">constraints</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="PymooProblem.parse_constraints">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.parse_constraints">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">parse_constraints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">constraints</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parse parameter constraints from string format to numerical format.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        constraints : list of str</span>
+<span class="sd">            List of constraint strings in format like &quot;x1 + 2*x2 &lt;= 5&quot;</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of dict</span>
+<span class="sd">            List of constraint dictionaries with &#39;indices&#39;, &#39;coefficients&#39;, &#39;rhs&#39;, &#39;operator&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">constraint_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">param_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;fixed&#39;</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">constraint_str</span> <span class="ow">in</span> <span class="n">constraints</span><span class="p">:</span>
+            <span class="c1"># Parse the constraint string</span>
+            <span class="c1"># Split by comparison operators</span>
+            <span class="k">if</span> <span class="s1">&#39;&lt;=&#39;</span> <span class="ow">in</span> <span class="n">constraint_str</span><span class="p">:</span>
+                <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">constraint_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&lt;=&#39;</span><span class="p">)</span>
+                <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;&lt;=&#39;</span>
+            <span class="k">elif</span> <span class="s1">&#39;&gt;=&#39;</span> <span class="ow">in</span> <span class="n">constraint_str</span><span class="p">:</span>
+                <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">constraint_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;&gt;=&#39;</span><span class="p">)</span>
+                <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;&gt;=&#39;</span>
+            <span class="k">elif</span> <span class="s1">&#39;==&#39;</span> <span class="ow">in</span> <span class="n">constraint_str</span><span class="p">:</span>
+                <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="n">constraint_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;==&#39;</span><span class="p">)</span>
+                <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;==&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported constraint operator in: </span><span class="si">{</span><span class="n">constraint_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Parse RHS</span>
+            <span class="n">rhs</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">right</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            
+            <span class="c1"># Parse LHS to extract coefficients and parameter indices</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">coefficients</span> <span class="o">=</span> <span class="p">[]</span>
+            
+            <span class="c1"># Simple parsing for linear constraints</span>
+            <span class="n">terms</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;+-&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+            <span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">terms</span> <span class="k">if</span> <span class="n">t</span><span class="p">]</span>  <span class="c1"># Remove empty strings</span>
+            
+            <span class="k">for</span> <span class="n">term</span> <span class="ow">in</span> <span class="n">terms</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">term</span><span class="p">:</span>
+                    <span class="n">coef_str</span><span class="p">,</span> <span class="n">param_name</span> <span class="o">=</span> <span class="n">term</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+                    <span class="n">coef</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">coef_str</span><span class="p">)</span> <span class="k">if</span> <span class="n">coef_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="mf">1.0</span>
+                    <span class="k">if</span> <span class="n">coef_str</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                        <span class="n">coef</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># Term is just a parameter name (coefficient is 1)</span>
+                    <span class="n">param_name</span> <span class="o">=</span> <span class="n">term</span>
+                    <span class="n">coef</span> <span class="o">=</span> <span class="mf">1.0</span>
+                    <span class="k">if</span> <span class="n">param_name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">):</span>
+                        <span class="n">param_name</span> <span class="o">=</span> <span class="n">param_name</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                        <span class="n">coef</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+                
+                <span class="k">if</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="n">param_names</span><span class="p">:</span>
+                    <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">param_name</span><span class="p">))</span>
+                    <span class="n">coefficients</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Parameter </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2"> not found in optimization parameters&quot;</span><span class="p">)</span>
+            
+            <span class="n">constraint_data</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;indices&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span>
+                <span class="s1">&#39;coefficients&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">coefficients</span><span class="p">),</span>
+                <span class="s1">&#39;rhs&#39;</span><span class="p">:</span> <span class="n">rhs</span><span class="p">,</span>
+                <span class="s1">&#39;operator&#39;</span><span class="p">:</span> <span class="n">operator</span>
+            <span class="p">})</span>
+        
+        <span class="k">return</span> <span class="n">constraint_data</span></div>
+</div>
+
+
+<span class="c1">######### Optimizer Definition #######################################################################</span>
+
+<div class="viewcode-block" id="PymooOptimizer">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PymooOptimizer</span><span class="p">(</span><span class="n">BaseAgent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Initialize the PymooOptimizer class. This class is used to optimize a given function using pymoo algorithms.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params : list of Fitparam() objects, optional</span>
+<span class="sd">        List of Fitparam() objects, by default None</span>
+<span class="sd">    agents : list of Agent() objects, optional</span>
+<span class="sd">        List of Agent() objects see optimpv/general/BaseAgent.py for a base class definition, by default None</span>
+<span class="sd">    algorithm : str, optional</span>
+<span class="sd">        Optimization algorithm to use, by default &#39;NSGA2&#39;</span>
+<span class="sd">        Options: &#39;NSGA2&#39;, &#39;NSGA3&#39;, &#39;MOEAD&#39;, &#39;GA&#39;, &#39;DE&#39;, &#39;PSO&#39;</span>
+<span class="sd">    pop_size : int, optional</span>
+<span class="sd">        Population size, by default 100</span>
+<span class="sd">    n_gen : int, optional</span>
+<span class="sd">        Number of generations, by default 100</span>
+<span class="sd">    algorithm_kwargs : dict, optional</span>
+<span class="sd">        Additional keyword arguments for the algorithm, by default None</span>
+<span class="sd">    existing_data : DataFrame, optional</span>
+<span class="sd">        existing data to use for the optimization process, by default None</span>
+<span class="sd">    suggest_only : bool, optional</span>
+<span class="sd">        if True, the optimization process will only suggest new points without running the agents, by default False</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        Name of the optimization process, by default &#39;pymoo&#39;</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional keyword arguments including:</span>
+<span class="sd">        - parallel_agents: bool, whether to run agents in parallel</span>
+<span class="sd">        - max_parallelism: int, maximum number of parallel processes</span>
+<span class="sd">        - verbose_logging: bool, whether to log verbose information</span>
+<span class="sd">        - seed: int, random seed for reproducibility</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;NSGA2&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_gen</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
+                 <span class="n">algorithm_kwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">existing_data</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">suggest_only</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;pymoo&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">agents</span> <span class="o">=</span> <span class="p">[</span><span class="n">agents</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agents</span> <span class="o">=</span> <span class="n">agents</span>
+        
+        <span class="c1"># Store algorithm as is (can be string or object)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">algorithm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_name</span> <span class="o">=</span> <span class="n">algorithm</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="n">algorithm</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="o">=</span> <span class="n">pop_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_gen</span> <span class="o">=</span> <span class="n">n_gen</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algorithm_kwargs</span> <span class="o">=</span> <span class="n">algorithm_kwargs</span> <span class="k">if</span> <span class="n">algorithm_kwargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_minimize</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">all_minimize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_metrics_list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_data</span> <span class="o">=</span> <span class="n">existing_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">suggest_only</span> <span class="o">=</span> <span class="n">suggest_only</span>
+        <span class="c1"># Set defaults from kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallel_agents</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parallel_agents&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parallel&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_parallelism&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_threads</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;n_threads&#39;</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose_logging&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;seed&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_constraints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parameter_constraints&#39;</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_attempts&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Maximum attempts for constraint satisfaction</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parallel_agents</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="PymooOptimizer.create_problem">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_problem">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_problem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a pymoo problem from agents and parameters.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">problem</span> <span class="o">=</span> <span class="n">PymooProblem</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">,</span>
+            <span class="n">parallel_agents</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel_agents</span><span class="p">,</span>
+            <span class="n">max_parallelism</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_parallelism</span><span class="p">,</span>
+            <span class="n">n_threads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_threads</span><span class="p">,</span>
+            <span class="n">parameter_constraints</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_constraints</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span></div>
+
+    
+<div class="viewcode-block" id="PymooOptimizer.create_algorithm">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_algorithm">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_algorithm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a pymoo algorithm based on the specified algorithm name or return the provided algorithm object.&quot;&quot;&quot;</span>
+        
+        <span class="c1"># If algorithm is already an object, return it directly</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span>
+        
+        <span class="n">algorithm_map</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;NSGA2&#39;</span><span class="p">:</span> <span class="n">NSGA2</span><span class="p">,</span>
+            <span class="s1">&#39;NSGA3&#39;</span><span class="p">:</span> <span class="n">NSGA3</span><span class="p">,</span>
+            <span class="s1">&#39;MOEAD&#39;</span><span class="p">:</span> <span class="n">MOEAD</span><span class="p">,</span>
+            <span class="s1">&#39;GA&#39;</span><span class="p">:</span> <span class="n">GA</span><span class="p">,</span>
+            <span class="s1">&#39;DE&#39;</span><span class="p">:</span> <span class="n">DE</span><span class="p">,</span>
+            <span class="s1">&#39;PSO&#39;</span><span class="p">:</span> <span class="n">PSO</span><span class="p">,</span>
+            <span class="s1">&#39;CMAES&#39;</span><span class="p">:</span> <span class="n">CMAES</span>
+        <span class="p">}</span>
+        
+        <span class="c1"># If algorithm string is not in map, return None or raise warning</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">algorithm_map</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Algorithm &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="si">}</span><span class="s2">&#39; not found in predefined algorithms. &quot;</span>
+                      <span class="sa">f</span><span class="s2">&quot;Available algorithms: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">algorithm_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        
+        <span class="n">algorithm_class</span> <span class="o">=</span> <span class="n">algorithm_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span><span class="p">]</span>
+        
+        <span class="c1"># Set default parameters</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;NSGA2&#39;</span><span class="p">,</span> <span class="s1">&#39;NSGA3&#39;</span><span class="p">,</span> <span class="s1">&#39;MOEAD&#39;</span><span class="p">]:</span>
+            <span class="c1"># Multi-objective algorithms</span>
+            <span class="n">default_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pop_size&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">}</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;NSGA3&#39;</span><span class="p">:</span>
+                <span class="c1"># For NSGA3, we need to set the number of reference directions</span>
+                <span class="n">n_obj</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span>
+                <span class="n">ref_dirs</span> <span class="o">=</span> <span class="n">get_reference_directions</span><span class="p">(</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="n">n_obj</span><span class="p">,</span> <span class="n">n_partitions</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+                <span class="n">default_kwargs</span><span class="p">[</span><span class="s1">&#39;ref_dirs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ref_dirs</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">algorithm</span> <span class="o">==</span> <span class="s1">&#39;MOEAD&#39;</span><span class="p">:</span> 
+                <span class="c1"># For MOEAD, we need to set the reference directions as well</span>
+                <span class="n">n_obj</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span>
+                <span class="n">ref_dirs</span> <span class="o">=</span> <span class="n">get_reference_directions</span><span class="p">(</span><span class="s2">&quot;uniform&quot;</span><span class="p">,</span> <span class="n">n_obj</span><span class="p">,</span> <span class="n">n_partitions</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+                <span class="n">default_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;ref_dirs&#39;</span><span class="p">:</span> <span class="n">ref_dirs</span><span class="p">,</span> <span class="s1">&#39;n_neighbors&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;prob_neighbor_mating&#39;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">}</span>
+
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Single-objective algorithms</span>
+            <span class="n">default_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;pop_size&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">}</span>
+        
+        <span class="c1"># Update with user-provided kwargs</span>
+        <span class="n">default_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_kwargs</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">default_kwargs</span><span class="p">[</span><span class="s1">&#39;seed&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span>
+            
+        <span class="k">return</span> <span class="n">algorithm_class</span><span class="p">(</span><span class="o">**</span><span class="n">default_kwargs</span><span class="p">)</span></div>
+
+    
+    
+
+<div class="viewcode-block" id="PymooOptimizer.create_callback">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_callback">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a callback to track optimization progress.&quot;&quot;&quot;</span>
+        <span class="k">class</span><span class="w"> </span><span class="nc">OptimizationCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+            <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">):</span>
+                <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
+                
+            <span class="k">def</span><span class="w"> </span><span class="nf">notify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">algorithm</span><span class="p">):</span>
+                <span class="c1"># Store current generation results</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="s1">&#39;pop&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">pop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">pop</span><span class="p">:</span>
+                        <span class="n">param_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">reconstruct_params</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+                        
+                        <span class="c1"># Convert objectives back to original values</span>
+                        <span class="n">objectives</span> <span class="o">=</span> <span class="p">{}</span>
+                        <span class="n">obj_idx</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">)):</span>
+                                <span class="c1"># Convert back from minimization format</span>
+                                <span class="n">sign</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+                                <span class="n">objectives</span><span class="p">[</span><span class="n">agent</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sign</span> <span class="o">*</span> <span class="n">ind</span><span class="o">.</span><span class="n">F</span><span class="p">[</span><span class="n">obj_idx</span><span class="p">]</span>
+                                <span class="n">obj_idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                        
+                        <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">all_evaluations</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                            <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">param_dict</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                            <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="n">objectives</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                        <span class="p">})</span>
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+                    <span class="n">logging_level</span> <span class="o">=</span> <span class="mi">20</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+                    <span class="n">f_values</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">pop</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
+                    <span class="n">best_per_objective</span> <span class="o">=</span> <span class="n">f_values</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">objective_log</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="n">metric</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">best_per_objective</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span>
+                    <span class="p">}</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Generation </span><span class="si">{</span><span class="n">algorithm</span><span class="o">.</span><span class="n">n_gen</span><span class="si">}</span><span class="s2">: Best objectives = </span><span class="si">{</span><span class="n">objective_log</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+                    <span class="c1"># logger.info(</span>
+                    <span class="c1">#     f&quot;Generation {algorithm.n_gen}: Best objective = {algorithm.pop.get(&#39;F&#39;).min():.6f}&quot;</span>
+                    <span class="c1"># )</span>
+        
+        <span class="k">return</span> <span class="n">OptimizationCallback</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="PymooOptimizer.existing_population">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.existing_population">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">existing_population</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an existing population from the provided data.&quot;&quot;&quot;</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Convert the existing data to a DataFrame if it is not already</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">existing_data</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;existing_data must be a pandas DataFrame&quot;</span><span class="p">)</span>
+        
+        <span class="n">pnames</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;fixed&#39;</span><span class="p">]</span>
+        <span class="c1"># make numpy array from the pnames in the existing data</span>
+        <span class="n">existing_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_data</span><span class="p">[</span><span class="n">pnames</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="c1"># objectives = self.existing_data[self.all_metrics].values </span>
+        <span class="n">objectives</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_minimize</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_minimize</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="c1"># If the metric is to be maximized, we need to invert the values</span>
+                <span class="n">objectives</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">objectives</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># Create a pymoo Population object from the existing data</span>
+        <span class="n">individuals</span> <span class="o">=</span> <span class="p">[</span><span class="n">Individual</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">existing_params</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">F</span><span class="o">=</span><span class="n">objectives</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">existing_params</span><span class="p">))]</span>
+        <span class="n">pop</span> <span class="o">=</span> <span class="n">Population</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="o">*</span><span class="n">individuals</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pop</span></div>
+
+    
+<div class="viewcode-block" id="PymooOptimizer.optimize">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.optimize">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">optimize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the optimization process using pymoo.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+            <span class="n">logging_level</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Starting optimization using </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_name</span><span class="si">}</span><span class="s2"> algorithm&quot;</span>
+            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Population size: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="si">}</span><span class="s2">, Generations: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">n_gen</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Create the metrics list</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">all_minimize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_metrics_list</span><span class="p">()</span>
+
+        
+        <span class="c1"># Create problem and algorithm</span>
+        <span class="n">problem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_problem</span><span class="p">()</span>
+        <span class="n">algorithm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_algorithm</span><span class="p">()</span>
+        <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_callback</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># If existing data is provided, create an initial population from it</span>
+            <span class="n">initial_pop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_population</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+                <span class="n">logging_level</span> <span class="o">=</span> <span class="mi">20</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Using existing population of size </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">initial_pop</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="n">algorithm</span><span class="o">.</span><span class="n">sampling</span> <span class="o">=</span> <span class="n">initial_pop</span>
+            <span class="c1"># add the initial population to self.all_evaluations</span>
+            <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">initial_pop</span><span class="p">:</span>
+                <span class="n">param_dict</span> <span class="o">=</span> <span class="n">problem</span><span class="o">.</span><span class="n">reconstruct_params</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+                <span class="n">objectives</span> <span class="o">=</span> <span class="p">{</span><span class="n">metric</span><span class="p">:</span> <span class="n">ind</span><span class="o">.</span><span class="n">F</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)}</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                    <span class="s1">&#39;params&#39;</span><span class="p">:</span> <span class="n">param_dict</span><span class="p">,</span>
+                    <span class="s1">&#39;results&#39;</span><span class="p">:</span> <span class="n">objectives</span>
+                <span class="p">})</span>
+
+        <span class="c1"># Run the optimization</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">suggest_only</span><span class="p">:</span>
+            <span class="c1"># only suggest new points without running the agents</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+                <span class="n">logging_level</span> <span class="o">=</span> <span class="mi">20</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="s2">&quot;Suggesting new points without running agents&quot;</span>
+                <span class="p">)</span>
+
+            <span class="c1"># prepare the algorithm to solve the specific problem (same arguments as for the minimize function)</span>
+            <span class="n">algorithm</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">problem</span><span class="p">,</span> <span class="n">termination</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;n_gen&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="n">valid_candidates</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">max_attempts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_attempts</span>  <span class="c1"># Use max_attempts from kwargs</span>
+            <span class="n">attempt</span> <span class="o">=</span> <span class="mi">0</span>
+            
+            <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="ow">and</span> <span class="n">attempt</span> <span class="o">&lt;</span> <span class="n">max_attempts</span><span class="p">:</span>
+                <span class="c1"># ask the algorithm for the next solution to be evaluated</span>
+                <span class="n">pop</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">ask</span><span class="p">()</span>
+                
+                <span class="c1"># Check constraints for each candidate if constraints exist</span>
+                <span class="k">if</span> <span class="n">problem</span><span class="o">.</span><span class="n">n_constr</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">:</span>
+                        <span class="n">x</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">X</span>
+                        <span class="c1"># Evaluate constraints</span>
+                        <span class="n">constraint_violations</span> <span class="o">=</span> <span class="p">[]</span>
+                        <span class="k">for</span> <span class="n">constraint</span> <span class="ow">in</span> <span class="n">problem</span><span class="o">.</span><span class="n">constraint_data</span><span class="p">:</span>
+                            <span class="n">indices</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;indices&#39;</span><span class="p">]</span>
+                            <span class="n">coefficients</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;coefficients&#39;</span><span class="p">]</span>
+                            <span class="n">rhs</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;rhs&#39;</span><span class="p">]</span>
+                            <span class="n">operator</span> <span class="o">=</span> <span class="n">constraint</span><span class="p">[</span><span class="s1">&#39;operator&#39;</span><span class="p">]</span>
+                            
+                            <span class="c1"># Calculate constraint value</span>
+                            <span class="n">constraint_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">coefficients</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">indices</span><span class="p">])</span>
+                            
+                            <span class="c1"># Check if constraint is satisfied</span>
+                            <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&lt;=&#39;</span><span class="p">:</span>
+                                <span class="n">violation</span> <span class="o">=</span> <span class="n">constraint_value</span> <span class="o">-</span> <span class="n">rhs</span>
+                            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;&gt;=&#39;</span><span class="p">:</span>
+                                <span class="n">violation</span> <span class="o">=</span> <span class="n">rhs</span> <span class="o">-</span> <span class="n">constraint_value</span>
+                            <span class="k">elif</span> <span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;==&#39;</span><span class="p">:</span>
+                                <span class="n">violation</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">constraint_value</span> <span class="o">-</span> <span class="n">rhs</span><span class="p">)</span>
+                            
+                            <span class="n">constraint_violations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">violation</span><span class="p">)</span>
+                        
+                        <span class="c1"># Only add candidate if all constraints are satisfied (violations &lt;= tolerance)</span>
+                        <span class="n">tolerance</span> <span class="o">=</span> <span class="mf">1e-6</span>
+                        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">violation</span> <span class="o">&lt;=</span> <span class="n">tolerance</span> <span class="k">for</span> <span class="n">violation</span> <span class="ow">in</span> <span class="n">constraint_violations</span><span class="p">):</span>
+                            <span class="n">valid_candidates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                            
+                        <span class="c1"># Stop if we have enough valid candidates</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">:</span>
+                            <span class="k">break</span>
+
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># No constraints, all candidates are valid</span>
+                    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">pop</span><span class="p">:</span>
+                        <span class="n">valid_candidates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">:</span>
+                            <span class="k">break</span>
+                
+                <span class="n">attempt</span> <span class="o">+=</span> <span class="mi">1</span>
+                
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span> <span class="ow">and</span> <span class="n">problem</span><span class="o">.</span><span class="n">n_constr</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">attempt</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Attempt </span><span class="si">{</span><span class="n">attempt</span><span class="si">}</span><span class="s2">: Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid candidates out of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="si">}</span><span class="s2"> requested&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not generate any valid candidates that satisfy constraints&quot;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Only found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span><span class="si">}</span><span class="s2"> valid candidates out of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="si">}</span><span class="s2"> requested&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Take only the requested number of candidates</span>
+            <span class="n">valid_candidates</span> <span class="o">=</span> <span class="n">valid_candidates</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">pop_size</span><span class="p">]</span>
+            
+            <span class="c1"># convert the valid candidates to a numpy array of parameters</span>
+            <span class="n">params_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">valid_candidates</span><span class="p">)</span>
+            <span class="c1"># store the parameters to try next in a DataFrame</span>
+            <span class="n">params_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">params_array</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;fixed&#39;</span><span class="p">])</span>
+            <span class="c1"># add the fixed parameters to the DataFrame</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;fixed&#39;</span><span class="p">:</span>
+                    <span class="n">params_df</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">return</span> <span class="n">params_df</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            
+
+            <span class="n">result</span> <span class="o">=</span> <span class="n">minimize</span><span class="p">(</span>
+                    <span class="n">problem</span><span class="p">,</span>
+                    <span class="n">algorithm</span><span class="p">,</span>
+                    <span class="p">(</span><span class="s1">&#39;n_gen&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gen</span><span class="p">),</span>
+                    <span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">,</span>
+                <span class="n">seed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">seed</span>
+            <span class="p">)</span>
+        
+            <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">result</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose_logging</span><span class="p">:</span>
+                <span class="n">logging_level</span> <span class="o">=</span> <span class="mi">20</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging_level</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Optimization completed after </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">n_gen</span><span class="si">}</span><span class="s2"> generations&quot;</span>
+                <span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Number of function evaluations: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">algorithm</span><span class="o">.</span><span class="n">evaluator</span><span class="o">.</span><span class="n">n_eval</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Best objective value: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Final population size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Pareto front size: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">F</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">result</span></div>
+
+    
+<div class="viewcode-block" id="PymooOptimizer.get_best_solution">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_best_solution">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_best_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">balance_objectives</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the best solution from the optimization results.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        balance_objectives : bool, optional</span>
+<span class="sd">            If True and multiple objectives exist, return the solution with best balance.</span>
+<span class="sd">            If False, return the first solution from the Pareto front.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary containing the best parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No optimization results available. Run optimize() first.&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">balance_objectives</span><span class="p">:</span>
+            <span class="c1"># Single objective or just take first Pareto solution</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">reconstruct_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Multi-objective: find best balance using ranking</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No evaluations recorded. Cannot find best balance.&quot;</span><span class="p">)</span>
+            
+            <span class="c1"># Use the same logic as other optimizers</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">best_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_params_with_best_balance</span><span class="p">(</span><span class="n">return_best_balance</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">best_params</span></div>
+
+    
+<div class="viewcode-block" id="PymooOptimizer.update_params_with_best_balance">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.update_params_with_best_balance">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">update_params_with_best_balance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_best_balance</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Update the parameters with the best balance of all metrics.</span>
+<span class="sd">            If multiple objectives exist, find the best balance based on ranks.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        return_best_balance : bool, optional</span>
+<span class="sd">            If True, return the index and parameters of the best balance, by default False</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            If return_best_balance is True, return the index and parameters of the best balance.</span>
+<span class="sd">            Otherwise, return None.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If no evaluations have been performed or no metrics are available.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No evaluations have been performed.&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;We need at least one metric to update the parameters&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># If we have one objective, just use the best result</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">minimizes_</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">)):</span>
+                    <span class="n">minimizes_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+
+            <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">([</span><span class="n">eval_result</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> 
+                                <span class="k">for</span> <span class="n">eval_result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">])</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">[</span><span class="n">best_idx</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">]</span>
+            <span class="c1"># Update parameters</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">best_params</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                    
+            <span class="k">if</span> <span class="n">return_best_balance</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">best_idx</span><span class="p">,</span> <span class="n">best_params</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Multiple objectives: find the best balance</span>
+            <span class="n">metrics_values</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">:</span>
+                <span class="n">metric_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">eval_result</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">metric</span><span class="p">]</span> 
+                             <span class="k">for</span> <span class="n">eval_result</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">]</span>
+                <span class="n">metrics_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metric_vals</span><span class="p">)</span>
+            
+            <span class="c1"># Determine minimize/maximize for each metric</span>
+            <span class="n">minimizes</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">agents</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">)):</span>
+                    <span class="n">minimizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">minimize</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            
+            <span class="c1"># Calculate ranks for each metric</span>
+            <span class="n">ranks</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)):</span>
+                <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">metrics_values</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">vals</span> <span class="p">))</span>
+                <span class="n">ranks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+            
+            <span class="c1"># Find the best balance (lowest sum of ranks)</span>
+            <span class="n">sum_ranks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">ranks</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">sum_ranks</span><span class="p">)</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">[</span><span class="n">best_idx</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">]</span>
+            
+            <span class="c1"># Update parameters</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">best_params</span><span class="p">:</span>
+                    <span class="n">p</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">best_params</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="n">return_best_balance</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">best_idx</span><span class="p">,</span> <span class="n">best_params</span></div>
+
+    
+<div class="viewcode-block" id="PymooOptimizer.get_pareto_front">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_pareto_front">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_pareto_front</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the Pareto front solutions for multi-objective optimization.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            Tuple containing (parameters_list, objectives_array)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No optimization results available. Run optimize() first.&quot;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># Single objective: return best solution</span>
+            <span class="n">best_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">F</span><span class="p">)</span>
+            <span class="n">best_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">reconstruct_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">best_idx</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">best_params</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">F</span><span class="p">[</span><span class="n">best_idx</span><span class="p">:</span><span class="n">best_idx</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="c1"># Multi-objective: return all Pareto front solutions</span>
+        <span class="n">pareto_params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">reconstruct_params</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">pareto_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">pareto_params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">F</span></div>
+
+
+<div class="viewcode-block" id="PymooOptimizer.plot_convergence">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.plot_convergence">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_convergence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot the convergence history of the optimization.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        save_path : str, optional</span>
+<span class="sd">            Path to save the plot, by default None</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Additional keyword arguments for the plot.</span>
+
+<span class="sd">                - xscale : str, optional</span>
+<span class="sd">                    Scale for the x-axis, by default &#39;linear&#39;</span>
+<span class="sd">                - yscale : str, optional</span>
+<span class="sd">                    Scale for the y-axis, by default &#39;linear&#39;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No evaluations recorded. Cannot plot convergence.&quot;</span><span class="p">)</span>
+        <span class="n">xscale</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;xscale&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">yscale</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;yscale&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="c1"># Group evaluations by generation (assuming they are stored in order)</span>
+        <span class="n">n_evals_per_gen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_gen</span>
+        <span class="n">generations</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">best_values</span> <span class="o">=</span> <span class="p">[]</span>
+        
+        <span class="k">for</span> <span class="n">gen</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_gen</span><span class="p">):</span>
+            <span class="n">start_idx</span> <span class="o">=</span> <span class="n">gen</span> <span class="o">*</span> <span class="n">n_evals_per_gen</span>
+            <span class="n">end_idx</span> <span class="o">=</span> <span class="p">(</span><span class="n">gen</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">n_evals_per_gen</span>
+            
+            <span class="n">gen_evals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span><span class="p">[</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># Single objective: track best value</span>
+                <span class="n">metric</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">gen_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">eval_result</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">metric</span><span class="p">]</span> <span class="k">for</span> <span class="n">eval_result</span> <span class="ow">in</span> <span class="n">gen_evals</span><span class="p">]</span>
+                <span class="n">best_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">gen_values</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Multi-objective: track hypervolume or average</span>
+                <span class="n">metric_values</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">:</span>
+                    <span class="n">metric_vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">eval_result</span><span class="p">[</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">metric</span><span class="p">]</span> <span class="k">for</span> <span class="n">eval_result</span> <span class="ow">in</span> <span class="n">gen_evals</span><span class="p">]</span>
+                    <span class="n">metric_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">metric_vals</span><span class="p">))</span>
+                <span class="n">best_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">metric_values</span><span class="p">))</span>
+            
+            <span class="n">generations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gen</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">generations</span><span class="p">,</span> <span class="n">best_values</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Generation&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Best Objective Value&#39;</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="s1">&#39;Average Objective Value&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algorithm_name</span><span class="si">}</span><span class="s1"> Convergence History&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="n">xscale</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="n">yscale</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">save_path</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="PymooOptimizer.get_df_from_pymoo">
+<a class="viewcode-back" href="../../../../optimpv.optimizers.pymooOpti.html#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_df_from_pymoo">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_df_from_pymoo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the optimization results to a pandas DataFrame.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            DataFrame containing the optimization results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+      
+        <span class="n">resall</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_evaluations</span>
+        <span class="n">dum_dic</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">resall</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">dum_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">resall</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">dum_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">resall</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">resall</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">dum_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resall</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;params&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">resall</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">dum_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resall</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;results&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">])</span>
+
+        <span class="c1"># remove the minus from the metrics that are maximized</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_minimize</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="c1"># If the metric is to be maximized, we need to invert the values</span>
+                <span class="n">dum_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">dum_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]]]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dum_dic</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

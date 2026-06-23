@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.tests.test_pymoo &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optimpv.tests.test_pymoo</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optimpv.tests.test_pymoo</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot; Test EQE module with pySIMsalabim&quot;&quot;&quot;</span>
+
+<span class="c1">######### Package Imports #########################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.Diodefits.DiodeAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiodeAgent</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.Diodefits.DiodeModel</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="c1"># Add the parent directory to the system path</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;../..&#39;</span><span class="p">)))</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.Diodefits.DiodeAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">DiodeAgent</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.Diodefits.DiodeModel</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.RateEqfits.RateEqAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">RateEqAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.RateEqfits.RateEqModel</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.RateEqfits.Pumps</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.optimizers.pymooOpti.pymooOptimizer</span><span class="w"> </span><span class="kn">import</span> <span class="n">PymooOptimizer</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.TransferMatrix.TransferMatrixAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">TransferMatrixAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.SuggestOnlyAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">SuggestOnlyAgent</span>
+
+<span class="c1">######### Test Functions #########################################################################</span>
+
+<div class="viewcode-block" id="test_SOO_diode_fit_pymoo">
+<a class="viewcode-back" href="../../../optimpv.tests.html#optimpv.tests.test_pymoo.test_SOO_diode_fit_pymoo">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_SOO_diode_fit_pymoo</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test the single-objective optimization of a diode model using axBOtorchOptimizer.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">J0</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;J0&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mf">1e-5</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span><span class="mf">1e-3</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$J_0$&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;A m$^{-2}$&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span><span class="n">force_log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">J0</span><span class="p">)</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$n$&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+
+        <span class="n">R_series</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;R_series&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span><span class="mf">1e-3</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$R_{\text</span><span class="si">{series}</span><span class="s1">}$&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\Omega$ m$^2$&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span><span class="n">force_log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">R_series</span><span class="p">)</span>
+
+        <span class="n">R_shunt</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;R_shunt&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mf">1e-1</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-2</span><span class="p">,</span><span class="mf">1e2</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$R_{\text</span><span class="si">{shunt}</span><span class="s1">}$&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\Omega$ m$^2$&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span><span class="n">force_log</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">R_shunt</span><span class="p">)</span>
+
+        <span class="c1"># original values</span>
+        <span class="n">params_orig</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+        <span class="c1"># Create JV to fit</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">NonIdealDiode_dark</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">J0</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">R_series</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">R_shunt</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Define the Agent and the target metric/loss function</span>
+        <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;mse&#39;</span> <span class="c1"># can be &#39;nrmse&#39;, &#39;mse&#39;, &#39;mae&#39;</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="s1">&#39;soft_l1&#39;</span> <span class="c1"># can be &#39;linear&#39;, &#39;huber&#39;, &#39;soft_l1&#39;</span>
+        <span class="n">exp_format</span> <span class="o">=</span> <span class="s1">&#39;dark&#39;</span> <span class="c1"># can be &#39;dark&#39;, &#39;light&#39; depending on the type of data you have</span>
+        <span class="n">use_pvlib</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># if True, use pvlib to calculate the diode model if not use the implementation in DiodeModel.py</span>
+
+        <span class="n">diode</span> <span class="o">=</span> <span class="n">DiodeAgent</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span><span class="p">,</span> <span class="n">minimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">exp_format</span><span class="o">=</span><span class="n">exp_format</span><span class="p">,</span><span class="n">use_pvlib</span><span class="o">=</span><span class="n">use_pvlib</span><span class="p">,</span><span class="n">transforms</span><span class="o">=</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Create PymooOptimizer for single-objective optimization</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">PymooOptimizer</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="p">[</span><span class="n">diode</span><span class="p">],</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;GA&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">n_gen</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pymoo_single_obj&#39;</span><span class="p">,</span> <span class="n">verbose_logging</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span> <span class="c1"># run the optimization with ax</span>
+
+        <span class="k">assert</span> <span class="kc">True</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Error occurred during diode fitting: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_MOO_TransferMatrix_pymoo">
+<a class="viewcode-back" href="../../../optimpv.tests.html#optimpv.tests.test_pymoo.test_MOO_TransferMatrix_pymoo">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_MOO_TransferMatrix_pymoo</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Test the multi-objective optimization of a rate equation model using PymooOptimizer.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Define the parameters for the rate equation model</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">d_3</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;d_3&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mf">80e-9</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">40e-9</span><span class="p">,</span> <span class="mf">200e-9</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;d_3&#39;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_3</span><span class="p">)</span>
+
+        <span class="n">d_6</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;d_6&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span>  <span class="mf">10e-9</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5e-9</span><span class="p">,</span> <span class="mf">20e-9</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;d_6&#39;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_6</span><span class="p">)</span>
+
+        <span class="n">d_7</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;d_7&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span>  <span class="mf">100e-9</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">50e-9</span><span class="p">,</span> <span class="mf">200e-9</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;d_7&#39;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_7</span><span class="p">)</span>
+
+        <span class="n">d_8</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;d_8&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span>  <span class="mf">10e-9</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">5e-9</span><span class="p">,</span> <span class="mf">20e-9</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;d_8&#39;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_8</span><span class="p">)</span>
+
+        <span class="n">d_9</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;d_9&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span>  <span class="mf">100e-9</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">50e-9</span><span class="p">,</span> <span class="mf">200e-9</span><span class="p">],</span> <span class="n">log_scale</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">rescale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;range&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;d_9&#39;</span><span class="p">,</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;m&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_9</span><span class="p">)</span>
+
+        <span class="c1"># Initialize the agent and default device stack</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SiOx&#39;</span> <span class="p">,</span> <span class="s1">&#39;ITO&#39;</span> <span class="p">,</span> <span class="s1">&#39;ZnO&#39;</span> <span class="p">,</span> <span class="s1">&#39;PCE10_FOIC_1to1&#39;</span> <span class="p">,</span> <span class="s1">&#39;MoOx&#39;</span> <span class="p">,</span> <span class="s1">&#39;Ag&#39;</span><span class="p">,</span> <span class="s1">&#39;MoOx&#39;</span><span class="p">,</span> <span class="s1">&#39;LiF&#39;</span><span class="p">,</span><span class="s1">&#39;MoOx&#39;</span><span class="p">,</span> <span class="s1">&#39;LiF&#39;</span><span class="p">,</span><span class="s1">&#39;Air&#39;</span><span class="p">]</span> <span class="c1"># list of layers (need to be the same than the name nk_*.csv file in the matdata folder)</span>
+        <span class="n">thicknesses</span> <span class="o">=</span>  <span class="p">[</span><span class="mi">0</span> <span class="p">,</span> <span class="mf">100e-9</span> <span class="p">,</span> <span class="mf">30e-9</span>  <span class="p">,</span> <span class="mf">100e-9</span> <span class="p">,</span> <span class="mf">9e-9</span> <span class="p">,</span> <span class="mf">8e-9</span><span class="p">,</span> <span class="mf">100e-9</span><span class="p">,</span> <span class="mf">100e-9</span><span class="p">,</span> <span class="mf">100e-9</span><span class="p">,</span> <span class="mf">100e-9</span><span class="p">,</span> <span class="mf">100e-9</span><span class="p">]</span><span class="c1"># list of thicknesses in nm</span>
+        <span class="n">mat_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;../..&#39;</span><span class="p">)),</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;matdata&#39;</span><span class="p">)</span> <span class="c1"># path to the folder containing the nk_*.csv files</span>
+        <span class="n">lambda_min</span> <span class="o">=</span> <span class="mf">350e-9</span> <span class="c1"># start of the wavelength range</span>
+        <span class="n">lambda_max</span> <span class="o">=</span> <span class="mf">800e-9</span> <span class="c1"># end of the wavelength range</span>
+        <span class="n">lambda_step</span> <span class="o">=</span> <span class="mf">1e-9</span> <span class="c1"># wavelength step</span>
+        <span class="n">x_step</span> <span class="o">=</span> <span class="mf">1e-9</span> <span class="c1"># x step</span>
+        <span class="n">activeLayer</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># active layer index</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mat_dir</span> <span class="p">,</span><span class="s1">&#39;AM15G.txt&#39;</span><span class="p">)</span> <span class="c1"># path to the AM15G spectrum file</span>
+        <span class="n">photopic_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mat_dir</span> <span class="p">,</span><span class="s1">&#39;photopic_curve.txt&#39;</span><span class="p">)</span> <span class="c1"># path to the photopic spectrum file</span>
+
+        <span class="n">TMAgent</span> <span class="o">=</span> <span class="n">TransferMatrixAgent</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span> <span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span> <span class="n">thicknesses</span><span class="o">=</span><span class="n">thicknesses</span><span class="p">,</span> <span class="n">lambda_min</span><span class="o">=</span><span class="n">lambda_min</span><span class="p">,</span> <span class="n">lambda_max</span><span class="o">=</span><span class="n">lambda_max</span><span class="p">,</span> <span class="n">lambda_step</span><span class="o">=</span><span class="n">lambda_step</span><span class="p">,</span> <span class="n">x_step</span><span class="o">=</span><span class="n">x_step</span><span class="p">,</span> <span class="n">activeLayer</span><span class="o">=</span><span class="n">activeLayer</span><span class="p">,</span> <span class="n">spectrum</span><span class="o">=</span><span class="n">spectrum</span><span class="p">,</span> <span class="n">mat_dir</span><span class="o">=</span><span class="n">mat_dir</span><span class="p">,</span> <span class="n">photopic_file</span><span class="o">=</span><span class="n">photopic_file</span><span class="p">,</span> <span class="n">exp_format</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Jsc&#39;</span><span class="p">,</span> <span class="s1">&#39;AVT&#39;</span><span class="p">],</span><span class="n">metric</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span><span class="n">loss</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span><span class="kc">None</span><span class="p">],</span><span class="n">threshold</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],</span><span class="n">minimize</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span><span class="kc">False</span><span class="p">])</span>
+
+        <span class="c1"># Define the optimizer</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">PymooOptimizer</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="n">TMAgent</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;NSGA2&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_gen</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pymoo_single_obj&#39;</span><span class="p">,</span> <span class="n">verbose_logging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">max_parallelism</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span> <span class="c1"># run the optimization with ax</span>
+
+        <span class="k">assert</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Error occurred during transfer matrix stack optimization: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_DOE_SOO_pymoo">
+<a class="viewcode-back" href="../../../optimpv.tests.html#optimpv.tests.test_pymoo.test_DOE_SOO_pymoo">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_DOE_SOO_pymoo</span><span class="p">():</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Define the path to the data </span>
+        <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;../..&#39;</span><span class="p">))</span>
+        <span class="n">data_dir</span> <span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">,</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;6D_pero_opti&#39;</span><span class="p">)</span> <span class="c1"># path to the data directory</span>
+
+        <span class="c1"># Load the data</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s1">&#39;6D_pero_opti.csv&#39;</span><span class="p">),</span><span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">)</span> <span class="c1"># load the data</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># list of parameters to be optimized</span>
+
+        <span class="n">Spin_Speed_1</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_Speed_1&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span><span class="mi">3000</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin Speed 1&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;rpm&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_Speed_1</span><span class="p">)</span>
+
+        <span class="n">Duration_t1</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Duration_t1&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">35</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Duration t1&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Duration_t1</span><span class="p">)</span>
+
+        <span class="n">Spin_Speed_2</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_Speed_2&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">3000</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin Speed 2&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;rpm&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_Speed_2</span><span class="p">)</span>
+
+        <span class="n">Dispense_Speed</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Dispense_Speed&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">400</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Dispense Speed&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;rpm&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Dispense_Speed</span><span class="p">)</span>
+
+        <span class="n">Duration_t3</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Duration_t3&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">35</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Duration t3&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Duration_t3</span><span class="p">)</span>
+
+        <span class="n">Spin_Speed_3</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_Speed_3&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin Speed 3&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;rpm&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_Speed_3</span><span class="p">)</span>
+
+        <span class="n">suggest</span> <span class="o">=</span> <span class="n">SuggestOnlyAgent</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">exp_format</span><span class="o">=</span><span class="s1">&#39;Pmax&#39;</span><span class="p">,</span><span class="n">minimize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">tracking_exp_format</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Jsc&#39;</span><span class="p">,</span><span class="s1">&#39;Voc&#39;</span><span class="p">,</span><span class="s1">&#39;FF&#39;</span><span class="p">],</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="c1"># Define the optimizer</span>
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">PymooOptimizer</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="n">suggest</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;GA&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_gen</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pymoo_single_obj&#39;</span><span class="p">,</span> <span class="n">verbose_logging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">max_parallelism</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">existing_data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">suggest_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">to_run_next</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span> 
+
+        <span class="k">assert</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Error occurred during DOE single-objective optimization: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="test_DOE_MOO_pymoo">
+<a class="viewcode-back" href="../../../optimpv.tests.html#optimpv.tests.test_pymoo.test_DOE_MOO_pymoo">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_DOE_MOO_pymoo</span><span class="p">():</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Define the path to the data </span>
+        <span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s1">&#39;../..&#39;</span><span class="p">))</span>
+        <span class="n">data_dir</span> <span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">,</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span><span class="s1">&#39;pero_MOO_opti&#39;</span><span class="p">)</span> <span class="c1"># path to the data directory</span>
+
+        <span class="c1"># Load the data</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">data_dir</span><span class="p">,</span><span class="s1">&#39;Pero_PLQY_FWHM.csv&#39;</span><span class="p">),</span><span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="c1"># load the data</span>
+
+        <span class="n">stepsize_fraction</span> <span class="o">=</span> <span class="mf">0.05</span>
+        <span class="n">stepsize_spin_speed</span> <span class="o">=</span> <span class="mi">100</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># list of parameters to be optimized</span>
+
+        <span class="n">Cs_fraction</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Cs_fraction&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Cs fraction&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Cs_fraction</span><span class="p">)</span>
+
+        <span class="n">Fa_fraction</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Fa_fraction&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Fa fraction&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Fa_fraction</span><span class="p">)</span>
+
+        <span class="n">Spin_duration_Antisolvent</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_duration_Antisolvent&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">30</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin duration Antisolvent&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_duration_Antisolvent</span><span class="p">)</span>
+
+        <span class="n">Spin_duration_High_Speed</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_duration_High_Speed&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">60</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin duration High Speed&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_duration_High_Speed</span><span class="p">)</span>
+
+        <span class="n">Spin_speed</span> <span class="o">=</span> <span class="n">FitParam</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Spin_speed&#39;</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">bounds</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">5000</span><span class="p">],</span> <span class="n">value_type</span> <span class="o">=</span> <span class="s1">&#39;float&#39;</span><span class="p">,</span> <span class="n">display_name</span><span class="o">=</span><span class="s1">&#39;Spin speed&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;rpm&#39;</span><span class="p">,</span> <span class="n">axis_type</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Spin_speed</span><span class="p">)</span>
+
+        <span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">50</span><span class="p">]</span> <span class="c1"># thresholds for the metrics</span>
+        <span class="n">suggest</span> <span class="o">=</span> <span class="n">SuggestOnlyAgent</span><span class="p">(</span><span class="n">params</span><span class="p">,</span><span class="n">exp_format</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;PLQY&#39;</span><span class="p">,</span> <span class="s1">&#39;FWHM&#39;</span><span class="p">],</span><span class="n">minimize</span><span class="o">=</span><span class="p">[</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">],</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+
+        <span class="c1"># Define the optimizer</span>
+        <span class="n">parameter_constraints</span> <span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Cs_fraction + Fa_fraction &lt;= 1&#39;</span><span class="p">]</span>
+
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">PymooOptimizer</span><span class="p">(</span><span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">agents</span><span class="o">=</span><span class="n">suggest</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;NSGA2&#39;</span><span class="p">,</span> <span class="n">pop_size</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">n_gen</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;pymoo_single_obj&#39;</span><span class="p">,</span> <span class="n">verbose_logging</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">max_parallelism</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">existing_data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">suggest_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parameter_constraints</span><span class="o">=</span><span class="n">parameter_constraints</span><span class="p">)</span>
+
+        <span class="n">to_run_next</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">()</span> 
+        <span class="k">assert</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;Error occurred during DOE multi-objective optimization: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1044 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.models.RateEqfits.RateEqAgent &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optimpv.models.RateEqfits.RateEqAgent</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optimpv.models.RateEqfits.RateEqAgent</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Provides general functionality for Agent objects for Rate Equation simulations&quot;&quot;&quot;</span>
+<span class="c1">######### Package Imports #########################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">uuid</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">copy</span><span class="o">,</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolate</span><span class="p">,</span> <span class="n">constants</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.general</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_metric</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span> <span class="n">transform_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.BaseAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.RateEqfits.RateEqModel</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.RateEqfits.Pumps</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">Logger</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.logger</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">_round_floats_for_logging</span>
+
+<span class="n">logger</span><span class="p">:</span> <span class="n">Logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">(</span><span class="s1">&#39;RateEqModel&#39;</span><span class="p">)</span>
+<span class="n">ROUND_FLOATS_IN_LOGS_TO_DECIMAL_PLACES</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">round_floats_for_logging</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+    <span class="n">_round_floats_for_logging</span><span class="p">,</span>
+    <span class="n">decimal_places</span><span class="o">=</span><span class="n">ROUND_FLOATS_IN_LOGS_TO_DECIMAL_PLACES</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1">## Physics constants</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;elementary charge&#39;</span><span class="p">)</span>
+<span class="n">eps_0</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;electric constant&#39;</span><span class="p">)</span>
+<span class="n">kb</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Boltzmann constant in eV/K&#39;</span><span class="p">)</span>
+
+<span class="c1">######### Agent Definition #######################################################################</span>
+<div class="viewcode-block" id="RateEqAgent">
+<a class="viewcode-back" href="../../../../optimpv.models.RateEqfits.html#optimpv.models.RateEqfits.RateEqAgent.RateEqAgent">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RateEqAgent</span><span class="p">(</span><span class="n">BaseAgent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Agent object for fitting rate equation models. </span>
+<span class="sd">    Available models are:  </span>
+
+<span class="sd">    - Bimolecular-Trapping (BT)</span>
+<span class="sd">    - Bimolecular-Trapping-detrapping (BTD)</span>
+
+<span class="sd">    see optimpv.RateEqfits.RateEqModel.py for more details about the available models</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params : list of Fitparam() objects</span>
+<span class="sd">        List of Fitparam() objects.</span>
+<span class="sd">    X : array-like</span>
+<span class="sd">        1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.</span>
+<span class="sd">    y : array-like</span>
+<span class="sd">        1-D array containing the current values.</span>
+<span class="sd">    pump_model : function, optional</span>
+<span class="sd">        Function to get the generated carrier density profile, by default initial_carrier_density.</span>
+<span class="sd">    pump_args : dict, optional</span>
+<span class="sd">        Arguments for the pump_model function, by default {}.</span>
+<span class="sd">    exp_format : str or list of str, optional</span>
+<span class="sd">        Format of the experimental data, cane be [&#39;trPL&#39;,&#39;TAS&#39;,&#39;trMC&#39;], by default &#39;trPL&#39;.</span>
+<span class="sd">    exp_format_agrs : dict, optional</span>
+<span class="sd">        Arguments dependent on the exp_format function, by default {}.</span>
+<span class="sd">    metric : str or list of str, optional</span>
+<span class="sd">        Metric to evaluate the model, see optimpv.general.calc_metric for options, by default &#39;mse&#39;.</span>
+<span class="sd">    loss : str or list of str, optional</span>
+<span class="sd">        Loss function to use, see optimpv.general.loss_function for options, by default &#39;linear&#39;.</span>
+<span class="sd">    threshold : int or list of int, optional</span>
+<span class="sd">        Threshold value for the loss function used when doing multi-objective optimization, by default 100.</span>
+<span class="sd">    minimize : bool or list of bool, optional</span>
+<span class="sd">        If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</span>
+<span class="sd">    yerr : array-like or list of array-like, optional</span>
+<span class="sd">        Errors in the current values, by default None.</span>
+<span class="sd">    weight : array-like or list of array-like, optional</span>
+<span class="sd">        Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.</span>
+<span class="sd">    tracking_metric : str or list of str, optional</span>
+<span class="sd">        Additional metrics to track and report in run_Ax output, by default None.</span>
+<span class="sd">    tracking_loss : str or list of str, optional</span>
+<span class="sd">        Loss functions to apply to tracking metrics, by default None.</span>
+<span class="sd">    tracking_exp_format : str or list of str, optional</span>
+<span class="sd">        Experimental formats for tracking metrics, by default None.</span>
+<span class="sd">    tracking_X : array-like or list of array-like, optional</span>
+<span class="sd">        X values for tracking metrics, by default None.</span>
+<span class="sd">    tracking_y : array-like or list of array-like, optional</span>
+<span class="sd">        y values for tracking metrics, by default None.</span>
+<span class="sd">    tracking_weight : array-like or list of array-like, optional</span>
+<span class="sd">        Weights for tracking metrics, by default None.</span>
+<span class="sd">    transforms : str or list of str, optional</span>
+<span class="sd">        Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default &#39;linear&#39;.</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        Name of the agent, by default &#39;RateEq&#39;.</span>
+<span class="sd">    equilibrate : bool, optional</span>
+<span class="sd">        If True, equilibrate the carrier densities with multiple pulses, by default True.</span>
+<span class="sd">    detection_limit : float, optional</span>
+<span class="sd">        Detection limit for the model, by default None.</span>
+
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional keyword arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">BT_model</span><span class="p">,</span> <span class="n">pump_model</span> <span class="o">=</span> <span class="n">initial_carrier_density</span><span class="p">,</span> <span class="n">pump_args</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">exp_format</span> <span class="o">=</span> <span class="s1">&#39;trPL&#39;</span><span class="p">,</span> <span class="n">fixed_model_args</span> <span class="o">=</span> <span class="p">{},</span> <span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;mse&#39;</span><span class="p">,</span> <span class="n">loss</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> <span class="n">minimize</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">yerr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_metric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_loss</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_exp_format</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_X</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_y</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">transforms</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;RateEq&#39;</span><span class="p">,</span> <span class="n">equilibrate</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">detection_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="c1"># voltage and Gfrac</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_model</span> <span class="o">=</span> <span class="n">pump_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span> <span class="o">=</span> <span class="n">pump_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span> <span class="o">=</span> <span class="n">fixed_model_args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="n">metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="n">minimize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">equilibrate</span> <span class="o">=</span> <span class="n">equilibrate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">detection_limit</span> <span class="o">=</span> <span class="n">detection_limit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span> <span class="o">=</span> <span class="n">tracking_metric</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span> <span class="o">=</span> <span class="n">tracking_loss</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span> <span class="o">=</span> <span class="n">tracking_exp_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span> <span class="o">=</span> <span class="n">tracking_X</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span> <span class="o">=</span> <span class="n">tracking_y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span> <span class="o">=</span> <span class="n">tracking_weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">=</span> <span class="n">transforms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">yerr</span> <span class="o">=</span> <span class="n">yerr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span> <span class="o">=</span> <span class="n">kwargs</span>
+
+        <span class="c1"># Set and validate experiment format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span> <span class="o">=</span> <span class="n">exp_format</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">exp_format</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span> <span class="o">=</span> <span class="p">[</span><span class="n">exp_format</span><span class="p">]</span>
+            
+        <span class="c1"># Check that all elements in exp_format are valid</span>
+        <span class="k">for</span> <span class="n">form</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">form</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;trPL&#39;</span><span class="p">,</span><span class="s1">&#39;TAS&#39;</span><span class="p">,</span><span class="s1">&#39;trMC&#39;</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">form</span><span class="si">}</span><span class="s1"> is an invalid exp_format, must be either &quot;trPL&quot;, &quot;TAS&quot; or &quot;trMC&quot;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Process main metrics and loss functions</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="s1">&#39;mse&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">metric</span> <span class="o">=</span> <span class="p">[</span><span class="n">metric</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">loss</span> <span class="o">=</span> <span class="p">[</span><span class="n">loss</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="n">threshold</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">minimize</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minimize</span> <span class="o">=</span> <span class="p">[</span><span class="n">minimize</span><span class="p">]</span>
+        
+        <span class="c1"># Process weights</span>
+        <span class="k">if</span> <span class="n">weight</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># check that weight has the same length as y</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;weight must have the same length as y&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">weight</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">yerr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># check that yerr has the same length as y</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">yerr</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;yerr must have the same length as y&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">yer</span> <span class="ow">in</span> <span class="n">yerr</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yer</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+                
+        <span class="c1"># Check that primary data dimensions match</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">minimize</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;exp_format, metric, loss, threshold and minimize must have the same length&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_agent_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_agent_metric_names</span><span class="p">()</span>     
+
+        <span class="c1"># Process tracking metrics</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">]</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">)</span>
+                
+            <span class="c1"># Ensure tracking_metric and tracking_loss have the same length</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;tracking_metric and tracking_loss must have the same length&#39;</span><span class="p">)</span>
+                
+            <span class="c1"># Process tracking_exp_format</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Default to the main experiment formats if not specified</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">]</span>
+                
+            <span class="c1"># Check that all elements in tracking_exp_format are valid</span>
+            <span class="k">for</span> <span class="n">form</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">form</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;trPL&#39;</span><span class="p">,</span><span class="s1">&#39;TAS&#39;</span><span class="p">,</span><span class="s1">&#39;trMC&#39;</span><span class="p">]:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">form</span><span class="si">}</span><span class="s1"> is an invalid tracking_exp_format, must be either &quot;trPL&quot;, &quot;TAS&quot; or &quot;trMC&quot;&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Process tracking_X and tracking_y</span>
+            <span class="n">all_formats_in_main</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">fmt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span> <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">all_formats_in_main</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;tracking_X and tracking_y must be provided when tracking_exp_format contains formats not in exp_format&#39;</span><span class="p">)</span>
+                
+                <span class="c1"># Construct tracking_X and tracking_y from main X and y based on matching formats</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span> <span class="o">=</span> <span class="p">[]</span>
+                
+                <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">:</span>
+                    <span class="n">fmt_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">main_fmt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">)</span> <span class="k">if</span> <span class="n">main_fmt</span> <span class="o">==</span> <span class="n">fmt</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">fmt_indices</span><span class="p">:</span>
+                        <span class="c1"># Use the first matching format&#39;s data</span>
+                        <span class="n">idx</span> <span class="o">=</span> <span class="n">fmt_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+            
+            <span class="c1"># Ensure tracking_X and tracking_y are lists</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span><span class="p">]</span>
+                
+            <span class="c1"># Check that tracking_X and tracking_y have the right lengths</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;tracking_X and tracking_y must have the same length as tracking_exp_format&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># Process tracking_weight</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">all_formats_in_main</span><span class="p">:</span>
+                <span class="c1"># Use the main weights if available</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">:</span>
+                    <span class="n">fmt_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">main_fmt</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">)</span> <span class="k">if</span> <span class="n">main_fmt</span> <span class="o">==</span> <span class="n">fmt</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">fmt_indices</span><span class="p">:</span>
+                        <span class="n">idx</span> <span class="o">=</span> <span class="n">fmt_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span><span class="p">]</span>
+                
+            <span class="c1"># Ensure tracking_weight has the right length</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;tracking_weight must have the same length as tracking_exp_format&#39;</span><span class="p">)</span>
+
+            <span class="c1"># Check that tracking dimensions match</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;tracking_exp_format, tracking_metric and tracking_loss must have the same length&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_agent_tracking_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_all_agent_tracking_metric_names</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;do_G_frac_transform&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;do_G_frac_transform&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;do_G_frac_transform&#39;</span><span class="p">)</span>
+   
+    
+<div class="viewcode-block" id="RateEqAgent.run_RateEq">
+<a class="viewcode-back" href="../../../../optimpv.models.RateEqfits.html#optimpv.models.RateEqfits.RateEqAgent.RateEqAgent.run_RateEq">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_RateEq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the diode model and calculate the loss function</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary of parameter names and values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Loss function value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="n">parallel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parallel&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">max_jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_jobs&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># get Gfracs from X</span>
+        <span class="k">if</span> <span class="s1">&#39;QE&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">QE</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;QE&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">&#39;QE&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">QE</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;QE&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">QE</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="s1">&#39;N0&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">N0</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;N0&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">&#39;N0&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">N0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">[</span><span class="s1">&#39;N0&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">N0</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># remove N0 from pump_args if it exists</span>
+        <span class="c1"># self.pump_args.pop(&#39;N0&#39;, None)</span>
+
+        <span class="n">Gfracs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">got_gfrac_none</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">len_X</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">x_default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">Gfracs</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">got_gfrac_none</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">!=</span> <span class="n">len_X</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all X elements should have the same shape&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">x_default</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all X elements should be the same, if they are different then create a separate agent for each X element&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">got_gfrac_none</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all X elements should have the same shape and Gfrac should be provided for all elements if specified for one&#39;</span><span class="p">)</span>
+                <span class="c1"># append np.unique(xx[:,1]) to Gfracs list</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">Gfrac</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">xx</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">Gfrac</span> <span class="o">=</span> <span class="n">Gfrac</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span>
+                    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">Gfrac</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">g</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                            <span class="n">Gfracs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Gfracs</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span> <span class="o">!=</span> <span class="n">len_X</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all X elements should have the same shape&#39;</span><span class="p">)</span>
+
+                <span class="c1"># check all elements in xx[:,0] are the same</span>
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">xx</span><span class="p">[</span><span class="n">xx</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">x_default</span><span class="p">[</span><span class="n">x_default</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="c1"># if not np.allclose(xx[:,0],x_default[:,0]):</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all X elements should be the same, if they are different then create a separate agent for each X element&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Gfracs</span><span class="p">)</span>    
+        <span class="n">ns</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># time axis should be the same for all elements</span>
+            <span class="n">tmax</span> <span class="o">=</span> <span class="mf">0.99999</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">[</span><span class="s1">&#39;fpu&#39;</span><span class="p">]</span> <span class="c1"># maximum time for the pump</span>
+            <span class="n">t_span</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">tmax</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="c1"># time axis for the simulation, here we need a different time axis for the simulation in case there is any equilibration to make sure that the full pulse is included and to reproduce the accumulated carrier density properly</span>
+            <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">tmax</span> <span class="o">=</span> <span class="mf">0.99999</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">[</span><span class="s1">&#39;fpu&#39;</span><span class="p">]</span>
+            <span class="n">t_span</span> <span class="o">=</span> <span class="n">t</span>
+            
+            <span class="k">if</span> <span class="n">t_span</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tmax</span><span class="p">:</span>
+                <span class="n">dum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">tmax</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+                <span class="n">dum</span> <span class="o">=</span> <span class="n">dum</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+                <span class="n">t_span</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">t</span><span class="p">,</span><span class="n">dum</span><span class="p">))</span>
+
+            <span class="n">pump</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;N0&#39;</span> <span class="ow">in</span> <span class="n">pump</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">pump</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;N0&#39;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;G_frac&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">G_frac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">G_frac</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="c1"># get the pump profile</span>
+            <span class="n">Generation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_model</span><span class="p">(</span><span class="n">t_span</span><span class="p">,</span> <span class="n">N0</span><span class="o">=</span><span class="n">N0</span><span class="p">,</span> <span class="n">G_frac</span><span class="o">=</span><span class="n">G_frac</span><span class="p">,</span> <span class="o">**</span><span class="n">pump</span><span class="p">)</span> <span class="o">*</span> <span class="n">QE</span> <span class="c1"># multiply by the quantum efficiency</span>
+            
+            <span class="c1"># if &#39;N0&#39; in self.pump_args.keys():</span>
+            <span class="c1">#     N0 = self.pump_args[&#39;N0&#39;]</span>
+            <span class="c1"># else:</span>
+            <span class="c1">#     N0 = 0</span>
+
+            <span class="n">ns</span><span class="p">,</span> <span class="n">ps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Generation</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">N0</span> <span class="o">=</span> <span class="n">N0</span><span class="p">,</span> <span class="n">equilibrate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">,</span> <span class="n">G_frac</span> <span class="o">=</span> <span class="n">G_frac</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">Gfrac_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+                <span class="n">num_cores</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_jobs</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">Gfracs</span><span class="p">),</span><span class="n">os</span><span class="o">.</span><span class="n">cpu_count</span><span class="p">())</span>
+
+                <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">num_cores</span><span class="p">,</span><span class="n">backend</span><span class="o">=</span><span class="s2">&quot;loky&quot;</span><span class="p">)(</span><span class="n">delayed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_run_single_Gfrac</span><span class="p">)(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">Gfrac</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span><span class="n">QE</span><span class="p">)</span> <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">ns_</span><span class="p">,</span> <span class="n">ps_</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>                   
+                        <span class="k">if</span> <span class="n">ns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">ns</span> <span class="o">=</span> <span class="n">ns_</span>
+                            <span class="n">ps</span> <span class="o">=</span> <span class="n">ps_</span>
+                            <span class="n">t_list</span> <span class="o">=</span> <span class="n">t</span>
+                            <span class="n">Gfrac_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">*</span><span class="n">Gfrac</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">ns</span><span class="p">,</span><span class="n">ns_</span><span class="p">))</span>
+                                <span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">ps</span><span class="p">,</span><span class="n">ps_</span><span class="p">))</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">ns</span><span class="p">,</span><span class="n">ns_</span><span class="p">))</span>
+                                <span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">ps</span><span class="p">,</span><span class="n">ps_</span><span class="p">))</span>
+                            <span class="n">t_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">t_list</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+                            <span class="n">Gfrac_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Gfrac_list</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">*</span><span class="n">Gfrac</span><span class="p">))</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The simulation failed for </span><span class="si">{</span><span class="n">parameters</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">ns_</span><span class="p">,</span> <span class="n">ps_</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Gfrac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_single_Gfrac</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">Gfrac</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">QE</span><span class="p">)</span>
+                    
+                    <span class="c1">#check for np.nan in ns_ or ps_</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">ns_</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">()</span> <span class="ow">or</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">ps_</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                        <span class="c1"># if something went wrong there is no point in continuing</span>
+                        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+                    <span class="k">try</span><span class="p">:</span>                   
+                        <span class="k">if</span> <span class="n">ns</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">ns</span> <span class="o">=</span> <span class="n">ns_</span>
+                            <span class="n">ps</span> <span class="o">=</span> <span class="n">ps_</span>
+                            <span class="n">t_list</span> <span class="o">=</span> <span class="n">t</span>
+                            <span class="n">Gfrac_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">*</span><span class="n">Gfrac</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ns_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                                <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">ns</span><span class="p">,</span><span class="n">ns_</span><span class="p">))</span>
+                                <span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">ps</span><span class="p">,</span><span class="n">ps_</span><span class="p">))</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">ns</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">ns</span><span class="p">,</span><span class="n">ns_</span><span class="p">))</span>
+                                <span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">ps</span><span class="p">,</span><span class="n">ps_</span><span class="p">))</span>
+                            <span class="n">t_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">t_list</span><span class="p">,</span><span class="n">t</span><span class="p">))</span>
+                            <span class="n">Gfrac_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Gfrac_list</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">))</span><span class="o">*</span><span class="n">Gfrac</span><span class="p">))</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The simulation failed for </span><span class="si">{</span><span class="n">parameters</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        
+        <span class="n">dum_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dum_dict</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ns</span><span class="p">)</span>
+        <span class="n">dum_dict</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dum_dict</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span>
+            <span class="n">dum_dict</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gfrac_list</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dum_dict</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t_list</span>
+            <span class="n">dum_dict</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gfrac_list</span>
+        
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">dum_dict</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">dum_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dum_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">lines</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dum_dict</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="si">}</span><span class="s2">, &quot;</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The simulation failed for </span><span class="si">{</span><span class="n">parameters</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">lines</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="k">return</span> <span class="n">df</span></div>
+
+    
+<div class="viewcode-block" id="RateEqAgent.reformat_data">
+<a class="viewcode-back" href="../../../../optimpv.models.RateEqfits.html#optimpv.models.RateEqfits.RateEqAgent.RateEqAgent.reformat_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reformat_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">df</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">parameters</span><span class="p">,</span><span class="n">exp_format</span><span class="o">=</span><span class="s1">&#39;trPL&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reformat the data to the experimental format</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : DataFrame</span>
+<span class="sd">            DataFrame containing the simulation results.</span>
+<span class="sd">        X : array-like</span>
+<span class="sd">            1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary of parameter names and values.</span>
+<span class="sd">        exp_format : str, optional</span>
+<span class="sd">            Format of the experimental data, cane be [&#39;trPL&#39;,&#39;TAS&#39;,&#39;trMC&#39;], by default &#39;trPL&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        DataFrame</span>
+<span class="sd">            DataFrame containing the simulation results in the experimental format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  
+
+        <span class="c1"># check if Gfrac is None is unique in df</span>
+        <span class="n">Gfracs</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">],</span><span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Gfracs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">Gfracs</span> <span class="o">=</span> <span class="kc">None</span> 
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">Gfracs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span>
+
+        <span class="n">Xfit</span><span class="p">,</span><span class="n">yfit</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="kc">None</span> <span class="c1"># will be np.array</span>
+        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="k">if</span> <span class="n">exp_format</span> <span class="o">==</span> <span class="s1">&#39;trPL&#39;</span><span class="p">:</span> <span class="c1"># transient photoluminescence</span>
+            <span class="k">if</span> <span class="s1">&#39;k_direct&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">k_direct</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;k_direct&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="s1">&#39;k_direct&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">k_direct</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;k_direct&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;k_direct should be provided in the parameters or fixed_model_args&#39;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;I_factor_PL&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">I_factor</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;I_factor_PL&#39;</span><span class="p">]</span>   
+            <span class="k">elif</span> <span class="s1">&#39;I_factor_PL&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">I_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;I_factor_PL&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;I_factor_PL should be provided in the parameters or fixed_model_args&#39;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="s1">&#39;N_A&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">N_A</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;N_A&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="s1">&#39;N_A&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">N_A</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;N_A&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">N_A</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># check if we have an array</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                    <span class="c1"># if n and p are not arrays, then we can use them directly  </span>
+                    <span class="n">signal</span> <span class="o">=</span> <span class="n">I_factor</span> <span class="o">*</span> <span class="n">k_direct</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">N_A</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">n_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                    <span class="n">p_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                    <span class="n">Rrad_calc</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_dens</span> <span class="o">*</span> <span class="p">(</span><span class="n">p_dens</span> <span class="o">+</span> <span class="n">N_A</span><span class="p">)</span> <span class="o">*</span> <span class="n">k_direct</span><span class="p">)</span>
+                    <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">Rrad_calc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">Rrad_calc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">I_factor</span> <span class="c1"># need to integrate over the space axis</span>
+
+                <span class="c1"># signal = I_factor * k_direct * df[&#39;n&#39;] * (df[&#39;p&#39;] + N_A)</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+
+                <span class="c1"># check if t = X</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+                        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">)</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">dum_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                        <span class="c1"># if n and p are not arrays, then we can use them directly</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">I_factor</span> <span class="o">*</span> <span class="n">k_direct</span> <span class="o">*</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">N_A</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">n_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                        <span class="n">p_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                        <span class="n">Rrad_calc</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_dens</span> <span class="o">*</span> <span class="p">(</span><span class="n">p_dens</span> <span class="o">+</span> <span class="n">N_A</span><span class="p">)</span> <span class="o">*</span> <span class="n">k_direct</span><span class="p">)</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">Rrad_calc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span> <span class="o">+</span> <span class="n">Rrad_calc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">I_factor</span> <span class="c1"># need to integrate over the space axis</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+                    <span class="n">X_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">)</span>
+                            <span class="n">yfit_</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X_</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+                            <span class="n">yfit_</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X_</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">yfit_</span> <span class="o">=</span> <span class="n">signal</span>
+
+                    <span class="k">if</span> <span class="n">yfit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yfit_</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">yfit_</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="n">Xfit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">Xfit</span> <span class="o">=</span> <span class="n">X</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">X</span><span class="p">))</span>
+
+                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span>
+                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yfit</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">exp_format</span> <span class="o">==</span> <span class="s1">&#39;trMC&#39;</span><span class="p">:</span> <span class="c1"># transient microwave conductivity</span>
+
+            <span class="k">if</span> <span class="s1">&#39;I_factor_MC&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">I_factor</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;I_factor_MC&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="s1">&#39;I_factor_MC&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">I_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;I_factor_MC&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;I_factor_MC should be provided in the parameters or fixed_model_args&#39;</span><span class="p">)</span>
+                
+            <span class="k">if</span> <span class="s1">&#39;ratio_mu&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">ratio_mu</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;ratio_mu&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="s1">&#39;ratio_mu&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">ratio_mu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;ratio_mu&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;ratio_mu should be provided in the parameters or fixed_model_args&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                    <span class="c1"># if n and p are not arrays, then we can use them directly</span>
+                    <span class="n">signal</span> <span class="o">=</span> <span class="n">I_factor</span> <span class="o">*</span> <span class="p">(</span><span class="n">ratio_mu</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">n_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                    <span class="n">p_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                    <span class="n">signal</span> <span class="o">=</span> <span class="p">(</span><span class="n">ratio_mu</span> <span class="o">*</span> <span class="n">n_dens</span> <span class="o">+</span> <span class="n">p_dens</span><span class="p">)</span>
+                    <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">signal</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">I_factor</span> <span class="c1"># need to integrate over the space axis, no need to </span>
+
+                <span class="c1"># signal = I_factor*(ratio_mu*df[&#39;n&#39;] + df[&#39;p&#39;])</span>
+                <span class="n">t</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+
+                <span class="c1"># check if t = X</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+                        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">)</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">dum_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">]</span>
+                    <span class="c1"># signal = I_factor*(ratio_mu*dum_df[&#39;n&#39;] + dum_df[&#39;p&#39;])</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                        <span class="c1"># if n and p are not arrays, then we can use them directly</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">I_factor</span> <span class="o">*</span> <span class="p">(</span><span class="n">ratio_mu</span> <span class="o">*</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">n_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                        <span class="n">p_dens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="p">(</span><span class="n">ratio_mu</span> <span class="o">*</span> <span class="n">n_dens</span> <span class="o">+</span> <span class="n">p_dens</span><span class="p">)</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">signal</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">I_factor</span> <span class="c1"># need to integrate over the space axis, no need to </span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+                    <span class="n">X_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+
+                    <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">)</span>
+                            <span class="n">yfit_</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X_</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+                            <span class="n">yfit_</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X_</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">yfit_</span> <span class="o">=</span> <span class="n">signal</span>
+
+                    <span class="k">if</span> <span class="n">yfit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yfit_</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">yfit_</span><span class="p">))</span>
+
+                    <span class="k">if</span> <span class="n">Xfit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">Xfit</span> <span class="o">=</span> <span class="n">X</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">X</span><span class="p">))</span>
+
+                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span>
+                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yfit</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">exp_format</span> <span class="o">==</span> <span class="s1">&#39;TAS&#39;</span><span class="p">:</span> <span class="c1"># transient absorption spectroscopy</span>
+                
+                <span class="k">if</span> <span class="s1">&#39;I_factor_TAS&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">I_factor</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;I_factor_TAS&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="s1">&#39;I_factor_TAS&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">I_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;I_factor_TAS&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">I_factor</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># we usually don&#39;t have a factor for TAS and correct with cross-sections and thickness</span>
+                    <span class="c1"># raise ValueError(&#39;I_factor_TAS should be provided in the parameters or fixed_model_args&#39;)</span>
+                    
+                <span class="k">if</span> <span class="s1">&#39;cross_section&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">cross_section</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;cross_section&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="s1">&#39;cross_section&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">cross_section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;cross_section&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;cross_section should be provided in the parameters or fixed_model_args&#39;</span><span class="p">)</span>
+                
+                <span class="k">if</span> <span class="s1">&#39;L&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">L</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="s1">&#39;L&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">L</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fixed_model_args</span><span class="p">[</span><span class="s1">&#39;L&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;L should be provided in the parameters or fixed_model_args&#39;</span><span class="p">)</span>
+                                
+                <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="c1"># check if we have an array</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                        <span class="c1"># if n is not an array, then we can use it directly  </span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()))</span>
+                    <span class="c1"># signal = df[&#39;n&#39;]</span>
+                    <span class="n">t</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+    
+                    <span class="c1"># check if t = X</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+                            <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+    
+                    <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">)</span>
+                            <span class="n">signal</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+                        <span class="k">except</span><span class="p">:</span>
+                            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">signal</span><span class="p">)</span>
+
+                    <span class="n">yfit</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">yfit</span><span class="p">)</span> <span class="c1"># simulate AC coupling </span>
+                    <span class="n">yfit</span> <span class="o">=</span> <span class="n">I_factor</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">cross_section</span><span class="o">*</span><span class="n">L</span><span class="o">*</span><span class="n">yfit</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># \Delta T/T = -\sigma*L*\Delta \n - 1 (the minus one comes from the fact that we are looking at the change in transmission and since Beer-Lambert law is A = exp(-\sigma*L*n) </span>
+
+                    <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                        <span class="n">dum_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;G_frac&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">]</span>
+                        <span class="n">signal</span> <span class="o">=</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+                        <span class="n">t</span> <span class="o">=</span> <span class="n">dum_df</span><span class="p">[</span><span class="s1">&#39;t&#39;</span><span class="p">]</span>
+                        <span class="n">X_</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    
+                        <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">)</span>
+                                <span class="n">yfit_</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X_</span><span class="p">,</span><span class="n">tck</span><span class="p">)</span>
+                            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                                <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">signal</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">)</span>
+                                <span class="n">yfit_</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X_</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">yfit_</span> <span class="o">=</span> <span class="n">signal</span>
+
+                        <span class="n">yfit_</span> <span class="o">-=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">yfit_</span><span class="p">)</span> <span class="c1"># simulate AC coupling</span>
+                        <span class="n">yfit_</span> <span class="o">=</span> <span class="n">I_factor</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">cross_section</span><span class="o">*</span><span class="n">L</span><span class="o">*</span><span class="n">yfit_</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># \Delta T/T = -\sigma*L*\Delta \n</span>
+
+                        <span class="k">if</span> <span class="n">yfit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">yfit_</span><span class="p">)</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">yfit_</span><span class="p">))</span>
+    
+                        <span class="k">if</span> <span class="n">Xfit</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">X</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">X</span><span class="p">))</span>
+    
+                    <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span>
+                    
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_limit</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">yfit</span> <span class="o">=</span> <span class="n">yfit</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">detection_limit</span>
+
+        <span class="k">return</span> <span class="n">Xfit</span><span class="p">,</span><span class="n">yfit</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_run_single_Gfrac</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">Gfrac</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">QE</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">tmax</span> <span class="o">=</span> <span class="mf">0.99999</span><span class="o">*</span><span class="mi">1</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">[</span><span class="s1">&#39;fpu&#39;</span><span class="p">]</span>
+        <span class="n">t_span</span> <span class="o">=</span> <span class="n">t</span>
+        
+        <span class="k">if</span> <span class="n">t_span</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">tmax</span><span class="p">:</span>
+            <span class="n">dum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">tmax</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+            <span class="n">dum</span> <span class="o">=</span> <span class="n">dum</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">t_span</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">t</span><span class="p">,</span><span class="n">dum</span><span class="p">))</span>
+        
+        <span class="n">pump</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pump_args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;G_frac&#39;</span> <span class="ow">in</span> <span class="n">pump</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">pump</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;G_frac&#39;</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="s1">&#39;N0&#39;</span> <span class="ow">in</span> <span class="n">pump</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">pump</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;N0&#39;</span><span class="p">)</span>
+        
+        <span class="n">Generation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pump_model</span><span class="p">(</span><span class="n">t_span</span><span class="p">,</span> <span class="n">G_frac</span> <span class="o">=</span> <span class="n">Gfrac</span><span class="p">,</span> <span class="n">N0</span><span class="o">=</span><span class="n">N0</span><span class="p">,</span> <span class="o">**</span><span class="n">pump</span><span class="p">)</span> <span class="o">*</span> <span class="n">QE</span>
+        
+        <span class="c1"># if &#39;N0&#39; in self.pump_args.keys():</span>
+        <span class="c1">#     N0 = self.pump_args[&#39;N0&#39;]</span>
+        <span class="c1"># else:</span>
+        <span class="c1">#     N0 = 0</span>
+
+        <span class="n">ns_</span><span class="p">,</span> <span class="n">ps_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Generation</span><span class="p">,</span> <span class="n">t_span</span><span class="p">,</span> <span class="n">N0</span> <span class="o">=</span> <span class="n">N0</span><span class="p">,</span> <span class="n">equilibrate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">equilibrate</span><span class="p">,</span> <span class="n">G_frac</span> <span class="o">=</span> <span class="n">Gfrac</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ns_</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">ns_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ns_</span><span class="p">)</span>
+            <span class="n">ps_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ps_</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ns_</span><span class="p">,</span> <span class="n">ps_</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">Gfrac</span>
+    
+<div class="viewcode-block" id="RateEqAgent.run">
+<a class="viewcode-back" href="../../../../optimpv.models.RateEqfits.html#optimpv.models.RateEqfits.RateEqAgent.RateEqAgent.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parameters</span><span class="p">,</span><span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">exp_format</span><span class="o">=</span><span class="s1">&#39;trPL&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the diode model and calculate the loss function</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary of parameter names and values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array-like</span>
+<span class="sd">            Array containing the current values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+
+        <span class="n">parameters_rescaled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_rescale</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_RateEq</span><span class="p">(</span><span class="n">parameters_rescaled</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+        <span class="n">Xfit</span><span class="p">,</span> <span class="n">yfit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reformat_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">parameters_rescaled</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">yfit</span></div>
+
+
+
+<div class="viewcode-block" id="RateEqAgent.run_Ax">
+<a class="viewcode-back" href="../../../../optimpv.models.RateEqfits.html#optimpv.models.RateEqfits.RateEqAgent.RateEqAgent.run_Ax">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_Ax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the diode model and calculate the loss function</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary of parameter names and values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Loss function value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+                
+        <span class="n">parameters_rescaled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_rescale</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+        <span class="c1"># print(&#39;Running RateEqAgent with parameters:&#39;, parameters_rescaled)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_RateEq</span><span class="p">(</span><span class="n">parameters_rescaled</span><span class="p">)</span>
+        <span class="c1"># print(&#39;Finished running RateEqAgent with parameters:&#39;, parameters_rescaled)</span>
+
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">:</span>
+            <span class="n">dum_dict</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">)):</span>
+                <span class="n">dum_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+            <span class="c1"># Add NaN values for tracking metrics</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">)):</span>
+                    <span class="n">dum_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_agent_tracking_metrics</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+                        
+            <span class="k">return</span> <span class="n">dum_dict</span>
+        
+        <span class="n">dum_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        
+        <span class="c1"># First loop: calculate main metrics for each exp_format</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">)):</span>
+            <span class="n">Xfit</span><span class="p">,</span> <span class="n">yfit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reformat_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">parameters_rescaled</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            
+            <span class="c1"># Transform both true and predicted values together using the enhanced function</span>
+            <span class="c1"># Pass both X values as well for future extensibility</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transforms</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+                <span class="n">metric_value</span> <span class="o">=</span> <span class="n">calc_metric</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="n">yfit</span><span class="p">,</span>
+                <span class="n">sample_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+                <span class="n">metric_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">y_true_transformed</span><span class="p">,</span> <span class="n">y_pred_transformed</span> <span class="o">=</span> <span class="n">transform_data</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+                    <span class="n">yfit</span><span class="p">,</span> 
+                    <span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="n">X_pred</span><span class="o">=</span><span class="n">Xfit</span><span class="p">,</span>
+                    <span class="n">transforms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span>
+                    <span class="n">do_G_frac_transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span>
+                <span class="p">)</span>
+            
+                <span class="c1"># Calculate metric with transformed data</span>
+                <span class="n">metric_value</span> <span class="o">=</span> <span class="n">calc_metric</span><span class="p">(</span>
+                    <span class="n">y_true_transformed</span><span class="p">,</span> 
+                    <span class="n">y_pred_transformed</span><span class="p">,</span> 
+                    <span class="n">sample_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weight</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> 
+                    <span class="n">metric_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">metric</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="n">dum_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_agent_metrics</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">metric_value</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">loss</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="c1"># Second loop: calculate all tracking metrics using tracking_X and tracking_y</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">)):</span>
+                <span class="n">exp_fmt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">metric_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_metric</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                <span class="n">loss_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_loss</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                
+                <span class="n">Xfit</span><span class="p">,</span> <span class="n">yfit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reformat_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">parameters_rescaled</span><span class="p">,</span> <span class="n">exp_fmt</span><span class="p">)</span>
+                
+                <span class="c1"># Transform data once for each format</span>
+                <span class="n">y_true_transformed</span><span class="p">,</span> <span class="n">y_pred_transformed</span> <span class="o">=</span> <span class="n">transform_data</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">tracking_y</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> 
+                    <span class="n">yfit</span><span class="p">,</span> 
+                    <span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_X</span><span class="p">[</span><span class="n">j</span><span class="p">],</span>
+                    <span class="n">X_pred</span><span class="o">=</span><span class="n">Xfit</span><span class="p">,</span>
+                    <span class="n">transforms</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">transforms</span><span class="p">,</span>
+                    <span class="n">do_G_frac_transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span>
+                <span class="p">)</span>
+                
+                <span class="n">metric_value</span> <span class="o">=</span> <span class="n">calc_metric</span><span class="p">(</span>
+                    <span class="n">y_true_transformed</span><span class="p">,</span> 
+                    <span class="n">y_pred_transformed</span><span class="p">,</span> 
+                    <span class="n">sample_weight</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_weight</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> 
+                    <span class="n">metric_name</span><span class="o">=</span><span class="n">metric_name</span>
+                <span class="p">)</span>
+                
+                <span class="n">dum_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">all_agent_tracking_metrics</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">metric_value</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="n">loss_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dum_dict</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

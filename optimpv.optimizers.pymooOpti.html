@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.optimizers.pymooOpti package &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="optimpv.optimizers.scipyOpti package" href="optimpv.optimizers.scipyOpti.html" />
+    <link rel="prev" title="optimpv.optimizers.axBOtorch package" href="optimpv.optimizers.axBOtorch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">optimpv</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="optimpv.html">optimpv package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="optimpv.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="optimpv.general.html">optimpv.general package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.models.html">optimpv.models package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.posterior.html">optimpv.posterior package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optimpv.tests.html">optimpv.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optimpv.html#module-optimpv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">optimpv</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.html">optimpv package</a></li>
+          <li class="breadcrumb-item"><a href="optimpv.optimizers.html">optimpv.optimizers package</a></li>
+      <li class="breadcrumb-item active">optimpv.optimizers.pymooOpti package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/optimpv.optimizers.pymooOpti.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="optimpv-optimizers-pymooopti-package">
+<h1>optimpv.optimizers.pymooOpti package<a class="headerlink" href="#optimpv-optimizers-pymooopti-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-optimpv.optimizers.pymooOpti.pymooOptimizer">
+<span id="optimpv-optimizers-pymooopti-pymoooptimizer-module"></span><h2>optimpv.optimizers.pymooOpti.pymooOptimizer module<a class="headerlink" href="#module-optimpv.optimizers.pymooOpti.pymooOptimizer" title="Link to this heading"></a></h2>
+<p>PymooOptimizer module. This module contains the PymooOptimizer class, which is used to optimize a given function using pymoo’s genetic algorithms.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.pymooOpti.pymooOptimizer.</span></span><span class="sig-name descname"><span class="pre">PymooOptimizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NSGA2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pop_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_gen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suggest_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pymoo'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="optimpv.general.html#optimpv.general.BaseAgent.BaseAgent" title="optimpv.general.BaseAgent.BaseAgent"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseAgent</span></code></a></p>
+<p>Initialize the PymooOptimizer class. This class is used to optimize a given function using pymoo algorithms.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em><em>, </em><em>optional</em>) – List of Fitparam() objects, by default None</p></li>
+<li><p><strong>agents</strong> (<em>list</em><em> of </em><em>Agent</em><em>(</em><em>) </em><em>objects</em><em>, </em><em>optional</em>) – List of Agent() objects see optimpv/general/BaseAgent.py for a base class definition, by default None</p></li>
+<li><p><strong>algorithm</strong> (<em>str</em><em>, </em><em>optional</em>) – Optimization algorithm to use, by default ‘NSGA2’
+Options: ‘NSGA2’, ‘NSGA3’, ‘MOEAD’, ‘GA’, ‘DE’, ‘PSO’</p></li>
+<li><p><strong>pop_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Population size, by default 100</p></li>
+<li><p><strong>n_gen</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of generations, by default 100</p></li>
+<li><p><strong>algorithm_kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – Additional keyword arguments for the algorithm, by default None</p></li>
+<li><p><strong>existing_data</strong> (<em>DataFrame</em><em>, </em><em>optional</em>) – existing data to use for the optimization process, by default None</p></li>
+<li><p><strong>suggest_only</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, the optimization process will only suggest new points without running the agents, by default False</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the optimization process, by default ‘pymoo’</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments including:
+- parallel_agents: bool, whether to run agents in parallel
+- max_parallelism: int, maximum number of parallel processes
+- verbose_logging: bool, whether to log verbose information
+- seed: int, random seed for reproducibility</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_algorithm">
+<span class="sig-name descname"><span class="pre">create_algorithm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.create_algorithm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_algorithm" title="Link to this definition"></a></dt>
+<dd><p>Create a pymoo algorithm based on the specified algorithm name or return the provided algorithm object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_callback">
+<span class="sig-name descname"><span class="pre">create_callback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.create_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_callback" title="Link to this definition"></a></dt>
+<dd><p>Create a callback to track optimization progress.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_problem">
+<span class="sig-name descname"><span class="pre">create_problem</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.create_problem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.create_problem" title="Link to this definition"></a></dt>
+<dd><p>Create a pymoo problem from agents and parameters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.existing_population">
+<span class="sig-name descname"><span class="pre">existing_population</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.existing_population"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.existing_population" title="Link to this definition"></a></dt>
+<dd><p>Create an existing population from the provided data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_best_solution">
+<span class="sig-name descname"><span class="pre">get_best_solution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">balance_objectives</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.get_best_solution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_best_solution" title="Link to this definition"></a></dt>
+<dd><p>Get the best solution from the optimization results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>balance_objectives</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True and multiple objectives exist, return the solution with best balance.
+If False, return the first solution from the Pareto front.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing the best parameters</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_df_from_pymoo">
+<span class="sig-name descname"><span class="pre">get_df_from_pymoo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.get_df_from_pymoo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_df_from_pymoo" title="Link to this definition"></a></dt>
+<dd><p>Convert the optimization results to a pandas DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame containing the optimization results</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_pareto_front">
+<span class="sig-name descname"><span class="pre">get_pareto_front</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.get_pareto_front"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.get_pareto_front" title="Link to this definition"></a></dt>
+<dd><p>Get the Pareto front solutions for multi-objective optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple containing (parameters_list, objectives_array)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.optimize">
+<span class="sig-name descname"><span class="pre">optimize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.optimize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.optimize" title="Link to this definition"></a></dt>
+<dd><p>Run the optimization process using pymoo.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.plot_convergence">
+<span class="sig-name descname"><span class="pre">plot_convergence</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.plot_convergence"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.plot_convergence" title="Link to this definition"></a></dt>
+<dd><p>Plot the convergence history of the optimization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the plot, by default None</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – <p>Additional keyword arguments for the plot.</p>
+<blockquote>
+<div><ul>
+<li><dl class="simple">
+<dt>xscale<span class="classifier">str, optional</span></dt><dd><p>Scale for the x-axis, by default ‘linear’</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>yscale<span class="classifier">str, optional</span></dt><dd><p>Scale for the y-axis, by default ‘linear’</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.update_params_with_best_balance">
+<span class="sig-name descname"><span class="pre">update_params_with_best_balance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_best_balance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooOptimizer.update_params_with_best_balance"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooOptimizer.update_params_with_best_balance" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Update the parameters with the best balance of all metrics.</dt><dd><p>If multiple objectives exist, find the best balance based on ranks.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>return_best_balance</strong> (<em>bool</em><em>, </em><em>optional</em>) – If True, return the index and parameters of the best balance, by default False</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>If return_best_balance is True, return the index and parameters of the best balance.
+Otherwise, return None.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If no evaluations have been performed or no metrics are available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">optimpv.optimizers.pymooOpti.pymooOptimizer.</span></span><span class="sig-name descname"><span class="pre">PymooProblem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agents</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooProblem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ElementwiseProblem</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.create_search_space">
+<span class="sig-name descname"><span class="pre">create_search_space</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooProblem.create_search_space"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.create_search_space" title="Link to this definition"></a></dt>
+<dd><p>Create a search space suitable for scipy.optimize.minimize based on parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> (<em>list</em><em> of </em><em>Fitparam</em><em>(</em><em>) </em><em>objects</em>) – List of parameter objects</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A tuple containing (x0, bounds) where x0 is the initial parameter vector
+and bounds is a list of (lower, upper) bound tuples</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.evaluate_single">
+<span class="sig-name descname"><span class="pre">evaluate_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooProblem.evaluate_single"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.evaluate_single" title="Link to this definition"></a></dt>
+<dd><p>Evaluate a single agent on a parameter point</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.get_all_metrics">
+<span class="sig-name descname"><span class="pre">get_all_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooProblem.get_all_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.get_all_metrics" title="Link to this definition"></a></dt>
+<dd><p>Create the objectives for the optimization process.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.parse_constraints">
+<span class="sig-name descname"><span class="pre">parse_constraints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">constraints</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooProblem.parse_constraints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.parse_constraints" title="Link to this definition"></a></dt>
+<dd><p>Parse parameter constraints from string format to numerical format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>constraints</strong> (<em>list</em><em> of </em><em>str</em>) – List of constraint strings in format like “x1 + 2*x2 &lt;= 5”</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of constraint dictionaries with ‘indices’, ‘coefficients’, ‘rhs’, ‘operator’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list of dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.reconstruct_params">
+<span class="sig-name descname"><span class="pre">reconstruct_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/optimpv/optimizers/pymooOpti/pymooOptimizer.html#PymooProblem.reconstruct_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#optimpv.optimizers.pymooOpti.pymooOptimizer.PymooProblem.reconstruct_params" title="Link to this definition"></a></dt>
+<dd><p>Reconstruct a parameter dictionary from an optimization vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>x</strong> (<em>array-like</em>) – Parameter vector from the optimizer</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping parameter names to values</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-optimpv.optimizers.pymooOpti">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-optimpv.optimizers.pymooOpti" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optimpv.optimizers.axBOtorch.html" class="btn btn-neutral float-left" title="optimpv.optimizers.axBOtorch package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optimpv.optimizers.scipyOpti.html" class="btn btn-neutral float-right" title="optimpv.optimizers.scipyOpti package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

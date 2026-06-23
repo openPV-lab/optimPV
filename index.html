@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimPV: Optimization &amp; Modeling Tools for PV Research &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="_static/js/rtd_search_config.js"></script>
+      <script src="_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="OPV light-intensity dependant JV fits with SIMsalabim (real data)" href="examples/JV_realOPV.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">optimPV: Optimization &amp; Modeling Tools for PV Research</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/openPV-lab/optimPV/blob/main/docs/source/index.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <a class="reference internal image-reference" href="_images/optimPV_logo.png"><img alt="optimPV logo" class="align-left" src="_images/optimPV_logo.png" style="width: 200px;" />
+</a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<section id="optimpv-optimization-modeling-tools-for-pv-research">
+<h1>optimPV: Optimization &amp; Modeling Tools for PV Research<a class="headerlink" href="#optimpv-optimization-modeling-tools-for-pv-research" title="Link to this heading"></a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+<p>Welcome to the optimPV documentation!</p>
+<section id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/VMLC-PV">Vincent M. Le Corre</a></p></li>
+<li><p><a class="reference external" href="https://github.com/larryluer">Larry Lüer</a></p></li>
+</ul>
+</section>
+<section id="institution">
+<h2>Institution<a class="headerlink" href="#institution" title="Link to this heading"></a></h2>
+<a class="reference internal image-reference" href="_images/sdu_logo.jpg"><img alt="SDU logo" src="_images/sdu_logo.jpg" style="width: 100px;" />
+</a>
+<p>CAPE - Centre for Advanced Photovoltaics and Thin-film Energy Devices, University of Southern Denmark, Denmark</p>
+</section>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Link to this heading"></a></h2>
+<p>This repository contains the code to run optimPV. optimPV combines several optimization procedures and modeling utilities used to:</p>
+<ol class="arabic simple">
+<li><p>Optimize simulation parameters to fit experimental data.</p></li>
+<li><p>Optimize the processing conditions in a self-driving experimental set-up.</p></li>
+</ol>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<section id="with-pip">
+<h3>With pip:<a class="headerlink" href="#with-pip" title="Link to this heading"></a></h3>
+<ul>
+<li><p>Install from PyPI:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>optimpv
+</pre></div>
+</div>
+</li>
+<li><p>Or install from GitHub:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/openPV-lab/optimPV
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="with-conda">
+<h3>With conda:<a class="headerlink" href="#with-conda" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>optimpv
+conda<span class="w"> </span>activate<span class="w"> </span>optimpv
+pip<span class="w"> </span>install<span class="w"> </span>optimpv
+</pre></div>
+</div>
+<p>To clone your base environment:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>optimpv<span class="w"> </span>--clone<span class="w"> </span>base
+</pre></div>
+</div>
+</section>
+</section>
+<section id="additional-necessary-installs-for-the-agents">
+<h2>Additional Necessary Installs for the Agents<a class="headerlink" href="#additional-necessary-installs-for-the-agents" title="Link to this heading"></a></h2>
+<section id="drift-diffusion-agent">
+<h3>Drift-diffusion agent:<a class="headerlink" href="#drift-diffusion-agent" title="Link to this heading"></a></h3>
+<p>The drift-diffusion agent uses SIMsalabim to run simulations.</p>
+<ul class="simple">
+<li><p>SIMsalabim is included as a submodule.</p></li>
+<li><p>Install it following the instructions on the SIMsalabim GitHub repository.</p></li>
+<li><p>Only works for parallel simulations on Linux (all other agents work on Windows).</p></li>
+</ul>
+</section>
+<section id="parallel-simulations">
+<h3>Parallel simulations:<a class="headerlink" href="#parallel-simulations" title="Link to this heading"></a></h3>
+<p>To run parallel simulations on Linux, install GNU Parallel:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>parallel
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+</section>
+<section id="disclaimer">
+<h2>Disclaimer<a class="headerlink" href="#disclaimer" title="Link to this heading"></a></h2>
+<p>This repository is still under development. If you find any bugs or have any questions, please contact us.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV.html#Get-the-experimental-data">Get the experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakePerovskite.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakePerovskite.html#Generate-some-fake-data">Generate some fake data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakePerovskite.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html#Generate-some-fake-data">Generate some fake data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html#Generate-some-fake-data">Generate some fake data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html#Generate-some-fake-data">Generate some fake data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html#Define-the-JVAgent">Define the JVAgent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html#Run-the-optimization">Run the optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html#Calculate-and-visualize-the-approximate-posterior-distributions">Calculate and visualize the approximate posterior distributions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_degradation.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html#Get-the-experimental-data">Get the experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery_DD.html">Notebook gallery DD fits</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakeOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV_MO.html">Multi-objective BO: OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realPerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakeOPV_BayesInf.html">Bayesian Inference: OPV light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakeOPV_pymoo.html">pymoo GA: OPV light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/QFLS_JV_perovskite_MOO_pymoo.html">QFLS and light-intensity dependant JV fits perovskite solar cell (real data)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/TransferMatrix.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TransferMatrix.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/TAS.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TAS.html#Generate-some-fake-data">Generate some fake data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TAS.html#Run-the-optimization">Run the optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TAS.html#id1">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_trPL_trMC.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_trPL_trMC.html#Load-and-prepare-the-experimental-data">Load and prepare the experimental data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_trPL_trMC.html#Run-the-optimization">Run the optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_trPL_trMC.html#Scipy-optimization">Scipy optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/TrPL_diff.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TrPL_diff.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design.html#Get-the-data">Get the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_turbo.html#Get-the-data">Get the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_turbo.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_turbo.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO.html#Get-the-data">Get the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html#Get-the-data">Get the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html#Run-the-optimization">Run the optimization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode.html#Define-the-parameters-for-the-simulation">Define the parameters for the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode.html#Generate-some-fake-data-for-the-dark-JV">Generate some fake data for the dark JV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode.html#Run-the-optimization">Run the optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode.html#Define-the-parameters-for-the-simulation-for-light-JV">Define the parameters for the simulation for light JV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode.html#id1">Run the optimization</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Notebook_gallery.html">All notebooks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakeOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realOPV_MO.html">Multi-objective BO: OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_realPerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakeOPV_BayesInf.html">Bayesian Inference: OPV light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/JV_fakeOPV_pymoo.html">pymoo GA: OPV light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/QFLS_JV_perovskite_MOO_pymoo.html">QFLS and light-intensity dependant JV fits perovskite solar cell (real data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TransferMatrix_EGBO.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TransferMatrix_pymoo.html">Pymoo: Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/MO_trPL_trMC_pymoo.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TrPL_diff_multi_trap_constraint.html">Fit of transient photoluminescence (TrPL) with diffusion and multi trap recombination model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/TAS_BayesInf.html">Bayesian Inference: Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/diode_pymoo.html">pymoo GA: Fit non ideal diode equation to dark JV-curves</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_pymoo.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="change_log.html">Change Log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="change_log.html#v1-05-2026-03-11-vmlc-pv-ffil">v1.05 - 2026-03-11 - VMLC-PV, FFil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="change_log.html#v1-04-2025-09-25-vmlc-pv">v1.04 - 2025-09-25 - VMLC-PV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="change_log.html#v1-03-2025-08-14-vmlc-pv">v1.03 - 2025-08-14 - VMLC-PV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="change_log.html#v1-02-2025-05-20-vmlc-pv">v1.02 - 2025-05-20 - VMLC-PV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="change_log.html#v1-01-2025-04-29-vmlc-pv">v1.01 - 2025-04-29 - VMLC-PV</a></li>
+<li class="toctree-l2"><a class="reference internal" href="change_log.html#v1-2025-04-10-vmlc-pv">v1 - 2025-04-10 - VMLC-PV</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">optimpv</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="optimpv.html">optimpv package</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples/JV_realOPV.html" class="btn btn-neutral float-right" title="OPV light-intensity dependant JV fits with SIMsalabim (real data)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

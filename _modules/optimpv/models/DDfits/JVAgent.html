@@ -1,0 +1,793 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>optimpv.models.DDfits.JVAgent &mdash; optimpv 1.05 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery.css?v=fd6457a4" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/rtd_sphinx_search.min.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/custom.css?v=0c049bae" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=8214e1ae"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../../../_static/sg-tags.js?v=d80f6fa4"></script>
+      <script src="../../../../_static/js/rtd_search_config.js"></script>
+      <script src="../../../../_static/js/rtd_sphinx_search.min.js"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html">
+            
+              <img src="../../../../_static/optimPV_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Drift-diffusion:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/JV_fakePerovskite.html">Perovskite light-intensity dependant JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_hysteresis_fakePerovskite.html">Multi-objective BO: Perovskite hysteresis JV fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_JV_impedance_fakePerovskite.html">Multi-objective BO: Perovskite light-intensity dependant JV and impedance fits with SIMsalabim (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Approx_posterior.html">Approximate Posterior Probability Distributions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_degradation.html">Fitting degradation JV data with Lazy Posterior analysis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Lazy_posterior_realOPV.html">OPV light-intensity dependant JV fits with SIMsalabim and Lazy posterior analysis (real data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery_DD.html">Notebook gallery DD fits</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Transfer Matrix:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TransferMatrix.html">Layer stack optimization with Transfer Matrix Method (TMM)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Rate equation models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TAS.html">Transient absorption spectroscopy fits with rate equation (fake data)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/MO_trPL_trMC.html">Multi-objective BO: Fit of transient photoluminescence (TrPL) and transient microwave conductivity (trMC) with rate equations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/TrPL_diff.html">Fit of transient photoluminescence (TrPL) with diffusion and recombination model</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Design of experiments:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design.html">Design of Experiment: Optimize perovskite solar cells efficiency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_turbo.html">Design of Experiment: Optimize perovskite solar cells efficiency (TURBO)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/Exp_design_MOO_pymoo.html">Design of Experiment: perovskite thin film optimization PLQY and FWHM (pymoo)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Non-ideal diode models:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../examples/diode.html">Fit non ideal diode equation to dark or light JV-curve</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Notebook gallery:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../Notebook_gallery.html">All notebooks</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../change_log.html">Change Log</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">optimpv</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">optimpv</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">optimpv.models.DDfits.JVAgent</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for optimpv.models.DDfits.JVAgent</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;JVAgent class for steady-state JV simulations&quot;&quot;&quot;</span>
+<span class="c1">######### Package Imports #########################################################################</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">uuid</span><span class="o">,</span><span class="w"> </span><span class="nn">sys</span><span class="o">,</span><span class="w"> </span><span class="nn">copy</span><span class="o">,</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">interpolate</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.general.general</span><span class="w"> </span><span class="kn">import</span> <span class="n">calc_metric</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">,</span> <span class="n">transform_data</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">optimpv.models.DDfits.SIMsalabimAgent</span><span class="w"> </span><span class="kn">import</span> <span class="n">SIMsalabimAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pySIMsalabim</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pySIMsalabim.experiments.JV_steady_state</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">######### Agent Definition #######################################################################</span>
+<div class="viewcode-block" id="JVAgent">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">JVAgent</span><span class="p">(</span><span class="n">SIMsalabimAgent</span><span class="p">):</span>  
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;JVAgent class for steady-state JV simulations with SIMsalabim</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    params : list of Fitparam() objects</span>
+<span class="sd">        List of Fitparam() objects.</span>
+<span class="sd">    X : array-like</span>
+<span class="sd">        1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.</span>
+<span class="sd">    y : array-like</span>
+<span class="sd">        1-D array containing the current values.</span>
+<span class="sd">    session_path : str</span>
+<span class="sd">        Path to the session directory.</span>
+<span class="sd">    simulation_setup : str, optional</span>
+<span class="sd">        Path to the simulation setup file, if None then use the default file &#39;simulation_setup.txt&#39;in the session_path directory, by default None.</span>
+<span class="sd">    exp_format : str or list of str, optional</span>
+<span class="sd">        Format of the experimental data, by default &#39;JV&#39;.</span>
+<span class="sd">    metric : str or list of str, optional</span>
+<span class="sd">        Metric to evaluate the model, see optimpv.general.calc_metric for options, by default &#39;mse&#39;.</span>
+<span class="sd">    loss : str or list of str, optional</span>
+<span class="sd">        Loss function to use, see optimpv.general.loss_function for options, by default &#39;linear&#39;.</span>
+<span class="sd">    threshold : int or list of int, optional</span>
+<span class="sd">        Threshold value for the loss function used when doing multi-objective optimization, by default 100.</span>
+<span class="sd">    minimize : bool or list of bool, optional</span>
+<span class="sd">        If True then minimize the loss function, if False then maximize the loss function (note that if running a fit minize should be True), by default True.</span>
+<span class="sd">    yerr : array-like or list of array-like, optional</span>
+<span class="sd">        Errors in the current values, by default None.</span>
+<span class="sd">    weight : array-like or list of array-like, optional</span>
+<span class="sd">        Weights used for fitting if weight is None and yerr is not None, then weight = 1/yerr**2, by default None.</span>
+<span class="sd">    tracking_metric : str or list of str, optional</span>
+<span class="sd">        Additional metrics to track and report in run_Ax output, by default None.</span>
+<span class="sd">    tracking_loss : str or list of str, optional</span>
+<span class="sd">        Loss functions to apply to tracking metrics, by default None.</span>
+<span class="sd">    tracking_exp_format : str or list of str, optional</span>
+<span class="sd">        Experimental formats for tracking metrics, by default None.</span>
+<span class="sd">    tracking_X : array-like or list of array-like, optional</span>
+<span class="sd">        X values for tracking metrics, by default None.</span>
+<span class="sd">    tracking_y : array-like or list of array-like, optional</span>
+<span class="sd">        y values for tracking metrics, by default None.</span>
+<span class="sd">    tracking_weight : array-like or list of array-like, optional</span>
+<span class="sd">        Weights for tracking metrics, by default None.</span>
+<span class="sd">    transforms : str or list of str, optional</span>
+<span class="sd">        Type of transformation to apply to data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default &#39;linear&#39;.</span>
+<span class="sd">    tracking_transforms : str or list of str, optional</span>
+<span class="sd">        Type of transformation to apply to tracking metrics data before metric calculation, if a list is provided, transformations are applied sequentially, see optimpv.general.transform_data for options, by default &#39;linear&#39;.</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        Name of the agent, by default &#39;JV&#39;.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional keyword arguments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>   
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">session_path</span><span class="p">,</span> <span class="n">simulation_setup</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exp_format</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;JV&#39;</span><span class="p">],</span> 
+                 <span class="n">metric</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mse&#39;</span><span class="p">],</span> <span class="n">loss</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">],</span> <span class="n">threshold</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">],</span> <span class="n">minimize</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span> 
+                 <span class="n">yerr</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_metric</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_loss</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                 <span class="n">tracking_exp_format</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_X</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_y</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tracking_weight</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">transforms</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">tracking_transforms</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span>
+                 <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;JV&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>       
+
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">session_path</span><span class="p">,</span> <span class="n">simulation_setup</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">,</span> <span class="n">metric</span><span class="p">,</span> <span class="n">loss</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">minimize</span><span class="p">,</span> <span class="n">yerr</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">tracking_metric</span><span class="p">,</span> <span class="n">tracking_loss</span><span class="p">,</span> <span class="n">tracking_exp_format</span><span class="p">,</span> <span class="n">tracking_X</span><span class="p">,</span> <span class="n">tracking_y</span><span class="p">,</span> <span class="n">tracking_weight</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">tracking_transforms</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Are we doing Gfrac transformations?</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;do_G_frac_transform&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;do_G_frac_transform&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1"># remove do_G_frac_transform from kwargs </span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;do_G_frac_transform&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">do_G_frac_transform</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exp_format</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;do_G_frac_transform must be a boolean or a list of booleans with the same length as exp_format&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tracking_do_G_frac_transform</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;tracking_do_G_frac_transform&#39;</span><span class="p">,</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tracking_exp_format</span><span class="p">))</span>
+            <span class="k">if</span> <span class="s1">&#39;tracking_do_G_frac_transform&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="c1"># remove tracking_do_G_frac_transform from kwargs </span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;tracking_do_G_frac_transform&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="JVAgent.validate_exp_format">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent.validate_exp_format">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_exp_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate the exp_format parameter to ensure it is in the correct format for JVAgent</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        exp_format : str</span>
+<span class="sd">            Format of the experimental data, must be one of allowed formats for JV data, which are: &#39;JV&#39; or &#39;QFLSL&#39; followed by an integer (e.g., QFLSL1, QFLSL2, etc.) or &#39;K_QFLSL&#39; followed by an integer (e.g., K_QFLSL1, K_QFLSL2, etc.)</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the exp_format is not valid or not found in self.exp_format.</span>
+<span class="sd">        &quot;&quot;&quot;</span>            
+        
+        <span class="n">is_valid</span> <span class="o">=</span> <span class="p">(</span><span class="n">exp_format</span> <span class="o">==</span> <span class="s1">&#39;JV&#39;</span> <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^QFLSL-?\d+$&#39;</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">)</span> <span class="ow">or</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^K_QFLSL-?\d+$&#39;</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_valid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">exp_format</span><span class="si">}</span><span class="s1"> is an invalid JV format. Possible values are: JV or QFLSL followed by an integer (e.g., QFLSL1, QFLSL2, etc.) or K_QFLSL followed by an integer (e.g., K_QFLSL1, K_QFLSL2, etc.)&#39;</span><span class="p">)</span></div>
+
+        
+<div class="viewcode-block" id="JVAgent.target_metric">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent.target_metric">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">target_metric</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">yfit</span><span class="p">,</span><span class="n">metric_name</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Xfit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the target metric depending on self.metric</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        y : array-like</span>
+<span class="sd">            1-D array containing the current values.</span>
+<span class="sd">        yfit : array-like</span>
+<span class="sd">            1-D array containing the fitted current values.</span>
+<span class="sd">        metric_name : str</span>
+<span class="sd">            Metric to evaluate the model, see optimpv.general.calc_metric for options.</span>
+<span class="sd">        X : array-like, optional</span>
+<span class="sd">            1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values, by default None.</span>
+<span class="sd">        Xfit : array-like, optional</span>
+<span class="sd">            1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values, by default None.</span>
+<span class="sd">        weight : array-like, optional</span>
+<span class="sd">            Weights used for fitting, by default None.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Target metric value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+
+        <span class="k">if</span> <span class="n">metric_name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;intdiff&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">metric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">yfit</span><span class="p">),</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Gfracs</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">Gfracs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">indices</span><span class="p">)]</span> <span class="c1"># unsure the order of the Gfracs is the same as they are in X </span>
+                
+                <span class="n">metric</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">Jmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">yfit</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">]))</span>
+                    <span class="n">Jmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">yfit</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">]))</span>
+                    <span class="n">Vmin</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+                    <span class="n">Vmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]),</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+                    <span class="n">metric</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">]</span><span class="o">-</span><span class="n">yfit</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">]),</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">((</span><span class="n">Jmax</span><span class="o">-</span><span class="n">Jmin</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">Vmax</span><span class="o">-</span><span class="n">Vmin</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">metric</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span>  <span class="n">calc_metric</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">yfit</span><span class="p">,</span><span class="n">sample_weight</span><span class="o">=</span><span class="n">weight</span><span class="p">,</span><span class="n">metric_name</span><span class="o">=</span><span class="n">metric_name</span><span class="p">)</span></div>
+
+    
+
+<div class="viewcode-block" id="JVAgent.run_Ax">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent.run_Ax">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_Ax</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function to run the simulation with the parameters and return the target metric value for Ax optimization</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary with the parameter names and values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            Dictionary with the target metric value and any tracking metrics.</span>
+<span class="sd">        &quot;&quot;&quot;</span>  
+
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_JV</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_Ax</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">reformat_JV_data</span><span class="p">)</span></div>
+
+
+    
+<div class="viewcode-block" id="JVAgent.run_JV">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent.run_JV">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run_JV</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the simulation with the parameters and return the simulated values</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary with the parameter names and values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dataframe</span>
+<span class="sd">            Dataframe with the simulated JV data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+
+        <span class="n">parallel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;parallel&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="n">max_jobs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;max_jobs&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">VarNames</span><span class="p">,</span><span class="n">custom_pars</span><span class="p">,</span><span class="n">clean_pars</span> <span class="o">=</span> <span class="p">[],[],[]</span>
+        
+        <span class="c1"># check if cmd_pars is in kwargs</span>
+        <span class="k">if</span> <span class="s1">&#39;cmd_pars&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">cmd_pars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;cmd_pars&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">cmd_par</span> <span class="ow">in</span> <span class="n">cmd_pars</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">cmd_par</span><span class="p">[</span><span class="s1">&#39;par&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SIMsalabim_params</span><span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="ow">and</span> <span class="p">(</span><span class="n">cmd_par</span><span class="p">[</span><span class="s1">&#39;par&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">SIMsalabim_params</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+                    <span class="n">custom_pars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd_par</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">clean_pars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd_par</span><span class="p">)</span>
+                <span class="n">VarNames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cmd_par</span><span class="p">[</span><span class="s1">&#39;par&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cmd_pars</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># get Gfracs from X</span>
+        <span class="c1"># check if X is 1D or 2D</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No Gfrac values provided in X, running simulation without Gfrac transformations&#39;</span><span class="p">)</span>
+            <span class="n">Gfracs</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">Gfracs_eff</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Gfracs</span><span class="p">,</span> <span class="n">Gfracs_eff</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span> <span class="c1"># list of Gfracs (real values) and the effective Gfracs (where Gfrac values are corrected by a factor G_eff)</span>
+            <span class="n">got_gfrac_none</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">Gfracs</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">got_gfrac_none</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">got_gfrac_none</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;all X elements should have the same shape&#39;</span><span class="p">)</span>
+
+                    <span class="n">Gfrac</span> <span class="o">=</span> <span class="n">xx</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">Gfrac</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">g</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                            <span class="n">Gfracs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+            <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">Gfracs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;G_eff&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">G_eff</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;G_eff&#39;</span><span class="p">]</span>
+                <span class="n">Gfracs_eff</span> <span class="o">=</span> <span class="n">Gfracs</span> <span class="o">*</span> <span class="n">G_eff</span>  
+            <span class="k">elif</span> <span class="s1">&#39;G_eff&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pnames</span><span class="p">:</span>
+                <span class="n">idx_G_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pnames</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;G_eff&#39;</span><span class="p">)</span>
+                <span class="n">G_eff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">idx_G_eff</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+                <span class="n">Gfracs_eff</span> <span class="o">=</span> <span class="n">Gfracs</span> <span class="o">*</span> <span class="n">G_eff</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">G_eff</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="n">Gfracs_eff</span> <span class="o">=</span> <span class="n">Gfracs</span>  
+        
+        <span class="c1"># prepare the cmd_pars for the simulation</span>
+        <span class="n">clean_pars</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_SIMsalabim_clean_cmd_pars</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+
+        <span class="c1"># Run the JV simulation</span>
+        <span class="n">UUID</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;UUID&#39;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()))</span>
+
+        <span class="n">ret</span><span class="p">,</span> <span class="n">mess</span> <span class="o">=</span> <span class="n">run_SS_JV</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">simulation_setup</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="n">JV_file_name</span> <span class="o">=</span> <span class="s1">&#39;JV.dat&#39;</span><span class="p">,</span> <span class="n">G_fracs</span> <span class="o">=</span> <span class="n">Gfracs_eff</span><span class="p">,</span> <span class="n">UUID</span><span class="o">=</span><span class="n">UUID</span><span class="p">,</span> <span class="n">cmd_pars</span><span class="o">=</span><span class="n">clean_pars</span><span class="p">,</span> <span class="n">parallel</span> <span class="o">=</span> <span class="n">parallel</span><span class="p">,</span> <span class="n">max_jobs</span> <span class="o">=</span> <span class="n">max_jobs</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ret</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">ret</span> <span class="o">==</span> <span class="mi">0</span>  <span class="ow">or</span> <span class="n">ret</span> <span class="o">==</span> <span class="mi">95</span><span class="p">)</span> <span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error in running SIMsalabim: &#39;</span><span class="o">+</span><span class="n">mess</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ret</span><span class="p">,</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CompletedProcess</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">ret</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">ret</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">95</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error in running SIMsalabim: &#39;</span><span class="o">+</span><span class="n">mess</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">([(</span><span class="n">res</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">res</span> <span class="o">==</span> <span class="mi">95</span><span class="p">)</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">ret</span><span class="p">]):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error in running SIMsalabim: </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ret</span><span class="p">)):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">mess</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="k">if</span> <span class="n">Gfracs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;JV_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">)</span>
+                <span class="c1"># delete the file if it exists</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;JV_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span><span class="p">)):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;JV_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span><span class="p">))</span>
+                <span class="c1"># same for log</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;log_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">)):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;log_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">))</span>
+                <span class="c1"># and scPars</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;scPars_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">)):</span>
+                    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;scPars_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">))</span>
+
+                <span class="k">return</span> <span class="n">df</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No JV data found for UUID &#39;</span><span class="o">+</span><span class="n">UUID</span> <span class="o">+</span> <span class="s1">&#39; and cmd_pars &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">clean_pars</span><span class="p">))</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># make a dummy dataframe and append the dataframes for each Gfrac with a new column for Gfrac</span>
+            <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Gfracs_eff</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;JV_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">)</span>
+                    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gfrac&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Gfracs</span><span class="p">[</span><span class="n">_</span><span class="p">]</span>  <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">df_all</span> <span class="o">=</span> <span class="n">df</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># concatenate the dataframes</span>
+                        <span class="n">df_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_all</span><span class="p">,</span><span class="n">df</span><span class="p">],</span><span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="c1"># delete the file if it exists</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;JV_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span><span class="p">)):</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;JV_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.dat&#39;</span><span class="p">))</span>
+                    <span class="c1"># same for log</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;log_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">)):</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;log_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">))</span>
+                    <span class="c1"># and scPars</span>
+                    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;scPars_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">)):</span>
+                        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">session_path</span><span class="p">,</span> <span class="s1">&#39;scPars_Gfrac_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;_&#39;</span><span class="o">+</span><span class="n">UUID</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">))</span>
+
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No JV data found for UUID &#39;</span><span class="o">+</span><span class="n">UUID</span> <span class="o">+</span> <span class="s1">&#39; and cmd_pars &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">clean_pars</span><span class="p">)</span><span class="o">+</span> <span class="s1">&#39; and Gfrac &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">Gfrac</span><span class="p">))</span>
+                    <span class="c1"># print(e)</span>
+                    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+            <span class="c1">#reset the index</span>
+            <span class="c1"># df_all = df_all.reset_index(drop=True)</span>
+            <span class="c1"># delete the files</span>
+
+            <span class="k">return</span> <span class="n">df_all</span></div>
+
+    
+<div class="viewcode-block" id="JVAgent.run">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">X</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exp_format</span> <span class="o">=</span> <span class="s1">&#39;JV&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the simulation with the parameters and return an array with the simulated values in the format specified by exp_format (default is &#39;JV&#39;)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parameters : dict</span>
+<span class="sd">            Dictionary with the parameter names and values.</span>
+<span class="sd">        X : array-like, optional</span>
+<span class="sd">            1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values, it must match the X values used for the specified exp_format, by default None</span>
+<span class="sd">        exp_format : str, optional</span>
+<span class="sd">            Format of the experimental data, by default &#39;JV&#39;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array-like</span>
+<span class="sd">            1-D array with the simulated current values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+
+        <span class="c1"># run the simulation</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_JV</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;T&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+        <span class="c1"># reformat the data</span>
+        <span class="n">Xfit</span><span class="p">,</span> <span class="n">yfit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reformat_JV_data</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">yfit</span></div>
+
+
+<div class="viewcode-block" id="JVAgent.reformat_JV_data">
+<a class="viewcode-back" href="../../../../optimpv.models.DDfits.html#optimpv.models.DDfits.JVAgent.JVAgent.reformat_JV_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">reformat_JV_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">exp_format</span><span class="o">=</span><span class="s1">&#39;JV&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Reformat the data depending on the exp_format and X values</span>
+<span class="sd">        Also interpolates the data if the simulation did not return the same points as the experimental data (i.e. if some points did not converge)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : dataframe</span>
+<span class="sd">            Dataframe with the JV data from run_JV function.</span>
+<span class="sd">        X : array-like</span>
+<span class="sd">            1-D or 2-D array containing the voltage (1st column) and if specified the Gfrac (2nd column) values.</span>
+<span class="sd">        exp_format : str, optional</span>
+<span class="sd">            Format of the experimental data, by default &#39;JV&#39;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            Tuple with the reformatted Xfit and yfit values.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        ValueError</span>
+<span class="sd">            If the exp_format is not &#39;JV&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        
+        <span class="n">Xfit</span><span class="p">,</span> <span class="n">yfit</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+        
+        <span class="k">if</span> <span class="n">exp_format</span> <span class="o">==</span> <span class="s1">&#39;JV&#39;</span><span class="p">:</span>
+            <span class="c1">#  check if Gfrac in df </span>
+            <span class="k">if</span> <span class="s1">&#39;Gfrac&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">Gfracs</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">Gfracs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">indices</span><span class="p">)]</span> <span class="c1"># unsure the order of the Gfracs is the same as they are in X </span>
+
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">df_dum</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gfrac&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">]</span>
+                    <span class="n">Vext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="n">Jext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;Jext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span><span class="o">*</span><span class="n">Gfrac</span>
+
+                    <span class="c1"># check if all points from X[:,0] and data[&#39;Vext&#39;].values are the same</span>
+                    <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span> <span class="p">:</span>
+                        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Vext</span><span class="p">):</span>
+                            <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                        <span class="c1"># Do interpolation in case SIMsalabim did not return the same number of points </span>
+                        <span class="c1"># if Vext[0] &gt;</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">Jext</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)))</span>
+                            
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="c1"># if min(X[X[:,1]==Gfrac,0])- 0.025 &lt; min(Vext):</span>
+                            <span class="c1">#     # add a point at the beginning of the JV curve</span>
+                            <span class="c1">#     Vext</span>
+                            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">Jext</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">Jext</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">Jext</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Vext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">Jext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Jext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span>
+
+                <span class="c1"># check if all points from X[:,0] and data[&#39;Vext&#39;].values are the same</span>
+                <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span> <span class="p">:</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Vext</span><span class="p">):</span>
+                        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                    <span class="c1"># Do interpolation in case SIMsalabim did not return the same number of points </span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">Jext</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="c1"># if min(X)- 0.025 &lt; min(Vext):</span>
+                        <span class="c1">#     # add a point at the beginning of the JV curve</span>
+                        <span class="c1">#     df = df.append({&#39;Vext&#39;:min(X),&#39;Jext&#39;:df[&#39;Jext&#39;].iloc[0]},ignore_index=True)</span>
+                        <span class="c1">#     df = df.sort_values(by=[&#39;Vext&#39;])</span>
+                        <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Jext&#39;</span><span class="p">],</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Xfit</span> <span class="o">=</span> <span class="n">X</span>
+                    <span class="n">yfit</span> <span class="o">=</span> <span class="n">Jext</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^K_QFLSL-?\d+$&#39;</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">):</span>
+            <span class="c1"># the format below is to match the Voltage vs QFLS as described in:</span>
+            <span class="c1"># Grabowski, D., Liu, Z., Schöpe, G., Rau, U. and Kirchartz, T. (2022)</span>
+            <span class="c1"># Fill Factor Losses and Deviations from the Superposition Principle in Lead Halide Perovskite Solar Cells. Sol. RRL, 6: 2200507. </span>
+            <span class="c1"># https://doi.org/10.1002/solr.202200507</span>
+            <span class="k">if</span> <span class="s1">&#39;Gfrac&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">Gfracs</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">Gfracs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">indices</span><span class="p">)]</span> <span class="c1"># unsure the order of the Gfracs is the same as they are in X </span>
+                <span class="c1"># get layer number after K_QFLSL</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^K_QFLSL(-?)(\d+)$&#39;</span><span class="p">,</span> <span class="n">exp_format</span><span class="p">)</span>
+                <span class="n">sign</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>   <span class="c1"># &#39;&#39; or &#39;-&#39;</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">df_dum</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gfrac&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">])</span>
+                    <span class="c1"># reset index</span>
+                    <span class="n">df_dum</span> <span class="o">=</span> <span class="n">df_dum</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">Vext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="n">Jext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;Jext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span><span class="o">*</span><span class="n">Gfrac</span>
+                    <span class="k">if</span> <span class="n">Vext</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">Vext</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="n">Voc_dum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Jext</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">Vext</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">Voc_dum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Jext</span><span class="p">,</span> <span class="n">Vext</span><span class="p">)</span>
+                    <span class="n">idx_Voc</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">Voc_dum</span><span class="p">))</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+                    <span class="n">JdirOC</span> <span class="o">=</span> <span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;JdirL&#39;</span><span class="o">+</span><span class="n">sign</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_Voc</span><span class="p">]</span>
+                    <span class="n">kb</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Boltzmann constant in eV/K&#39;</span><span class="p">)</span>
+                    <span class="c1"># check if self as T attribute</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span>
+                        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">T</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SIMsalabim_params</span><span class="p">[</span><span class="s1">&#39;setup&#39;</span><span class="p">][</span><span class="s1">&#39;T&#39;</span><span class="p">])</span>
+                    <span class="n">QFLS</span> <span class="o">=</span> <span class="n">kb</span><span class="o">*</span><span class="n">T</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;JdirL&#39;</span><span class="o">+</span><span class="n">sign</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">JdirOC</span><span class="p">)</span> <span class="o">+</span> <span class="n">Voc_dum</span>
+
+                    <span class="c1"># check if all points from X[:,0] and data[&#39;Vext&#39;].values are the same</span>
+                    <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span> <span class="p">:</span>
+                        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Vext</span><span class="p">):</span>
+                            <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+                    <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                        <span class="c1"># Do interpolation in case SIMsalabim did not return the same number of points </span>
+                        <span class="c1"># if Vext[0] &gt;</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">QFLS</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)))</span>
+                            
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="c1"># if min(X[X[:,1]==Gfrac,0])- 0.025 &lt; min(Vext):</span>
+                            <span class="c1">#     # add a point at the beginning of the JV curve</span>
+                            <span class="c1">#     Vext</span>
+                            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">QFLS</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">QFLS</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">QFLS</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Vext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">Jext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Jext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span>
+                <span class="n">Voc_dum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">Jext</span><span class="p">,</span> <span class="n">Vext</span><span class="p">)</span>
+                <span class="n">idx_Voc</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">Voc_dum</span><span class="p">))</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+                <span class="n">JdirOC</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;JdirL&#39;</span><span class="o">+</span><span class="n">sign</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx_Voc</span><span class="p">]</span>
+                <span class="n">kb</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;Boltzmann constant in eV/K&#39;</span><span class="p">)</span>
+                <span class="c1"># check if self as T attribute</span>
+                <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;T&#39;</span><span class="p">):</span>
+                    <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dev_par</span><span class="p">[</span><span class="s1">&#39;T&#39;</span><span class="p">]</span>
+                <span class="n">QFLS</span> <span class="o">=</span> <span class="n">kb</span><span class="o">*</span><span class="n">T</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;JdirL&#39;</span><span class="o">+</span><span class="n">sign</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)]</span><span class="o">.</span><span class="n">values</span> <span class="o">/</span> <span class="n">JdirOC</span><span class="p">)</span> <span class="o">+</span> <span class="n">Voc_dum</span>
+
+                <span class="c1"># check if all points from X[:,0] and data[&#39;Vext&#39;].values are the same</span>
+                <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span> <span class="p">:</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Vext</span><span class="p">):</span>
+                        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                    <span class="c1"># Do interpolation in case SIMsalabim did not return the same number of points </span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">QFLS</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="c1"># if min(X)- 0.025 &lt; min(Vext):</span>
+                        <span class="c1">#     # add a point at the beginning of the JV curve</span>
+                        <span class="c1">#     df = df.append({&#39;Vext&#39;:min(X),&#39;Jext&#39;:df[&#39;Jext&#39;].iloc[0]},ignore_index=True)</span>
+                        <span class="c1">#     df = df.sort_values(by=[&#39;Vext&#39;])</span>
+                        <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">],</span> <span class="n">QFLS</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Xfit</span> <span class="o">=</span> <span class="n">X</span>
+                    <span class="n">yfit</span> <span class="o">=</span> <span class="n">QFLS</span>
+
+        <span class="k">elif</span> <span class="n">exp_format</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;Gfrac&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">Gfracs</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">return_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">Gfracs</span> <span class="o">=</span> <span class="n">Gfracs</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">indices</span><span class="p">)]</span> <span class="c1"># unsure the order of the Gfracs is the same as they are in X </span>
+
+                <span class="k">for</span> <span class="n">Gfrac</span> <span class="ow">in</span> <span class="n">Gfracs</span><span class="p">:</span>
+                    <span class="n">df_dum</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Gfrac&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">Gfrac</span><span class="p">]</span>
+                    <span class="n">Vext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="n">exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df_dum</span><span class="p">[</span><span class="n">exp_format</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                    <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span><span class="o">*</span><span class="n">Gfrac</span>
+
+                    <span class="c1"># check if all points from X[:,0] and data[&#39;Vext&#39;].values are the same</span>
+                    <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span> <span class="p">:</span>
+                        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Vext</span><span class="p">):</span>
+                            <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                    <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                        <span class="c1"># Do interpolation in case SIMsalabim did not return the same number of points </span>
+                        <span class="c1"># if Vext[0] &gt;</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)))</span>
+                            
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                            <span class="c1"># if min(X[X[:,1]==Gfrac,0])- 0.025 &lt; min(Vext):</span>
+                            <span class="c1">#     # add a point at the beginning of the JV curve</span>
+                            <span class="c1">#     Vext</span>
+                            <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+                            <span class="k">else</span><span class="p">:</span>
+                                <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                                <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="n">Gfrac</span><span class="p">,</span><span class="mi">0</span><span class="p">])))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">Xfit</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">exp</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">Xfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Xfit</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">Vext</span><span class="p">,</span><span class="n">G</span><span class="p">))</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+                            <span class="n">yfit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">yfit</span><span class="p">,</span><span class="n">exp</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">Vext</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">exp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">exp_format</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span>
+
+                <span class="c1"># check if all points from X[:,0] and data[&#39;Vext&#39;].values are the same</span>
+                <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">Vext</span><span class="p">)</span> <span class="p">:</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">Vext</span><span class="p">):</span>
+                        <span class="n">do_interp</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">do_interp</span><span class="p">:</span>
+                    <span class="c1"># Do interpolation in case SIMsalabim did not return the same number of points </span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">tck</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">Vext</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">tck</span><span class="p">,</span> <span class="n">der</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="c1"># if min(X)- 0.025 &lt; min(Vext):</span>
+                        <span class="c1">#     # add a point at the beginning of the JV curve</span>
+                        <span class="c1">#     df = df.append({&#39;Vext&#39;:min(X),&#39;Jext&#39;:df[&#39;Jext&#39;].iloc[0]},ignore_index=True)</span>
+                        <span class="c1">#     df = df.sort_values(by=[&#39;Vext&#39;])</span>
+                        <span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Vext&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">exp_format</span><span class="p">],</span> <span class="n">fill_value</span><span class="o">=</span><span class="s1">&#39;extrapolate&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+                        <span class="n">yfit</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Xfit</span> <span class="o">=</span> <span class="n">X</span>
+                    <span class="n">yfit</span> <span class="o">=</span> <span class="n">exp</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid exp_format: &#39;</span><span class="o">+</span><span class="n">exp_format</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">Xfit</span><span class="p">,</span> <span class="n">yfit</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Vincent M. Le Corre, Larry Lüer.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
