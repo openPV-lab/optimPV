@@ -1,6 +1,8 @@
 pySIMsalabim>=1.3
 scikit-optimize
 scikit-learn>=1.0
+streamlit>=1.28
+matplotlib
 ax-platform[fully_bayesian]>=1.3.1
 torch
 torchvision

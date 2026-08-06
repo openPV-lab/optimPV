@@ -13,6 +13,26 @@ See `Data/simsalabim_test_inputs/README_combinatorial_TCO_ETL_HTL_SAM.md` for th
 layer parameter files, their provenance, and modeling choices (in particular: SAM is
 represented as a contact work-function/injection-barrier tuning, not a bulk layer).
 
+## GUI
+
+`gui/app.py` is a Streamlit GUI covering **Stage 2 and Stage 3 only** (process
+correlation + condition search) -- it deliberately does not call SIMsalabim/DDfits, so
+it has no dependency on the SIMsalabim binary and works with just `scikit-learn` (plus
+`ax-platform`/`torch` for the Stage 3 search). It takes as input any table with one row
+per device: process-condition columns and target columns (performance, and/or Stage 1
+fitted physical parameters if you produced them separately). Launch it with:
+
+```bash
+./run_gui.sh        # Linux/Mac
+run_gui.bat          # Windows
+# or directly:
+streamlit run gui/app.py
+```
+
+Stage 1 (drift-diffusion fitting) stays a script you run separately
+(`scripts/fit_combinatorial_devices.py`) -- its output CSV is exactly the kind of
+table the GUI expects as input.
+
 ## Stage 1 -- physical understanding (drift-diffusion fitting per device)
 
 `scripts/fit_combinatorial_devices.py` loops over every device in your combinatorial
@@ -77,6 +97,8 @@ search.
   `axBOtorchOptimizer` machinery that `JVAgent`/`DiodeAgent` already use.
 - `scripts/fit_combinatorial_devices.py`, `scripts/optimize_process_conditions.py`:
   new orchestration scripts tying Stage 1/2/3 together.
+- `gui/app.py`, `run_gui.sh`/`run_gui.bat`: new Streamlit GUI for Stage 2/3 (see
+  "GUI" section above).
 
 ## Known limitations / what still needs your input
 
