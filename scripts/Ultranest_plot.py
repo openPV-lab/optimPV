@@ -42,20 +42,24 @@ params.append(preLangevin)
 R_series = FitParam(name='R_series', value=1e-4, bounds=[1e-5,1e-3], log_scale=True, value_type='float', fscale=None, rescale=False, display_name=r'$R_{series}$', unit=r'$\Omega$ m$^2$', axis_type='log', force_log=True)
 params.append(R_series)
 
+N_c = FitParam(name = 'l2.N_c', value = 1e27, bounds = [5e26,5e27], log_scale = True, value_type = 'float', fscale = None, rescale = False,  display_name=r'$N_{c}$', unit=r'm$^{-3}$', axis_type = 'log', force_log = True)
+params.append(N_c)
+
 pnames = [param.full_name for param in params if param.type != "fixed"]
 
 # Load the UltraNest run corresponding to the configured parameter list.
-directory = os.path.join(os.path.dirname(__file__), "logs/loggauss/run1")
+directory = os.path.join(os.path.dirname(__file__), "logs/log_JV/run1")
 run, info = ultranest.read_file(directory, x_dim=len(pnames))
 
 # Fill in missing parameter metadata when the saved run does not include it.
-if "paramnames" not in info and "weighted_samples" in info:
-    ndim = info["weighted_samples"]["points"].shape[1]
-    info["paramnames"] = [f"x{i}" for i in range(ndim)]
-if "paramnames_latex" not in info and "paramnames" in info:
-    info["paramnames_latex"] = info["paramnames"]
+# if "paramnames" not in info and "weighted_samples" in info:
+#     ndim = info["weighted_samples"]["points"].shape[1]
+#     info["paramnames"] = [f"x{i}" for i in range(ndim)]
+# if "paramnames_latex" not in info and "paramnames" in info:
+#     info["paramnames_latex"] = info["paramnames"]
 
 # Convert samples to an ArviZ-compatible posterior dataset.
+# print(info["samples"].keys())
 results_df = pd.DataFrame(data=info["samples"], columns=pnames)
 results_df["chain"] = 0
 results_df["draw"] = np.arange(len(results_df), dtype=int)
